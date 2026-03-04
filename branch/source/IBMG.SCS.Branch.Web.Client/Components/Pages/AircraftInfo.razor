@@ -1,0 +1,148 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenColumn Size="12" SizeMd="12" SizeLg="4" class="bg-light rounded shadow-sm p-3 position-relative">
+
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center" class="mb-3">
+
+        <div class="d-flex align-items-center gap-2">
+
+            @if (AircraftList.Any())
+            {
+                <RadzenDropDown TValue="Guid"
+                                Data="@AircraftList"
+                                TextProperty="TailNumber"
+                                ValueProperty="AircraftId"
+                                Placeholder="Select Aircraft"
+                                @bind-Value="SelectedAircraftId"
+                                Change="@(async args => await HandleAircraftChanged((Guid)args))" class="rounded border fw-medium bg-white border-black" />
+            }
+            <ComponentLoading IsVisible="@IsLoading" CssClass="ms-2" />
+        </div>
+
+
+        <div class="bg-transparent">
+            <RadzenButton Icon="edit_square"
+                          Size="ButtonSize.Small"
+                          Class="icon-only-btn bg-transparent"
+                          ButtonStyle="ButtonStyle.Light"
+                          Click="@HandleToggleEdit"
+                          Disabled="@(AircraftList == null || !AircraftList.Any() || IsAddMode)" />
+
+            <RadzenButton Icon="add"
+                          Size="ButtonSize.Small"
+                          Class="icon-only-btn bg-transparent"
+                          ButtonStyle="ButtonStyle.Light"
+                          Click="@HandleAddNew" />
+        </div>
+    </RadzenStack>
+
+    <div class="mb-4">
+        <RadzenImage Path="images.jpg" class="w-100 img-fluid rounded object-fit-cover h-100" />
+    </div>
+
+    @if (!IsEditMode && !IsAddMode && Aircraft != null)
+    {
+        <div class="d-flex flex-column aircraft-info-grid">
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Tail Number</RadzenText>
+                <RadzenText>@Aircraft.TailNumber</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Location</RadzenText>
+                <RadzenText>@Aircraft.Location</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Model</RadzenText>
+                <RadzenText>@Aircraft.Model</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Manufacturer</RadzenText>
+                <RadzenText>@Aircraft.Manufacturer</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Year Of Manufacture</RadzenText>
+                <RadzenText>@Aircraft.YearOfManufacture</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Aircraft Type</RadzenText>
+                <RadzenText>@Aircraft.AircraftType</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Variant Type</RadzenText>
+                <RadzenText>@Aircraft.VariantType</RadzenText>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-1 border-bottom">
+                <RadzenText class="fw-semibold">Type Rating</RadzenText>
+                <RadzenText>@Aircraft.TypeRating</RadzenText>
+            </div>
+        </div>
+    }
+
+    @if (IsEditMode || IsAddMode)
+    {
+        <RadzenTemplateForm Data="@Aircraft" TItem="AircraftInfoModel" Submit="@HandleSave">
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Tail Number" />
+                <RadzenTextBox Name="TailNumber" @bind-Value="Aircraft.TailNumber" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="TailNumber" Text="Tail Number is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Location" />
+                <RadzenTextBox Name="Location" @bind-Value="Aircraft.Location" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="Location" Text="Location is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Model" />
+                <RadzenTextBox Name="Model" @bind-Value="Aircraft.Model" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="Model" Text="Model is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Manufacturer" />
+                <RadzenTextBox Name="Manufacturer" @bind-Value="Aircraft.Manufacturer" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="Manufacturer" Text="Manufacturer is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Year Of Manufacture" />
+                <RadzenNumeric Name="YearOfManufacture" @bind-Value="Aircraft.YearOfManufacture" class="w-100 mt-1 form-label border-dark" ShowUpDown="false" />
+                <RadzenRequiredValidator Component="YearOfManufacture" Text="Year of Manufacture is required" />
+                <RadzenNumericRangeValidator Component="YearOfManufacture" Min="1900" Max="2026" Text="Please select a year between 1900 and 2026"></RadzenNumericRangeValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Aircraft Type" />
+                <RadzenTextBox Name="AircraftType" @bind-Value="Aircraft.AircraftType" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="AircraftType" Text="Aircraft Type is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Variant Type" />
+                <RadzenTextBox Name="VariantType" @bind-Value="Aircraft.VariantType" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="VariantType" Text="Variant Type is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="mb-3 d-flex flex-column">
+                <RadzenLabel Text="Type Rating" />
+                <RadzenTextBox Name="TypeRating" @bind-Value="Aircraft.TypeRating" class="w-100 mt-1" />
+                <RadzenRequiredValidator Component="TypeRating" Text="Type Rating is required"></RadzenRequiredValidator>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3 gap-2">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save" Icon="save" Class="btn-primary flex-fill" />
+                <RadzenButton ButtonType="ButtonType.Button" Text="Cancel" Icon="close" class="flex-fill" ButtonStyle="ButtonStyle.Light" Click="HandleCancel" />
+            </div>
+        </RadzenTemplateForm>
+    }
+</RadzenColumn>

@@ -1,0 +1,17 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "KerridgeSettings": {
+    "G&S": "https://grantbt9943cbbb522b-tpw.kerridgecs.online/XI/",
+    "RGB": "https://rgbtf58bm2ppprabf46c.kerridgecs.online/XI/",
+    "SE": "https://localhost:7229"
+  },
+  "ConnectionStrings": {
+    "primaryConnectionString": "Server=tcp:sql-uks-scs-dev.database.windows.net,1433;Initial Catalog=sqldb-uks-scs-dev-customerportal;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=Active Directory Default;",
+    "IBMG_DWH": "Server=4.158.65.60,1438;Initial Catalog=IBMG_Group_Warehouse;User Id=SVCSCSAPI;Password=ixgvuGa@*Fje3_i9dE;Encrypt=True;TrustServerCertificate=True;"
+  }
+}

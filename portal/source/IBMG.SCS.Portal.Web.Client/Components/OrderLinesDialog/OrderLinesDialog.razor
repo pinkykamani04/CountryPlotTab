@@ -1,0 +1,74 @@
+﻿@using IBMG.SCS.Portal.ApiClient
+@using IBMG.SCS.Portal.Web.Client.Models
+@inject IClient Client
+@inject DialogService DialogService
+@if (isLoading)
+{
+    <ComponentLoading IsVisible = "true"/>
+}
+else
+{
+    <RadzenDataGrid Data="@Lines" TItem="OrderLineDetails">
+        <Columns>
+            <RadzenDataGridColumn Property="Product" Title="Product" />
+            <RadzenDataGridColumn Property="Quantity" Title="Qty" />
+            <RadzenDataGridColumn Property="UnitPrice" Title="Unit Price" FormatString="{0:C}" />
+            <RadzenDataGridColumn Property="Total" Title="Total" FormatString="{0:C}" />
+        </Columns>
+    </RadzenDataGrid>
+
+    <div style="text-align:right; margin-top:12px;">
+        <RadzenButton Text="Close" Click="@Close" />
+    </div>
+}
+
+@code {
+    [Parameter] public string OrderId { get; set; }
+
+    private List<OrderLineDetails> Lines = new();
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Client.GetCustomerOrderAsync(
+            6702124,
+            OrderId
+        );
+
+        if (result?.Data != null)
+        {
+            Lines = GetMockOrderLines(OrderId);
+        }
+
+        isLoading = false;
+    }
+
+
+    private List<OrderLineDetails> GetMockOrderLines(string orderId)
+    {
+        return orderId switch
+        {
+            "ORD-1003" => new()
+        {
+            new OrderLineDetails { Product = "Bricks", Quantity = 100, UnitPrice = 1.50m },
+            new OrderLineDetails { Product = "Cement Bags", Quantity = 5, UnitPrice = 20m },
+        },
+
+            "ORD-1004" => new()
+        {
+            new OrderLineDetails { Product = "Hammer", Quantity = 2, UnitPrice = 15.00m },
+            new OrderLineDetails { Product = "Drill", Quantity = 1, UnitPrice = 120.00m },
+        },
+
+            "ORD-3001" => new()
+        {
+            new OrderLineDetails { Product = "Pipes", Quantity = 10, UnitPrice = 25.00m },
+        },
+
+            _ => new()
+        };
+    }
+
+
+    void Close() => DialogService.Close();
+}

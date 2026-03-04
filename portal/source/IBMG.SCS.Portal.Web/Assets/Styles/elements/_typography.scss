@@ -1,0 +1,23 @@
+﻿h1, h2, h3, h4 {
+    color: $secondary-color;
+    margin-bottom: $spacing-unit;
+}
+
+p {
+    color: #444;
+}
+
+.rz-textbox, .rz-textbox:hover, .rz-dropdown, .rz-numeric, .rz-datepicker {
+    border: 1px solid var(--dark-electric-blue) !important;
+}
+
+.rz-dropdown-trigger .rzi-chevron-down:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('/Assets/assets/dropdown-arrow.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

@@ -1,0 +1,282 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenCard class="pilot-card">
+    <RadzenStack Gap="2rem">
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenText Text="Pilot Info" TextStyle="TextStyle.DisplayH6" class="fw-bold" />
+            </RadzenStack>
+
+            @if (!IsEditMode && !ShowFullDetails)
+            {
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             Gap="0"
+                             class="d-flex gap-2">
+
+                    <RadzenButton Icon="edit_square"
+                                  ButtonStyle="ButtonStyle.Light"
+                                  Variant="Variant.Flat"
+                                  Size="ButtonSize.Small"
+                                  Class="bg-transparent border-0 shadow-none p-1 icon-only-btn"
+                                  Click="@HandlePreparePilotForEditQuick"
+                                  Disabled="@(IsEditMode)" />
+
+                </RadzenStack>
+            }
+        </RadzenStack>
+
+        @if (!IsEditMode && !ShowFullDetails && Pilot != null)
+        {
+            <RadzenStack AlignItems="AlignItems.Center" Gap="0.5rem">
+                @if (!string.IsNullOrEmpty(ProfileImageUrl))
+                {
+                    <RadzenImage Path="@ProfileImageUrl"
+                                 Class="pilot-avatar-small" />
+                }
+                else
+                {
+                    <div class="initials-avatar">
+                        @GetInitials(Pilot.FullName)
+                    </div>
+                }
+
+                <RadzenText Text="@Pilot.FullName"
+                            TextStyle="TextStyle.Body1"
+                            class="fw-bold" />
+            </RadzenStack>
+
+            <RadzenStack Gap="0.75rem">
+
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenText Text="Medical Certificate Expiry"
+                                TextStyle="TextStyle.Caption"
+                                class="fw-semibold fs-7" />
+                    <RadzenText Text="@Pilot.MedicalCertificate.ToString("dd MMM yyyy")"
+                                TextStyle="TextStyle.Caption" class="fs-7" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             JustifyContent="JustifyContent.SpaceBetween"
+                             AlignItems="AlignItems.Center">
+                    <RadzenStack Orientation="Orientation.Horizontal"
+                                 AlignItems="AlignItems.Center">
+                        <RadzenStack AlignItems="AlignItems.Center"
+                                     JustifyContent="JustifyContent.Center"
+                                     class="rounded-circle bg-danger text-white"
+                                     style="width:24px;height:24px;font-size:12px;font-weight:bold;">
+                            1
+                        </RadzenStack>
+
+                        <RadzenStack Gap="0.5rem">
+                            <RadzenText Text="Licence Number"
+                                        TextStyle="TextStyle.Caption"
+                                        class="fw-semibold fs-7" />
+                            <RadzenText Text="Licence Name"
+                                        TextStyle="TextStyle.Caption"
+                                        class="fw-semibold fs-7" />
+                        </RadzenStack>
+
+                    </RadzenStack>
+                    <RadzenStack Gap="0.25rem" AlignItems="AlignItems.End">
+                        <RadzenText Text="@Pilot.LicenseNumber"
+                                    TextStyle="TextStyle.Caption" class="fs-7" />
+                        <RadzenText Text="@Pilot.LicenseType"
+                                    TextStyle="TextStyle.Caption" class="fs-7" />
+                    </RadzenStack>
+
+                </RadzenStack>
+
+            </RadzenStack>
+
+            <RadzenButton Text="Load More" ButtonStyle="ButtonStyle.Light" class="w-100" Click="@HandleLoadMore" />
+        }
+
+        @if (!IsEditMode && ShowFullDetails && Pilot != null)
+        {
+            <RadzenStack AlignItems="AlignItems.Center" Gap="0.5rem">
+                @if (!string.IsNullOrEmpty(ProfileImageUrl))
+                {
+                    <RadzenImage Path="@ProfileImageUrl"
+                                 Class="pilot-avatar" />
+                }
+                else
+                {
+                    <div class="initials-avatar">
+                        @GetInitials(Pilot.FullName)
+                    </div>
+                }
+
+                <RadzenText Text="@Pilot.FullName"
+                            TextStyle="TextStyle.Body1"
+                            class="fw-bold text-center" />
+            </RadzenStack>
+
+            <RadzenStack Gap="0.5rem">
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="Date of Birth" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.DateOfBirth.ToString("dd MMM yyyy")" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="Contact Number" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.ContactNumber.ToString()" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="Email" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.EmailAddress" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="Location" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.Location" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="License Number" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.LicenseNumber" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="License Type" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.LicenseType" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2 border-bottom">
+                    <RadzenText Text="License Expiry" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.LicenseExpiryDate.ToString("dd MMM yyyy")" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" class="py-2">
+                    <RadzenText Text="Medical Certificate Expiry" TextStyle="TextStyle.Caption" />
+                    <RadzenText Text="@Pilot.MedicalCertificate.ToString("dd MMM yyyy")" TextStyle="TextStyle.Caption" class="fw-semibold" />
+                </RadzenStack>
+
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" class="mt-3">
+                <RadzenButton Text="Edit" ButtonStyle="ButtonStyle.Primary" class="flex-fill" Click="@HandlePreparePilotForEditFull" />
+                <RadzenButton Text="Close" ButtonStyle="ButtonStyle.Light" class="flex-fill" Click="@HandleCloseFullDetails" />
+            </RadzenStack>
+        }
+
+        @if (IsEditMode && EditablePilot != null)
+        {
+            <RadzenTemplateForm Data="@EditablePilot" TItem="PilotInfoModel" Submit="@HandleSave">
+                <RadzenText Text="Edit Pilot Information" TextStyle="TextStyle.Subtitle2" class="fw-bold mb-3" />
+
+                <RadzenStack Gap="0.5rem">
+                    <RadzenStack AlignItems="AlignItems.Center" Gap="0.5rem" class="mb-3">
+
+                        @if (!string.IsNullOrEmpty(ImagePreviewUrl))
+                        {
+                            <RadzenImage Path="@ImagePreviewUrl"
+                                         Class="pilot-avatar" />
+                        }
+                        else if (!string.IsNullOrEmpty(ProfileImageUrl))
+                        {
+
+                            <RadzenImage Path="@ProfileImageUrl"
+                                         Class="pilot-avatar" />
+                        }
+                        else
+                        {
+                            <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center fw-bold text-uppercase" style="width:90px;height:90px;font-size:32px;">
+                                @GetInitials(EditablePilot.FullName)
+                            </div>
+                        }
+
+                        <RadzenUpload ChooseText="Choose Profile Image"
+                                      Auto="false"
+                                      Multiple="false"
+                                      Accept=".jpg,.jpeg,.png,.heic"
+                                      Change="@HandleImageSelected" Name="ProfileImageName" class="d-flex justify-content-center align-items-center rounded" />
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Full Name" />
+                        <RadzenTextBox @bind-Value="EditablePilot.FullName" Name="FullName" Placeholder="Enter Full Name" class="form-label border-dark border rounded w-100" ReadOnly="true" />
+                        <RadzenRequiredValidator Component="FullName" Text="Full Name is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Date of Birth" />
+                        <RadzenDatePicker @bind-Value="EditablePilot.DateOfBirth" Name="DateOfBirth" Placeholder="Select DOB" class="form-label border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="DateOfBirth" Text="DateOfBirth is required"></RadzenRequiredValidator>
+                        <RadzenCustomValidator Component="DateOfBirth"
+                                               Text="Date of Birth cannot be in the future"
+                                               Validator="@(() => EditablePilot.DateOfBirth != null && EditablePilot.DateOfBirth <= DateTime.Today)" />
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Contact Number" />
+
+                        <RadzenNumeric TValue="long"
+                                       @bind-Value="EditablePilot.ContactNumber"
+                                       Name="ContactNumber"
+                                       Placeholder="Enter Contact Number"
+                                       class="form-label border-dark border rounded w-100"
+                                       ShowUpDown="false" />
+
+                        <RadzenRequiredValidator Component="ContactNumber"
+                                                 Text="Contact Number is required" />
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Email Address" />
+                        <RadzenTextBox @bind-Value="EditablePilot.EmailAddress" Name="EmailAddress" Placeholder="Enter Email Address" class="form-label border-dark border rounded w-100" ReadOnly="true" />
+                        <RadzenRequiredValidator Component="EmailAddress" Text="EmailAddress is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Location" />
+                        <RadzenTextBox @bind-Value="EditablePilot.Location" Name="Location" Placeholder="Enter Location" class="form-label border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="Location" Text="Location is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="License Number" />
+                        <RadzenTextBox @bind-Value="EditablePilot.LicenseNumber" Name="LicenseNumber" Placeholder="Enter License Number" class="form-label border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="LicenseNumber" Text="License Number is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="License Type" />
+                        <RadzenTextBox @bind-Value="EditablePilot.LicenseType" Name="LicenseType" Placeholder="Enter License Type" class="form-label border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="LicenseType" Text="License Type is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="License Expiry Date" />
+                        <RadzenDatePicker @bind-Value="EditablePilot.LicenseExpiryDate" Name="LicenseExpiryDate" Placeholder="Select License Expiry Date" class="border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="LicenseExpiryDate" Text="License ExpiryDate is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Medical Certificate Expiry" />
+                        <RadzenDatePicker @bind-Value="EditablePilot.MedicalCertificate"
+                                          Placeholder="Select Expiry Date" Name="MedicalCertificate"
+                                          class="border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="MedicalCertificate" Text="Medical Certificate is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack>
+                        <RadzenLabel Text="Contact Address" />
+                        <RadzenTextArea @bind-Value="EditablePilot.ContactAddress" Name="ContactAddress" Placeholder="Enter Contact Address" class="form-label border-dark border rounded w-100" />
+                        <RadzenRequiredValidator Component="ContactAddress" Text="ContactAddress is required"></RadzenRequiredValidator>
+                    </RadzenStack>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" class="mt-3">
+                        <RadzenButton Text="SAVE" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" Icon="save" class="flex-fill" />
+                        <RadzenButton Text="CANCEL" ButtonStyle="ButtonStyle.Light" Icon="close" class="flex-fill" Click="@HandleCancel" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        }
+
+    </RadzenStack>
+</RadzenCard>

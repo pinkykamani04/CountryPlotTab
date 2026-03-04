@@ -1,0 +1,17 @@
+﻿@using Radzen
+@inherits ComponentBase
+
+<div class="widget-wrapper">
+    <div class="widget-content">
+        @ChildContent
+    </div>
+
+    <div class="widget-overlay">
+        <RadzenButton Text="Add"
+                      Icon="add"
+                      ButtonStyle="ButtonStyle.Light"
+                      Size="ButtonSize.Medium"
+                      Click="@OnAddClick" />
+    </div>
+</div>
+

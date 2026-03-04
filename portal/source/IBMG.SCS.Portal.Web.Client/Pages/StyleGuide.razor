@@ -1,0 +1,315 @@
+﻿@page "/styleguide"
+@using Radzen
+@inject DialogService DialogService
+
+<div class="container-fluid p-4">
+    <RadzenHeading Size="H1" Text="UI Style Guide" class="mb-1" />
+    <RadzenHeading Size="H2" Text="1. Typography" class="mb-3" />
+    <RadzenCard class="mb-5 shadow-sm p-4">
+        <div class="row gy-4">
+            <div class="col-md-6">
+                <RadzenHeading Size="H1" Text="H1 – Main Dashboard Title" />
+                <RadzenHeading Size="H2" Text="H2 – Page Title" />
+                <RadzenHeading Size="H3" Text="H3 – Section Header" />
+                <RadzenHeading Size="H4" Text="H4 – Card Title" />
+                <RadzenHeading Size="H5" Text="H5 – Subheading" />
+                <RadzenHeading Size="H6" Text="H6 – Small Header" />
+            </div>
+
+            <div class="col-md-6">
+                <p>This is standard <strong>paragraph text</strong>. It is used throughout forms and reports.</p>
+                <p>
+                    <span class="fw-bold">Bold</span>,
+                    <span class="fst-italic">Italic</span>,
+                    <span class="text-muted">Muted</span>.
+                </p>
+                <p class="small text-muted">
+                    Small text – timestamps or metadata.
+                </p>
+            </div>
+
+        </div>
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="2. Colours" class="mb-3" />
+    <RadzenCard class="mb-5 shadow-sm p-4">
+        <p class="text-muted">Primary colour palette used throughout the application.</p>
+
+        <div class="row gy-4">
+
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="color-swatch bg-primary"></div>
+                    <div class="ms-3">
+                        <strong>Primary</strong>
+                        <div class="small text-muted">Main actions / highlights</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="color-swatch bg-secondary"></div>
+                    <div class="ms-3">
+                        <strong>Secondary</strong>
+                        <div class="small text-muted">Neutral actions / secondary info</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="color-swatch bg-success"></div>
+                    <div class="ms-3">
+                        <strong>Success</strong>
+                        <div class="small text-muted">Positive status</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                    <div class="color-swatch bg-warning"></div>
+                    <div class="ms-3">
+                        <strong>Warning</strong>
+                        <div class="small text-muted">Attention needed</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="color-swatch bg-info"></div>
+                    <div class="ms-3">
+                        <strong>Info</strong>
+                        <div class="small text-muted">Informational</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="color-swatch bg-danger"></div>
+                    <div class="ms-3">
+                        <strong>Danger</strong>
+                        <div class="small text-muted">Destructive actions</div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="color-swatch bg-light border"></div>
+                    <div class="ms-3">
+                        <strong>Light Background</strong>
+                        <div class="small text-muted">Dashboard panels</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="3. Buttons" class="mb-3" />
+
+    <RadzenCard class="mb-5 shadow-sm p-4">
+
+        <h6 class="text-uppercase text-muted small">Primary Buttons</h6>
+        <RadzenButton Text="Primary" ButtonStyle="ButtonStyle.Primary" class="me-2" />
+        <RadzenButton Text="Secondary" ButtonStyle="ButtonStyle.Secondary" class="me-2" />
+
+        <RadzenButton Text="Outline"
+                      ButtonStyle="ButtonStyle.Light"
+                      Style="border:1px solid #1976d2;color:#1976d2;background:none"
+                      class="me-2" />
+
+        <div class="my-4"></div>
+
+        <h6 class="text-uppercase text-muted small">Semantic Buttons</h6>
+        <RadzenButton Text="Success" ButtonStyle="ButtonStyle.Success" class="me-2" />
+        <RadzenButton Text="Warning" ButtonStyle="ButtonStyle.Warning" class="me-2" />
+        <RadzenButton Text="Danger" ButtonStyle="ButtonStyle.Danger" class="me-2" />
+
+        <div class="my-4"></div>
+
+        <h6 class="text-uppercase text-muted small">Table Action Buttons</h6>
+        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" class="me-2" />
+        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.Small" />
+
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="4. Forms" class="mb-3" />
+
+    <RadzenCard Style="padding:25px; max-width:750px; margin:auto;">
+
+        <RadzenTemplateForm TItem="DemoFormModel"
+                            Data="@demoModel"
+                            Submit="@OnSubmitDemo">
+
+            <RadzenStack Gap="20px">
+                <RadzenStack>
+                    <RadzenText Text="Name*" class="brand-label" />
+                    <RadzenTextBox Name="name"
+                                   @bind-Value="demoModel.Name"
+                                   Style="width:100%;"
+                                   class="input-field" />
+                    <RadzenRequiredValidator Component="name"
+                                             Text="Name is required" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Status*" class="brand-label" />
+                    <RadzenDropDown Name="status"
+                                    @bind-Value="demoModel.Status"
+                                    Data="@Statuses"
+                                    Placeholder="Select status"
+                                    Style="width:100%;" />
+                    <RadzenRequiredValidator Component="status"
+                                             Text="Status is required" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Date*" class="brand-label" />
+                    <RadzenDatePicker Name="date"
+                                      TValue="DateTime?"
+                                      @bind-Value="demoModel.Date"
+                                      Style="width:100%;"
+                                      class="input-field" />
+                    <RadzenRequiredValidator Component="date"
+                                             Text="Date is required" />
+                </RadzenStack>
+                <RadzenRow class="mt-2">
+                    <RadzenColumn Size="12" SizeMD="6">
+                        <RadzenButton Text="SUBMIT"
+                                      ButtonStyle="ButtonStyle.Primary"
+                                      Style="width:100%; padding:12px; font-weight:600;"
+                                      Type="ButtonType.Submit" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="6">
+                        <RadzenButton Text="SECONDARY ACTION"
+                                      Disabled="@(!IsFormValid)"
+                                      Style="width:100%; padding:12px; font-weight:600; background:#d9d9d9; color:#7b7b7b;" />
+                    </RadzenColumn>
+
+                </RadzenRow>
+
+            </RadzenStack>
+
+        </RadzenTemplateForm>
+
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="5. Cards" class="mb-3" />
+
+    <RadzenCard class="mb-5 shadow-sm">
+        <div class="p-3">
+            <RadzenHeading Size="H4" Text="Card Title" class="mb-2" />
+            <p class="text-muted">Standard Radzen card used throughout the dashboard and settings screens.</p>
+            <RadzenButton Text="Action" ButtonStyle="ButtonStyle.Primary" />
+        </div>
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="6. Tables" class="mb-3" />
+
+    <RadzenCard class="mb-5 shadow-sm p-3">
+
+        <RadzenDataGrid Data="@demo" TItem="DemoRow"
+                        RowRender="@OnRowRender">
+
+            <Columns>
+                <RadzenDataGridColumn TItem="DemoRow" Property="Id" Title="ID" Width="80px" />
+                <RadzenDataGridColumn TItem="DemoRow" Property="Name" Title="Name" />
+                <RadzenDataGridColumn TItem="DemoRow" Property="Status" Title="Status">
+                    <Template Context="item">
+                        <RadzenBadge Text="@item.Status"
+                                     Style="@(item.Status=="Active"
+                                                                          ? "background:#4caf50;color:white"
+                                                                          : "background:#e0e0e0;color:#555")" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="DemoRow" Title="Actions" Width="120px">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small"
+                                      ButtonStyle="ButtonStyle.Light"
+                                      class="me-2" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small"
+                                      ButtonStyle="ButtonStyle.Danger" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+            </Columns>
+
+        </RadzenDataGrid>
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="7. Spacing" class="mb-3" />
+
+    <RadzenCard class="mb-5 shadow-sm p-3">
+        <ul>
+            <li><strong>4px:</strong> compact spacing</li>
+            <li><strong>8px:</strong> inputs + controls</li>
+            <li><strong>16px:</strong> card padding</li>
+            <li><strong>24px:</strong> section separation</li>
+            <li><strong>32px:</strong> page layout spacing</li>
+        </ul>
+    </RadzenCard>
+    <RadzenHeading Size="H2" Text="8. Dialog Example" class="mb-3" />
+
+    <RadzenCard class="mb-5 shadow-sm p-3">
+        <RadzenButton Text="Open Dialog"
+                      ButtonStyle="ButtonStyle.Primary"
+                      Click="@OpenDemoDialog" />
+    </RadzenCard>
+
+</div>
+
+@code {
+
+    RadzenTextBox NameBox;
+    RadzenDropDown<string> StatusDrop;
+    RadzenDatePicker<DateTime?> DatePick;
+
+    class DemoRow
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+        public bool IsHighlighted { get; set; }
+    }
+
+    List<DemoRow> demo = new()
+    {
+        new DemoRow{ Id=1, Name="John Doe", Status="Active", IsHighlighted=true },
+        new DemoRow{ Id=2, Name="Jane Smith", Status="Inactive" },
+        new DemoRow{ Id=3, Name="David Lee", Status="Active" }
+    };
+
+    void OpenDemoDialog()
+    {
+        DialogService.Open<DemoDialog>("Demo Dialog",
+            new Dictionary<string, object>(),
+            new DialogOptions() { Width = "500px" }
+        );
+    }
+
+    void OnRowRender(RowRenderEventArgs<DemoRow> args)
+    {
+        if (args.Data.IsHighlighted)
+        {
+            args.Attributes.Add("style", "background-color:#FFF9E6;");
+        }
+    }
+
+    public class DemoFormModel
+    {
+        public string Name { get; set; }
+        public string Status { get; set; }
+        public DateTime? Date { get; set; }
+    }
+
+    DemoFormModel demoModel = new();
+
+    bool IsFormValid = false;
+
+    List<string> Statuses = new() { "Active", "Inactive" };
+
+    void OnSubmitDemo(DemoFormModel model)
+    {
+        IsFormValid = true;
+    }
+
+    RenderFragment DialogContent => @<div>This is a standard Radzen dialog.</div>;
+}
+<style>
+    .color-swatch {
+        width: 32px;
+        height: 32px;
+        border-radius: 4px;
+    }
+
+</style>

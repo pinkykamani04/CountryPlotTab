@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenNotification />
+
+<RadzenLayout class="sidebar-layout">
+    <RadzenHeader class="ibmg-header d-flex justify-content-between align-items-center px-4">
+        <div class="d-flex align-items-center gap-2">
+            <a href="/" class="d-inline d-md-none">
+                <img src="/mobile-ibmg-logo.png" class="ibmg-logo" />
+            </a>
+            <a href="/" class="d-none d-md-inline">
+                <img src="/main-logo-ibmg.png" class="ibmg-logo" />
+            </a>
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <img src="/navbar-people.png" class="ibmg-avatar" />
+        </div>
+    </RadzenHeader>
+    <RadzenSidebar Expanded="@sidebarExpanded" class="ibmg-sidebar">
+        <RadzenPanelMenu DisplayStyle="@(sidebarExpanded? MenuItemDisplayStyle.IconAndText: MenuItemDisplayStyle.Icon)"
+                         Match="NavLinkMatch.Prefix" class="ibmg-panelmenu">
+            <RadzenPanelMenuItem Icon="check_circle_outline" Text="Trade Validation" Path="/" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <CascadingValue Value="sidebarExpanded">
+        <RadzenBody class="rz-p-2">
+            <main class="container-fluid page">
+                @Body
+            </main>
+        </RadzenBody>
+    </CascadingValue>
+</RadzenLayout>

@@ -1,0 +1,52 @@
+﻿@page "/customers/{TenantId:guid}/device-remembrance"
+@using BluQube.Commands
+@using BluQube.Constants
+@using PearDrop.Multitenancy.Client.Domain.Tenant.Commands
+@inject ICommander Commander
+@inject NavigationManager Nav
+
+<h3>Tenant Device Remembrance Settings</h3>
+
+@if (saving)
+{
+    <p>Saving...</p>
+}
+else if (saved)
+{
+    <div class="alert alert-success" role="alert">Saved.</div>
+}
+
+<div class="mb-3">
+    <label class="form-label">Use Device Remembrance</label>
+    <input type="checkbox" class="form-check-input" @bind="useDeviceRemembrance" />
+</div>
+<div class="mb-3">
+    <label class="form-label">Expiration (Days)</label>
+    <input type="number" class="form-control" @bind="expirationDays" />
+    <small class="text-muted">Blank or 0 = global default.</small>
+</div>
+<button class="btn btn-primary" @onclick="Save" disabled="@saving">Save</button>
+<button class="btn btn-secondary ms-2" @onclick="Back">Back</button>
+
+@code {
+    [Parameter] public Guid TenantId { get; set; }
+    private bool useDeviceRemembrance;
+    private int expirationDays;
+    private bool saving;
+    private bool saved;
+
+    private async Task Save()
+    {
+        saving = true;
+        var cmd = new SetTenantDeviceRemembranceSettingsCommand(TenantId, useDeviceRemembrance, expirationDays);
+        var result = await Commander.Send(cmd, CancellationToken.None);
+        saving = false;
+        saved = result.Status == CommandResultStatus.Succeeded;
+        if (saved)
+        {
+            Nav.NavigateTo($"/tenants/{TenantId}");
+        }
+    }
+
+    private void Back() => Nav.NavigateTo($"/tenants/{TenantId}");
+}

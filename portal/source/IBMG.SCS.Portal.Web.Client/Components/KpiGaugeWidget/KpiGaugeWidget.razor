@@ -1,0 +1,30 @@
+﻿@using Radzen
+@using Radzen.Blazor
+
+<div>
+    <div class="d-flex flex-column h-100">
+        @if (Value != 0)
+        {
+            <RadzenRadialGauge Min="0" Max="100" Value="@Value" Style="height:200px;">
+                <RadzenRadialGaugeScale StartAngle="-140" EndAngle="140">
+                    <RadzenRadialGaugeScaleRange From="0" To="@Value" Fill="#7B61FF" />
+                    <RadzenRadialGaugeScaleRange From="@Value" To="100" Fill="#E5E7EB" />
+                </RadzenRadialGaugeScale>
+            </RadzenRadialGauge>
+
+            <div class="rz-text-center rz-mt-2">
+                <h1 class="rz-m-0">@Value%</h1>
+            <span>@Description</span>
+        </div>
+        }
+         else
+ {
+     <div class="d-flex flex-grow-1 align-items-center justify-content-center text-center">
+         <p class="fw-bold mb-0 fs-4">
+             No Data available For Selected Period
+         </p>
+     </div>
+ }
+    </div>
+</div>
+

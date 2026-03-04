@@ -1,0 +1,449 @@
+﻿@page "/reports-analytics"
+@using IBMG.SCS.Portal.Web.Client.Dtos
+@inherits ReportsAnalyticsBase
+
+
+<div class="sticky-nav-wrapper">
+
+<RadzenStack Orientation="Orientation.Horizontal"
+             AlignItems="AlignItems.Center"
+             JustifyContent="JustifyContent.SpaceBetween"
+             Gap="1rem"
+             Wrap="FlexWrap.Wrap"
+             Class="top-nav px-3 px-md-4 py-3 w-100">
+    <RadzenImage Path="countrystyle.png" AlternateText="Country Style" Class="logo-img" Style="max-width:150px;" />
+
+    <RadzenStack Orientation="Orientation.Horizontal"
+                 AlignItems="AlignItems.Center"
+                 Gap="0.5rem"
+                 Wrap="FlexWrap.NoWrap">
+        <div class="search-wrapper position-relative d-none d-sm-flex align-items-center gap-2 bg-white rounded-pill px-3"
+             Style="width:auto; min-width:200px; max-width:300px;">
+            <i class="material-icons text-success fs-1 cursor-pointer flex-shrink-0">×</i>
+            <RadzenTextBox Class="search-input form-control border-0 bg-transparent shadow-none p-0 flex-fill"
+                           Style="height: 100%;" />
+        </div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     AlignItems="AlignItems.Center"
+                     Gap="0.5rem"
+                     Wrap="FlexWrap.NoWrap">
+            <RadzenButton Icon="apps"
+                          ButtonStyle="ButtonStyle.Light"
+                          Variant="Variant.Text"
+                          Class="top-icon-btn text-white p-2"
+                          Style="min-width:auto;" />
+
+            <RadzenStack Class="position-relative">
+                <RadzenButton Icon="notifications"
+                              ButtonStyle="ButtonStyle.Light"
+                              Variant="Variant.Text"
+                              Class="top-icon-btn text-white p-2"
+                              Style="min-width:auto;" />
+                <RadzenBadge BadgeStyle="BadgeStyle.Danger"
+                             Text="3"
+                             Class="position-absolute"
+                             Style="top:-5px; right:-5px;" />
+            </RadzenStack>
+
+            <RadzenGravatar Email="user@countrystyle.com"
+                            Class="rounded-circle border border-2 border-white"
+                            Style="width:36px; height:36px;" />
+            <RadzenButton Icon="menu"
+                          ButtonStyle="ButtonStyle.Light"
+                          Variant="Variant.Text"
+                          Click="@ToggleMobileMenu"
+                          Class="d-md-none text-white p-2"
+                          Style="min-width:auto;" />
+        </RadzenStack>
+    </RadzenStack>
+</RadzenStack>
+
+<RadzenStack Orientation="Orientation.Horizontal"
+             Gap="0.25rem"
+             Wrap="FlexWrap.Wrap"
+             Class="menu-nav w-100 px-2 px-md-4 py-0 d-none d-md-flex flex-row">
+    <RadzenButton Text="Dashboard" Icon="grid_view"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("dashboard"))"
+                  Class="@(GetButtonClass("dashboard"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+    <RadzenButton Text="Transactions" Icon="credit_card"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("transactions"))"
+                  Class="@(GetButtonClass("transactions"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+    <RadzenButton Text="Invoice History" Icon="account_balance_wallet"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("invoice-history"))"
+                  Class="@(GetButtonClass("invoice-history"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+    <RadzenButton Text="Document Library" Icon="folder_open"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("document-library"))"
+                  Class="@(GetButtonClass("document-library"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+    <RadzenButton Text="Help & Support" Icon="work"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("test45"))"
+                  Class="@(GetButtonClass("help-support"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+    <RadzenButton Text="Reports & Analytics" Icon="bar_chart"
+                  ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                  Click="@(() => Navigate("reports-analytics"))"
+                  Class="@(GetButtonClass("reports-analytics"))"
+                  Style="font-size:0.875rem; padding:0.75rem 1rem;" />
+</RadzenStack>
+
+@if (mobileMenuOpen)
+{
+    <RadzenStack Orientation="Orientation.Vertical"
+                 Gap="0"
+                 Class="d-md-none w-100"
+                 Style="background:#1a5c35; z-index:999;">
+        <RadzenButton Text="Dashboard" Icon="grid_view"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("dashboard"))"
+                      Class="@(GetMobileButtonClass("dashboard"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); color:white; width:100%; text-align:left; justify-content:flex-start;" />
+        <RadzenButton Text="Transactions" Icon="credit_card"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("transactions"))"
+                      Class="@(GetMobileButtonClass("transactions"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); color:white; width:100%; text-align:left; justify-content:flex-start;" />
+        <RadzenButton Text="Invoice History" Icon="account_balance_wallet"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("invoice-history"))"
+                      Class="@(GetMobileButtonClass("invoice-history"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); color:white; width:100%; text-align:left; justify-content:flex-start;" />
+        <RadzenButton Text="Document Library" Icon="folder_open"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("document-library"))"
+                      Class="@(GetMobileButtonClass("document-library"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); color:white; width:100%; text-align:left; justify-content:flex-start;" />
+        <RadzenButton Text="Help & Support" Icon="work"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("help-support"))"
+                      Class="@(GetMobileButtonClass("help-support"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); color:white; width:100%; text-align:left; justify-content:flex-start;" />
+        <RadzenButton Text="Reports & Analytics" Icon="bar_chart"
+                      ButtonStyle="ButtonStyle.Light" Variant="Variant.Text"
+                      Click="@(() => Navigate("reports-analytics"))"
+                      Class="@(GetMobileButtonClass("reports-analytics"))"
+                      Style="font-size:0.9rem; padding:0.85rem 1.25rem; color:white; width:100%; text-align:left; justify-content:flex-start;" />
+    </RadzenStack>
+}
+<RadzenStack Class="page-header w-100 px-3 px-md-4 py-3">
+    <RadzenText TextStyle="TextStyle.H4" Class="text-white fw-semibold mb-2">Reporting and Analytics</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body2" Class="text-white-50 mb-0">Analytics and reporting for all customer transactions</RadzenText>
+</RadzenStack>
+</div>
+
+@if (currentView == "reports-analytics")
+{
+<RadzenStack Orientation="Orientation.Vertical" Gap="1.5rem" Class="content-wrapper mt-3 px-2 px-md-4 py-3 rounded-3">
+
+    <div class="pt-3 px-2 px-md-4 rounded-3">
+        <RadzenTabs SelectedIndex="@selectedIndex"
+                    SelectedIndexChanged="@OnTabChanged"
+                    Class="custom-tabs">
+            <Tabs>
+                <RadzenTabsItem Text="Tonnage" Icon="local_shipping" />
+                <RadzenTabsItem Text="Revenue" Icon="currency_pound" />
+            </Tabs>
+        </RadzenTabs>
+    </div>
+
+    <RadzenStack Orientation="Orientation.Vertical"
+                 Gap="1rem"
+                 Class="mt-3 w-100">
+        <RadzenRow Gap="1rem">
+            <RadzenColumn Size="12" SizeSM="6" SizeMD="6" SizeLG="3">
+                <div class="position-relative w-100">
+                    <RadzenButton Click="@(() => ToggleDropdown("customerSite"))"
+                                  Class="filter-dropdown-btn">
+                        <RadzenStack Orientation="Orientation.Horizontal"
+                                     AlignItems="AlignItems.Center"
+                                     JustifyContent="JustifyContent.SpaceBetween"
+                                     Gap="0"
+                                     Class="w-100">
+                            <RadzenText Class="filter-btn-text">
+                                @GetCustomerSiteText()
+                            </RadzenText>
+                            <RadzenIcon Icon="arrow_circle_down" Class="filter-btn-icon" />
+                        </RadzenStack>
+                    </RadzenButton>
+
+                    @if (showCustomerSiteDropdown)
+                    {
+                        <RadzenCard Class="filter-popup-menu position-absolute bg-white rounded-3 shadow">
+                            @foreach (var site in customerSites)
+                            {
+                                <div class="filter-popup-item @(CurrentFilters.CustomerSiteId == site.Id ? "selected" : "")"
+                                     @onclick="@(() => SelectCustomerSite(site.Id))">
+                                    @site.Name
+                                </div>
+                            }
+                        </RadzenCard>
+                    }
+                </div>
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeSM="6" SizeMD="6" SizeLG="3">
+                <div class="position-relative w-100">
+                    <RadzenButton Click="@(() => ToggleDropdown("dateRange"))"
+                                  Class="filter-dropdown-btn">
+                        <RadzenStack Orientation="Orientation.Horizontal"
+                                     AlignItems="AlignItems.Center"
+                                     JustifyContent="JustifyContent.SpaceBetween"
+                                     Gap="0"
+                                     Class="w-100">
+                            <RadzenText Class="filter-btn-text">
+                                @DateRangeDisplay
+                            </RadzenText>
+                            <RadzenIcon Icon="arrow_circle_down" Class="filter-btn-icon" />
+                        </RadzenStack>
+                    </RadzenButton>
+
+                    @if (showDateRangeDropdown)
+                    {
+                        <RadzenCard Class="date-range-popup">
+                            <RadzenStack Orientation="Orientation.Horizontal"
+                                         Gap="0.5rem"
+                                         Wrap="FlexWrap.NoWrap"
+                                         Class="quick-date-btns-row">
+                                <RadzenButton Text="LAST WEEK" Click="@SelectLastWeek" Class="quick-date-btn-new" />
+                                <RadzenButton Text="THIS WEEK" Click="@SelectThisWeek" Class="quick-date-btn-new" />
+                                <RadzenButton Text="THIS MONTH" Click="@SelectThisMonth" Class="quick-date-btn-new" />
+                                <RadzenButton Text="THIS YEAR" Click="@SelectThisYear" Class="quick-date-btn-new" />
+                            </RadzenStack>
+
+                            <RadzenStack Orientation="Orientation.Horizontal"
+                                         AlignItems="AlignItems.Center"
+                                         Gap="1rem"
+                                         Class="date-pickers-row">
+                                <RadzenDatePicker @bind-Value="CurrentFilters.StartDate"
+                                                  DateFormat="dd/MM/yyyy"
+                                                  Class="date-input-new"
+                                                  Placeholder="dd/mm/yyyy" />
+                                <RadzenText Class="date-to-label">To</RadzenText>
+                                <RadzenDatePicker @bind-Value="CurrentFilters.EndDate"
+                                                  DateFormat="dd/MM/yyyy"
+                                                  Class="date-input-new"
+                                                  Placeholder="dd/mm/yyyy" />
+                            </RadzenStack>
+
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" Class="m-0">
+                                <RadzenButton Text="Clear" Click="@ClearDates" Class="date-clear-btn-new" />
+                                <RadzenButton Text="Apply" Click="@ApplyDates" Class="date-apply-btn-new" />
+                            </RadzenStack>
+                        </RadzenCard>
+                    }
+                </div>
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeSM="6" SizeMD="6" SizeLG="2">
+                <div class="position-relative w-100">
+                    <RadzenButton Click="@(() => ToggleDropdown("wasteStream"))"
+                                  Class="filter-dropdown-btn">
+                        <RadzenStack Orientation="Orientation.Horizontal"
+                                     AlignItems="AlignItems.Center"
+                                     JustifyContent="JustifyContent.SpaceBetween"
+                                     Gap="0"
+                                     Class="w-100">
+                            <RadzenText Class="filter-btn-text">
+                                @GetWasteStreamText()
+                            </RadzenText>
+                            <RadzenIcon Icon="arrow_circle_down" Class="filter-btn-icon" />
+                        </RadzenStack>
+                    </RadzenButton>
+
+                    @if (showWasteStreamDropdown)
+                    {
+                        <RadzenCard Class="filter-popup-menu position-absolute bg-white rounded-3 shadow">
+                            @foreach (var stream in wasteStreams)
+                            {
+                                <div class="filter-popup-item @(CurrentFilters.WasteStreamId == stream.Id ? "selected" : "")"
+                                     @onclick="@(() => SelectWasteStream(stream.Id))">
+                                    @stream.Name
+                                </div>
+                            }
+                        </RadzenCard>
+                    }
+                </div>
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeSM="6" SizeMD="6" SizeLG="3">
+                <div class="position-relative w-100">
+                    <RadzenButton Click="@(() => ToggleDropdown("containerType"))"
+                                  Class="filter-dropdown-btn">
+                        <RadzenStack Orientation="Orientation.Horizontal"
+                                     AlignItems="AlignItems.Center"
+                                     JustifyContent="JustifyContent.SpaceBetween"
+                                     Gap="0"
+                                     Class="w-100">
+                            <RadzenText Class="filter-btn-text">
+                                @GetContainerTypeText()
+                            </RadzenText>
+                            <RadzenIcon Icon="arrow_circle_down" Class="filter-btn-icon" />
+                        </RadzenStack>
+                    </RadzenButton>
+
+                    @if (showContainerTypeDropdown)
+                    {
+                        <RadzenCard Class="filter-popup-menu position-absolute bg-white rounded-3 shadow">
+                            @foreach (var type in containerTypes)
+                            {
+                                <div class="filter-popup-item @(CurrentFilters.ContainerTypeId == type.Id ? "selected" : "")"
+                                     @onclick="@(() => SelectContainerType(type.Id))">
+                                    @type.Name
+                                </div>
+                            }
+                        </RadzenCard>
+                    }
+                </div>
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="1"
+                          Class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                <RadzenButton Click="@ResetFilters" Class="btn-reset-filter">
+                    <RadzenIcon Icon="filter_alt_off" Class="text-white" />
+                </RadzenButton>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenStack>
+
+    @if (selectedIndex == 0)
+    {
+        <TonnageCharts MonthlyChartData="@monthlyChartData"
+                       TransactionCountChartData="@transactionCountChartData"
+                       TotalValueChartData="@totalValueChartData"
+                       StreamPerformanceData="@streamPerformanceData"
+                       TotalStreamValue="@totalStreamValue"
+                       AchievedPercentage="@AchievedPercentage"
+                       RemainingPercentage="@RemainingPercentage" />
+    }
+    else if (selectedIndex == 1)
+    {
+        <RevenueCharts TotalValueChartData="@totalRevenueChartData"
+                       MonthlyAverageCostData="@monthlyAverageCostData"
+                       TonnageRevenueData="@tonnageRevenueData"
+                       TransactionCountChartData="@transactionCountChartData"
+                       LastYearToDateData="@lastYearToDateData"
+                       LastFullYearData="@lastFullYearData"
+                       WasteProcessingMultiYearData="@WasteProcessingMultiYearData" />
+    }
+    else if (selectedIndex == 2)
+    {
+        <RadzenText Text="No charts available for Container Count." />
+    }
+
+    <div class="w-100" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <RadzenDataGrid @ref="grid"
+                        Data="@GetCurrentPageData()"
+                        TItem="ReportingTransactionDto"
+                        Count="@totalCount"
+                        AllowPaging="false"
+                        AllowSorting="true"
+                        AllowFiltering="false"
+                        AllowAlternatingRows="false"
+                        Class="report-grid"
+                        Style="min-width: 100%;">
+            <Columns>
+                <RadzenDataGridColumn Width="80px" Frozen="true" Resizable="false" Sortable="false"
+                                      Filterable="false" Title="View" TextAlign="TextAlign.Center">
+                    <Template Context="data">
+                        <RadzenIcon Icon="visibility" Class="view-icon" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Property="TransactionDate" Title="Date" Width="130px"
+                                      FormatString="{0:dd/MM/yyyy}" Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="CustomerSiteName" Title="Site Name" Width="200px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="OrderNumber" Title="Order Number" Width="160px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="TicketNumber" Title="Ticket Number" Width="160px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="ActivityStatus" Title="Activity Status" Width="160px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="CollectionType" Title="Collection Types" Width="170px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="WasteStreamName" Title="Waste Stream Name" Width="200px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="ContainerTypeName" Title="Container Type" Width="170px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="NetWeight" Title="Net Weight" Width="150px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="TonnageTransaction" Title="Tonnage Transaction" Width="200px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="TransactionValue" Title="Revenue Transaction" Width="200px"
+                                      Resizable="true" TextAlign="TextAlign.Center" />
+            </Columns>
+        </RadzenDataGrid>
+
+        <div class="custom-pagination-footer">
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         JustifyContent="JustifyContent.SpaceBetween"
+                         Gap="1rem"
+                         Wrap="FlexWrap.NoWrap"
+                         Class="px-4 py-2"
+                         Style="min-height: 56px;">
+
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             AlignItems="AlignItems.Center"
+                             Gap="0.5rem"
+                             Wrap="FlexWrap.NoWrap">
+                    <RadzenButton Icon="edit" Variant="Variant.Text" ButtonStyle="ButtonStyle.Light"
+                                  Click="@OnEdit" Size="ButtonSize.Small"
+                                  Style="color: white; min-width: auto; width: 36px; height: 36px; padding: 0;" />
+                    <RadzenButton Icon="cloud_download" Variant="Variant.Text" ButtonStyle="ButtonStyle.Light"
+                                  Click="@OnDownload" Size="ButtonSize.Small"
+                                  Style="color: white; min-width: auto; width: 36px; height: 36px; padding: 0;" />
+                </RadzenStack>
+
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             AlignItems="AlignItems.Center"
+                             Gap="1.5rem"
+                             Wrap="FlexWrap.NoWrap">
+                    <RadzenStack Orientation="Orientation.Horizontal"
+                                 AlignItems="AlignItems.Center"
+                                 Gap="0.75rem"
+                                 Wrap="FlexWrap.NoWrap">
+                        <RadzenText Style="color: white; font-size: 0.875rem; white-space: nowrap; margin: 0; line-height: 1;">
+                            Rows per page:
+                        </RadzenText>
+                        <RadzenDropDown @bind-Value="@pageSize"
+                                        Data="@pageSizeOptions"
+                                        Change="@OnPageSizeChange"
+                                        Style="min-width: 80px; width: 80px; background: white; height: 40px;"
+                                        Class="custom-page-dropdown" />
+                    </RadzenStack>
+
+                    <RadzenText Style="color: white; font-size: 0.875rem; white-space: nowrap; margin: 0; line-height: 1;">
+                        @GetPageInfo()
+                    </RadzenText>
+
+                    <RadzenStack Orientation="Orientation.Horizontal"
+                                 AlignItems="AlignItems.Center"
+                                 Gap="0.25rem"
+                                 Wrap="FlexWrap.NoWrap">
+                        <RadzenButton Icon="chevron_left" Variant="Variant.Text" ButtonStyle="ButtonStyle.Light"
+                                      Click="@PreviousPage" Disabled="@(currentPage == 0)" Size="ButtonSize.Small"
+                                      Style="color: white; min-width: auto; width: 36px; height: 36px; padding: 0;" />
+                        <RadzenButton Icon="chevron_right" Variant="Variant.Text" ButtonStyle="ButtonStyle.Light"
+                                      Click="@NextPage" Disabled="@(currentPage >= totalPages - 1)" Size="ButtonSize.Small"
+                                      Style="color: white; min-width: auto; width: 36px; height: 36px; padding: 0;" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenStack>
+        </div>
+    </div>
+    
+</RadzenStack>
+}
+else
+{
+    <RadzenStack Class="content-wrapper mt-3 px-2 px-md-4 py-3 rounded-3">
+    </RadzenStack>
+}

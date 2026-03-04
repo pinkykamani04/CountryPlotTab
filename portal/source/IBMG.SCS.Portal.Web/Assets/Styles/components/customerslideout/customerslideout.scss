@@ -1,0 +1,28 @@
+﻿.custom-slide-out {
+    .rz-dialog-titlebar {
+        background-color: white;
+
+        .rz-dialog-titlebar-close .rzi.rzi-times {
+            width: 24px;
+            height: 24px;
+            background-color: var(--dark-electric-blue);
+
+            &:before {
+                font-size: 24px;
+                color: white;
+            }
+        }
+    }
+
+    .rz-dialog-content {
+        padding-top: unset !important;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .card-slideout {
+        .heading {
+            font-size: 34px;
+        }
+    }
+}

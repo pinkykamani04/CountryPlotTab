@@ -1,0 +1,13 @@
+﻿<RadzenStack AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" class="@(this.CssClass)" Visible="@this.IsVisible">
+    <div class="rz-loading-content">
+        <RadzenIcon IconStyle="IconStyle.Primary" Icon="cycle" Style="animation: rotation 1000ms linear infinite" />
+    </div>
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; } = string.Empty;
+}

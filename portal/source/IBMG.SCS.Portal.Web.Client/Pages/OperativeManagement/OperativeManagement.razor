@@ -1,0 +1,31 @@
+﻿@page "/operative-management"
+@using IBMG.SCS.Portal.Web.Client.Components.OperativeManagement.Operatives
+@using IBMG.SCS.Portal.Web.Client.Components.OperativeManagement.SpendLimitManagement
+@using IBMG.SCS.Portal.Web.Client.Components.OperativeManagement.TradeCardManagement
+@using IBMG.SCS.Portal.Web.Client.Components.OperativeManagement.AuditLogs
+
+<PageTitle>Operative Management | IBMG</PageTitle>
+
+<div class="container-fluid px-0 operative-management">
+    <RadzenRow class="w-100">
+        <RadzenTabs RenderMode="TabRenderMode.Server" @bind-SelectedIndex="@SelectedTabIndex" class="w-100">
+            <Tabs>
+                <RadzenTabsItem Text="Operatives">
+                    <OperativesManagement />
+                </RadzenTabsItem>
+
+                <RadzenTabsItem Text="Trade Card Management">
+                    <TradeCardManagement />
+                </RadzenTabsItem>
+
+                <RadzenTabsItem Text="Spend Limits">
+                    <SpendLimitManagement/>
+                </RadzenTabsItem>
+
+                <RadzenTabsItem Text="Audit Log">
+                    <AuditLogsManagement/>
+                </RadzenTabsItem>
+            </Tabs>
+        </RadzenTabs>
+    </RadzenRow>
+</div>

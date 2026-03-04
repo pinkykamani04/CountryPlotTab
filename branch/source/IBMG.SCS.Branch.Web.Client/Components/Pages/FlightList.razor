@@ -1,0 +1,67 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenCard class="@CardClass">
+    <RadzenStack Orientation="Orientation.Horizontal"
+                 AlignItems="AlignItems.Center"
+                 JustifyContent="JustifyContent.SpaceBetween"
+                 class="mb-3 pb-3">
+        <RadzenText Text="@Title"
+                    TextStyle="TextStyle.DisplayH6"
+                    class="fw-bold mb-0" />
+        <RadzenLink Text="View All Flight Logs" Path="#" />
+    </RadzenStack>
+
+    <RadzenStack Gap="0">
+        @if (Flights.Any())
+        {
+            @for (int i = 0; i < Flights.Count; i++)
+            {
+                var flight = Flights[i];
+                string cssClass = i == Flights.Count - 1 ? "flight-row py-3 w-100" : "flight-row py-3 w-100 border-bottom";
+
+                <RadzenStack class="@cssClass">
+                    <RadzenRow AlignItems="AlignItems.Center" class="gy-3">
+
+                        <RadzenColumn Size="12" SizeLg="@DepartureColSize" class="text-center text-lg-start">
+                            <RadzenStack Gap="0.25rem">
+                                <RadzenText Text="@flight.DepartureCode" TextStyle="TextStyle.Body2" class="flight-code" />
+                                <RadzenText Text="@flight.DepartureTime" TextStyle="TextStyle.Caption" class="flight-time" />
+                            </RadzenStack>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeLg="@MiddleColSize" class="text-center">
+                            <RadzenText Text="@flight.Date" TextStyle="TextStyle.Caption" class="flight-date" />
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="0.5rem">
+                                <RadzenText Text="•••" TextStyle="TextStyle.Caption" class="flight-divider" />
+                                <RadzenIcon Icon="flight" class="flight-divider" />
+                                <RadzenText Text="•••" TextStyle="TextStyle.Caption" class="flight-divider" />
+                            </RadzenStack>
+                            <RadzenText TextStyle="TextStyle.Caption" class="flight-location">
+                                @flight.FullFromLocation → @flight.FullToLocation
+                            </RadzenText>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeLg="@ArrivalColSize" class="text-center text-lg-end">
+                            <RadzenStack Gap="0.25rem">
+                                <RadzenText Text="@flight.ArrivalCode" TextStyle="TextStyle.Body2" class="flight-code" />
+                                <RadzenText Text="@flight.ArrivalTime" TextStyle="TextStyle.Caption" class="flight-time" />
+                            </RadzenStack>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenStack class="mt-2">
+                        <RadzenColumn Size="12" SizeLg="2" class="text-center text-lg-end">
+                            <RadzenButton Text="@ActionButtonText" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Dark" class="w-lg-auto" />
+                        </RadzenColumn>
+                    </RadzenStack>
+                </RadzenStack>
+            }
+        }
+        else
+        {
+            <RadzenText Text="@NoFlightsText" TextStyle="TextStyle.Caption" class="text-muted text-center py-3" />
+        }
+    </RadzenStack>
+</RadzenCard>

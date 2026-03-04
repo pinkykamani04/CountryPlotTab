@@ -1,0 +1,62 @@
+﻿@typeparam TItem
+@using Radzen
+@using Radzen.Blazor
+
+<RadzenCard>
+    <div class="d-flex flex-column h-100">
+        @if (Data != null && Data.Any())
+        {
+            <RadzenChart Style="height:200px;">
+                <RadzenDonutSeries Data="@Data"
+                                   CategoryProperty="@Category"
+                                   ValueProperty="@Value" />
+                <RadzenLegend Visible="false" />
+            </RadzenChart>
+            @if (ShowLegend && LegendItems.Any())
+            {
+                <div class="custom-donut-legend">
+                    @foreach (var item in LegendItems)
+                    {
+                        <div class="legend-item">
+                            <span class="legend-dot"
+                                  style="background-color:@item.Color"></span>
+                            <span class="legend-text">@item.Label</span>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="d-flex flex-grow-1 align-items-center justify-content-center text-center">
+                <p class="fw-bold mb-0 fs-5">
+                    No Data available For Selected Period
+                </p>
+            </div>
+        }
+    </div>
+</RadzenCard>
+<style>
+    .custom-donut-legend {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        color: #374151;
+    }
+
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+</style>

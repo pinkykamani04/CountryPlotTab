@@ -1,0 +1,20 @@
+﻿@page "/auth/signed-out"
+@using PearDrop.Authentication.Constants
+@using PearDrop.Authentication.RazorPages.Constants
+@model SignOut
+@{
+    ViewData["Title"] = "Signed Out";
+    ViewData["PageFunc"] = "signed-out";
+}
+
+<section id="auth-container" class="d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center min-vh-100 bg-white px-5">
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column">
+            <div class="auth-logo">
+                <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+            </div>
+            <h3 class="p-2 rounded-title mt-4 mb-0">Signed Out</h3>
+            <small>You have now been signed out of the system. Please click <a href="@Url.Page(AuthPageLocations.AuthSignIn, new { area = "auth" })">here to sign back in</a>.</small>
+        </div>
+    </div>
+</section>

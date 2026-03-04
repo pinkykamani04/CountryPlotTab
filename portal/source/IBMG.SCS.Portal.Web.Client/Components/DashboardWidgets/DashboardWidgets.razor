@@ -1,0 +1,53 @@
+﻿<RadzenColumn class="@CssClass" Size="@Size" SizeSM="@SizeSM" SizeMD="@SizeMD" SizeLG="@SizeLG" SizeXL="@SizeXL" SizeXS="@SizeXS" SizeXX="@SizeXX">
+    <RadzenCard Class="h-100 shadow-sm p-3" Style="border-radius: 12px;">
+        <RadzenRow AlignItems="AlignItems.Center">
+            <RadzenColumn Size="4">
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center" class="border-radius-50"
+                             Style='@($"width:55px;height:55px;background-color:{IconBackground};")'>
+                    <RadzenIcon Icon="@Icon" IconColor="@IconColor" class="fs-26" />
+                </RadzenStack>
+            </RadzenColumn>
+            <RadzenColumn Size="8">
+                <RadzenStack Gap="6" class="dashboard-widget-content">
+                    <RadzenText Text="@CardText" TextStyle="TextStyle.H6" class="dark-blue-color dashboard-widget-title" />
+                    <RadzenText Text="@CardNumber" TextStyle="TextStyle.H5" class="fw-600 dashboard-widget-number" />
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
+</RadzenColumn>
+
+@code {
+    [Parameter] public string CssClass { get; set; }
+    [Parameter] public string CardNumber { get; set; }
+    [Parameter] public string CardText { get; set; }
+    [Parameter] public string Icon { get; set; } = "credit_card";
+    [Parameter] public string IconColor { get; set; } = "#ff3f84";
+    [Parameter] public string IconBackground { get; set; } = "#ffe6f0";
+
+    [Parameter] public int? Size { get; set; }
+    [Parameter] public int? SizeSM { get; set; }
+    [Parameter] public int? SizeMD { get; set; }
+    [Parameter] public int? SizeLG { get; set; }
+    [Parameter] public int? SizeXL { get; set; }
+    [Parameter] public int? SizeXS { get; set; }
+    [Parameter] public int? SizeXX { get; set; }
+}
+<style>
+    .dashboard-widget-content {
+        display: flex;
+        flex-direction: column;
+        height: 60px; /* FIXED HEIGHT — adjust as needed */
+    }
+
+    .dashboard-widget-title {
+        flex-grow: 1; /* Title takes remaining space */
+        display: block;
+    }
+
+    .dashboard-widget-number {
+        margin-top: auto; /* Pushes number to bottom → PERFECT ALIGNMENT */
+    }
+
+
+</style>

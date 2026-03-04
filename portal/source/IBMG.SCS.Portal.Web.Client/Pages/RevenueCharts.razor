@@ -1,0 +1,33 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos
+@using IBMG.SCS.Portal.Web.Client.Pages
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="1rem" Class="w-100">
+    <RadzenRow Gap="1rem">
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueLineCard Title="Total Value of Transactions" Data="@TotalValueChartData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueBarCard Title="Monthly Average Cost Total" Data="@MonthlyAverageCostData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueBarCard Title="Tonnage of Listed Transactions" Data="@TonnageRevenueData" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow Gap="1rem">
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueBarCard Title="Number of Transactions Listed" Data="@TransactionCountChartData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueLineCard Title="Last Year To Date Total Value" Data="@LastYearToDateData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <RevenueLineCard Title="Last Full Year Total Value" Data="@LastFullYearData" />
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn Size="12">
+            <RevenueMultiYearCard WasteProcessingMultiYearData="@WasteProcessingMultiYearData" />
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenStack>

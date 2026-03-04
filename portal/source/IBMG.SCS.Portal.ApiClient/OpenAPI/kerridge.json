@@ -1,0 +1,3019 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "IBMG.SCS.KerridgeApi.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Lists all customers for branch portal",
+        "description": "Retrieve a list of all customers",
+        "operationId": "ListCustomers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/portal/customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Lists all customers for customer portal",
+        "description": "Retrieve a list of all customers",
+        "operationId": "ListCustomerPortalCustomers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScsCustomerListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customer details",
+        "description": "Details of a single customer",
+        "operationId": "GetCustomer",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScsCustomerApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customers/by-branch/{branchCode}/salesperson/{salespersonCode}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "summary": "Get customers for a branch and salesperson",
+        "description": "Returns a list of customer accounts for a given branch code and salesperson code.",
+        "operationId": "GetCustomersByBranchAndSalesperson",
+        "parameters": [
+          {
+            "name": "branchCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "salespersonCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/token": {
+      "post": {
+        "tags": [
+          "IBMG.SCS.KerridgeApi.Server"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TokenRequest"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "IBMG.SCS.KerridgeApi.Server"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/kpis/otif": {
+      "get": {
+        "tags": [
+          "KPIs"
+        ],
+        "summary": "Get OTIF KPI",
+        "description": "OTIF KPI Widget",
+        "operationId": "GetKpiOtif",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OtifKpiDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/kpis/invoice-accuracy": {
+      "get": {
+        "tags": [
+          "KPIs"
+        ],
+        "summary": "Get Invoice Accuracy KPI",
+        "description": "Invoice Accuracy KPI",
+        "operationId": "GetKpiInvoiceAccuracy",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceAccuracyKpiDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/kpis/faulty-goods": {
+      "get": {
+        "tags": [
+          "KPIs"
+        ],
+        "summary": "Get Faulty Goods KPI",
+        "description": "Faulty Goods Report KPI",
+        "operationId": "GetKpiFaultyGoods",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FaultyGoodsKpiDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Lists orders for a customer",
+        "description": "Lists the orders for a single customer",
+        "operationId": "ListCustomerOrders",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "filterBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/order/add-branch-order": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Add order after successful validation",
+        "description": "Add order after the validation is successful",
+        "operationId": "AddBranchOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RequestSalesOrderDto"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSalesOrderDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/order/get-branch-Order": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order for the branch portal",
+        "description": "Get ordes for the branch portal",
+        "operationId": "GetBranchOrder",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGetSalesOrderDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/orders/count": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Count customer orders",
+        "description": "Lists the count of orders for a single customer",
+        "operationId": "CountCustomerOrders",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int32ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/order/{orderId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order details",
+        "description": "Details of a single order",
+        "operationId": "GetCustomerOrder",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScsSalesAndOrdersLinesApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/spend/summary": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get spend summary",
+        "description": "Gets the spend details for a specific customer (total spend, credit limit, available credit, total sales)",
+        "operationId": "GetCustomerSpendSummary",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpendSummaryDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/spend": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "List customer spend",
+        "description": "Lists the spend for a single customer by day for a time period between two datetimes",
+        "operationId": "ListCustomerSpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateFilter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerBySpendDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/spend/operative/{operativeId}": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get operative spend details",
+        "description": "Details of the spend of a single customer specific operative (using order point account id)",
+        "operationId": "GetCustomerOperativeSpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "operativeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperativeSpendDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/operative/{operativeId}/spend-limits": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Lists spend for the operative",
+        "description": "Retrieve a list of spend limits for the given opearative",
+        "operationId": "GetSpendLimitsByOperative",
+        "parameters": [
+          {
+            "name": "operativeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpendLimitsApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/trade-Card-number/{tradeCardNumber}/spend-limits": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Lists spend for the trade card number",
+        "description": "Retrieve a list of spend limits for the given trade crad number",
+        "operationId": "GetSpendLimitsByTradeCardNumber",
+        "parameters": [
+          {
+            "name": "tradeCardNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpendLimitsApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerId}/operatives/status/{operativeStatus}": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get Operative Status",
+        "description": "Operative Status",
+        "operationId": "GetOperativeStatus",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "operativeStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperativeStatusDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/spend/today": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get today's spend for a customer",
+        "description": "Returns the total spend for a customer for the current day.",
+        "operationId": "GetTodaysSpend",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaySpendDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/spend-limit/{newSpendLimit}": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "New spend limit for a customer",
+        "description": "Sets a new spend limit for a customer.",
+        "operationId": "NewSpendLimit",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newSpendLimit",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpendLimitResponseDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/operatives-by-spend": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get operatives sorted by spend",
+        "description": "Returns a list for operatives and their spend details.",
+        "operationId": "GetOpertaiveBySpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateFilter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperativesBySpendListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/branches-by-spend": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get branches sorted by spend",
+        "description": "Returns a list for branches and their spend details.",
+        "operationId": "GetBranchesBySpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateFilter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BranchesBySpendListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/products-by-spend": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get products sorted by spend",
+        "description": "Returns a list for products and their spend details.",
+        "operationId": "GetProductsBySpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateFilter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductsBySpendListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/categories-by-spend": {
+      "get": {
+        "tags": [
+          "Spend"
+        ],
+        "summary": "Get categories sorted by spend",
+        "description": "Returns a list for categories and their spend details.",
+        "operationId": "GetCategoryBySpend",
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dateFilter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryBySpendListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/operative/{operativeId}/validate": {
+      "get": {
+        "tags": [
+          "Validate"
+        ],
+        "summary": "Validate operative for a customer",
+        "description": "Checks if an operative ID is valid for a given customer account code.",
+        "operationId": "ValidateOperative",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "operativeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/trade-card/{tradeCardNumber}/validate": {
+      "get": {
+        "tags": [
+          "Validate"
+        ],
+        "summary": "Validate trade card for a customer",
+        "description": "Checks if a trade card number is valid for a given customer account code.",
+        "operationId": "ValidateTradeCardNumber",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tradeCardNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/job/{jobNumber}": {
+      "get": {
+        "tags": [
+          "Validate"
+        ],
+        "summary": "Validate job number for a customer",
+        "description": "Checks if an job number is valid for a given customer account code.",
+        "operationId": "ValidateJobNumber",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "jobNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobDetailsDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/customer/{customerAccountNumber}/job/{jobNumber}/operative/{operativeId}/trade-crad/{tradeCardNumber}": {
+      "get": {
+        "tags": [
+          "Validate"
+        ],
+        "summary": "Validate all",
+        "description": "Checks if an operative ID is valid for a given customer account code.",
+        "operationId": "ValidataeAll",
+        "parameters": [
+          {
+            "name": "customerAccountNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "jobNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "operativeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tradeCardNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateAllDtoListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Address": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Body": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "type": "string"
+          },
+          "accounttype": {
+            "type": "string"
+          },
+          "next": {
+            "type": "boolean"
+          },
+          "orderdetails": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Orderdetails"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BranchesBySpend": {
+        "type": "object",
+        "properties": {
+          "branchId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "branchName": {
+            "type": "string"
+          },
+          "branchSpend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BranchesBySpendListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BranchesBySpend"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryBySpend": {
+        "type": "object",
+        "properties": {
+          "categoryName": {
+            "type": "string"
+          },
+          "categorySpend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryBySpendListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryBySpend"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerBySpendDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customerName": {
+            "type": "string"
+          },
+          "custmomerSpend": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerBySpendDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerBySpendDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accountNumber": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "creditLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "availableCredit": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DataCaptureContainer": {
+        "type": "object",
+        "properties": {
+          "capture": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataCaptureItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DataCaptureItem": {
+        "type": "object",
+        "properties": {
+          "occurs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Datacapture": {
+        "type": "object",
+        "properties": {
+          "capture": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Datacaptureitem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Datacaptureitem": {
+        "type": "object",
+        "properties": {
+          "occurs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DaySpendDto": {
+        "type": "object",
+        "properties": {
+          "totalSpendForDay": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DaySpendDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DaySpendDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FaultyGoodsKpiDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "target": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "faultyOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "faultyPercentage": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FaultyGoodsKpiDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FaultyGoodsKpiDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Int32ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceAccuracyKpiDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "target": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalInvoices": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "correctInvoices": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accuracyPercentage": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InvoiceAccuracyKpiDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InvoiceAccuracyKpiDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobDetailsDto": {
+        "type": "object",
+        "properties": {
+          "jobDescription": {
+            "type": "string"
+          },
+          "customerName": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "spend": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobDetailsDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobDetailsDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObjectApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativeSpendDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "operativeId": {
+            "type": "string"
+          },
+          "operativeName": {
+            "type": "string"
+          },
+          "totalSpend": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativeSpendDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OperativeSpendDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativeStatusDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "operativeStatus": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativeStatusDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OperativeStatusDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativesBySpend": {
+        "type": "object",
+        "properties": {
+          "operativeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "operativeName": {
+            "type": "string"
+          },
+          "operativeSpend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OperativesBySpendListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OperativesBySpend"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderAddress": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "postcode": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Orderdetails": {
+        "type": "object",
+        "properties": {
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Orderline"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Orderline": {
+        "type": "object",
+        "properties": {
+          "ordernumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerorder": {
+            "type": "string"
+          },
+          "customerorder2": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "branchshortcode": {
+            "type": "string"
+          },
+          "datecreated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timecreated": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "daterequired": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderAddress"
+              }
+            ],
+            "nullable": true
+          },
+          "deliverycountry": {
+            "type": "string"
+          },
+          "invoicename": {
+            "type": "string"
+          },
+          "invoiceaccount": {
+            "type": "string"
+          },
+          "invoiceaddress": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderAddress"
+              }
+            ],
+            "nullable": true
+          },
+          "invoicecountry": {
+            "type": "string"
+          },
+          "quoteexpirydate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ordervalue": {
+            "type": "number",
+            "format": "double"
+          },
+          "deliverycosts": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalexcludingtax": {
+            "type": "number",
+            "format": "double"
+          },
+          "ordervat": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalincludingtax": {
+            "type": "number",
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "ordercategory": {
+            "type": "string"
+          },
+          "deliverymethod": {
+            "type": "string"
+          },
+          "ordertype": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Ordertype"
+              }
+            ],
+            "nullable": true
+          },
+          "contact": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Contact"
+              }
+            ],
+            "nullable": true
+          },
+          "sourceofsale": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Sourceofsale"
+              }
+            ],
+            "nullable": true
+          },
+          "datacapture": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Datacapture"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ordertype": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OtifKpiDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "target": {
+            "type": "number",
+            "format": "double"
+          },
+          "onTimePercentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "inFullPercentage": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OtifKpiDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OtifKpiDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "reference": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Payments": {
+        "type": "object",
+        "properties": {
+          "payment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductsBySpend": {
+        "type": "object",
+        "properties": {
+          "productCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "productName": {
+            "type": "string"
+          },
+          "productSpend": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductsBySpendListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductsBySpend"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteActionItem": {
+        "type": "object",
+        "properties": {
+          "quoteno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "action": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuoteActions": {
+        "type": "object",
+        "properties": {
+          "quoteaction": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuoteActionItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestSalesOrderDto": {
+        "type": "object",
+        "properties": {
+          "header": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SalesOrderHeader"
+              }
+            ],
+            "nullable": true
+          },
+          "lines": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SalesOrderLines"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseCodeDetail": {
+        "type": "object",
+        "properties": {
+          "orderCategoryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderCategoryError": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveryMethodCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveryMethodError": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactIDCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "contactIDError": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseGetSalesOrderDto": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Body"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseGetSalesOrderDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseGetSalesOrderDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseSalesOrderDto": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SalesOrderResponseBody"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseSalesOrderDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseSalesOrderDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderHeader": {
+        "type": "object",
+        "properties": {
+          "account": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createuser": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "reference2": {
+            "type": "string"
+          },
+          "dateRequired": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              }
+            ],
+            "nullable": true
+          },
+          "deliverycountry": {
+            "type": "string"
+          },
+          "invoicename": {
+            "type": "string"
+          },
+          "invoiceaddress": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Address"
+              }
+            ],
+            "nullable": true
+          },
+          "invoicecountry": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string"
+          },
+          "narrative": {
+            "type": "string"
+          },
+          "ordertype": {
+            "type": "string"
+          },
+          "carrier": {
+            "type": "string"
+          },
+          "servicelevel": {
+            "type": "string"
+          },
+          "calccarriage": {
+            "type": "boolean"
+          },
+          "suspendorder": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "suspendmsg": {
+            "type": "string"
+          },
+          "ordercategory": {
+            "type": "string"
+          },
+          "deliverymethod": {
+            "type": "string"
+          },
+          "contactid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sourceofsale": {
+            "type": "string"
+          },
+          "webcontact": {
+            "type": "string"
+          },
+          "sitetelephone": {
+            "type": "string"
+          },
+          "sitemobile": {
+            "type": "string"
+          },
+          "contractref": {
+            "type": "string"
+          },
+          "contactphone": {
+            "type": "string"
+          },
+          "contactmobile": {
+            "type": "string"
+          },
+          "contactemail": {
+            "type": "string"
+          },
+          "sitecontactid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sitecontactname": {
+            "type": "string"
+          },
+          "supplystatus": {
+            "type": "string"
+          },
+          "advicemethod": {
+            "type": "string"
+          },
+          "acknowledgedprices": {
+            "type": "string"
+          },
+          "creditreason": {
+            "type": "string"
+          },
+          "origsalesorderno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteactions": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/QuoteActions"
+              }
+            ],
+            "nullable": true
+          },
+          "payments": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Payments"
+              }
+            ],
+            "nullable": true
+          },
+          "datacapture": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataCaptureContainer"
+              }
+            ],
+            "nullable": true
+          },
+          "vouchers": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Vouchers"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderLine": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "manufact": {
+            "type": "string"
+          },
+          "extendeddescription": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "daterequired": {
+            "type": "string",
+            "format": "date"
+          },
+          "specialinstructions": {
+            "type": "string"
+          },
+          "internalinstructions": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "priceunit": {
+            "type": "string"
+          },
+          "special": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Special"
+              }
+            ],
+            "nullable": true
+          },
+          "cost": {
+            "type": "number",
+            "format": "double"
+          },
+          "quoteNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quoteline": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tally": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Tally"
+              }
+            ],
+            "nullable": true
+          },
+          "datacapture": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataCaptureContainer"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderLines": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesOrderLine"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SalesOrderResponseBody": {
+        "type": "object",
+        "properties": {
+          "orderNo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "suspended": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "suspendmessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderCategory": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseCodeDetail"
+              }
+            ],
+            "nullable": true
+          },
+          "deliveryMethod": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseCodeDetail"
+              }
+            ],
+            "nullable": true
+          },
+          "contactID": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponseCodeDetail"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScsCustomer": {
+        "type": "object",
+        "properties": {
+          "customer_ID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customer_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "customer_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "credit_Status": {
+            "type": "string",
+            "nullable": true
+          },
+          "credit_Limit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "credit_Available": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScsCustomerApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScsCustomer"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScsCustomerListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScsCustomer"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScsSalesAndOrdersLines": {
+        "type": "object",
+        "properties": {
+          "system_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "order_Status": {
+            "type": "string",
+            "nullable": true
+          },
+          "operative_ID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "operative_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "operative_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "customer_ID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customer_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "customer_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "branch_ID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "branch_Code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "branch_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_Number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "order_Number_Unique": {
+            "type": "string"
+          },
+          "order_Line": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "order_Type": {
+            "type": "string"
+          },
+          "order_Category": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaction_Date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "product_ID": {
+            "type": "string",
+            "nullable": true
+          },
+          "product_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "product_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "level1_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "level1_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "reason_ID": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reason_Desc": {
+            "type": "string",
+            "nullable": true
+          },
+          "invoiced_Sales_Total": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ScsSalesAndOrdersLinesApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScsSalesAndOrdersLines"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Sourceofsale": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Special": {
+        "type": "object",
+        "properties": {
+          "supplier": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendLimitResponseDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string"
+          },
+          "newSpendLimit": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendLimitResponseDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpendLimitResponseDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendLimits": {
+        "type": "object",
+        "properties": {
+          "dailyLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "monthlyLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "tnxLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "weeklyLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "overrideDailyLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "overrideMonthlyLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "overrideTnxLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "overrideWeeklyLimit": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendLimitsApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SpendLimits"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendSummaryDto": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "totalSpend": {
+            "type": "number",
+            "format": "double"
+          },
+          "creditLimit": {
+            "type": "number",
+            "format": "double"
+          },
+          "availableCredit": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalSales": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpendSummaryDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SpendSummaryDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Tally": {
+        "type": "object",
+        "properties": {
+          "tallyitem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TallyItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TallyItem": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "length": {
+            "type": "number",
+            "format": "double"
+          },
+          "width": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokenRequest": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string",
+            "nullable": true
+          },
+          "assertion": {
+            "type": "string",
+            "nullable": true
+          },
+          "scope": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidateAllDto": {
+        "type": "object",
+        "properties": {
+          "accountCode": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "tradeCardNumber": {
+            "type": "string"
+          },
+          "operativeId": {
+            "type": "string"
+          },
+          "operativeTradeStatus": {
+            "type": "boolean"
+          },
+          "jobReference": {
+            "type": "string"
+          },
+          "jobDescription": {
+            "type": "string"
+          },
+          "jobReferenceStatus": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidateAllDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidateAllDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "valid": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ValidationDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Voucher": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          },
+          "minspend": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Vouchers": {
+        "type": "object",
+        "properties": {
+          "voucher": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Voucher"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      },
+      "X-Branch-Code": {
+        "type": "apiKey",
+        "description": "Branch code header",
+        "name": "X-Branch-Code",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    },
+    {
+      "X-Branch-Code": [ ]
+    }
+  ]
+}

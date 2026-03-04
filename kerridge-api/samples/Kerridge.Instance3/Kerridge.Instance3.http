@@ -1,0 +1,6 @@
+@Kerridge.Instance3_HostAddress = http://localhost:5250
+
+GET {{Kerridge.Instance3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

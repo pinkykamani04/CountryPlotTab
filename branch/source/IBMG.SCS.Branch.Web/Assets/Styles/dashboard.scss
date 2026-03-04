@@ -1,0 +1,105 @@
+﻿$brand-primary: #384A5A;
+$brand-success: #2C9F42;
+$brand-warning: #F0AD4E;
+$brand-danger: #D9534F;
+$brand-muted: #6C757D;
+$brand-border: #DDE2E5;
+$brand-background: #F2F4F7;
+
+/* Typography */
+.brand-heading {
+    color: $brand-primary;
+    font-weight: 600;
+}
+
+.brand-label {
+    color: $brand-primary;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.text-muted {
+    color: $brand-muted !important;
+}
+
+.validation-message {
+    color: $brand-danger;
+    font-size: 0.8rem;
+}
+
+
+.rz-primary {
+    background-color: $brand-primary !important;
+    color: #fff !important;
+}
+
+.rz-secondary {
+    background-color: #E0E5EB !important;
+    color: $brand-primary !important;
+}
+
+.rz-danger {
+    background-color: #FF7678 !important;
+    color: white !important;
+}
+
+.rz-success {
+    background-color: #198612 !important;
+    color: white !important;
+}
+
+.rz-light {
+    background-color: $brand-success;
+    color: #fff;
+}
+
+.btn-warning {
+    background: $brand-warning;
+    color: #fff;
+}
+
+.btn-danger {
+    background: $brand-danger;
+    color: #fff;
+}
+
+/* Color Blocks */
+.color-box {
+    height: 60px;
+    border-radius: 8px;
+}
+
+.brand-primary {
+    background: $brand-primary;
+}
+
+.brand-success {
+    background: $brand-success;
+}
+
+.brand-warning {
+    background: $brand-warning;
+}
+
+.brand-danger {
+    background: $brand-danger;
+}
+.input-field {
+    border: 1px solid #A8B3BD;
+    height: 44px;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 15px;
+}
+
+.brand-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #394B5A;
+    margin-bottom: 4px;
+}
+
+.rz-message {
+    font-size: 0.8rem;
+    color: #D9534F;
+}

@@ -1,0 +1,274 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - feature/*
+      - refs/tags/*
+      - hotfix/*
+
+pool:
+  vmImage: windows-latest
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetVersion: '10.0.x'
+  version: '1.0.$(Build.BuildId)'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+  DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+stages:
+  - stage: Build
+    displayName: 'Build and Test'
+    jobs:
+      - job: BuildAndTest
+        displayName: 'Build Solution and Run Tests'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 10 SDK'
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: false
+
+          - task: NodeTool@0
+            displayName: 'Install Node.js 24.10.0'
+            inputs:
+              versionSpec: '24.10.0'
+
+          - script: npm config set ignore-scripts true
+            displayName: 'Configure npm to ignore scripts'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Install NSwag.ConsoleCore'
+            inputs:
+              command: 'custom'
+              custom: 'tool'
+              arguments: 'install --global NSwag.ConsoleCore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore NuGet Packages'
+            inputs:
+              command: 'restore'
+              projects: '**/*.csproj'
+              feedsToUse: 'config'
+              nugetConfigPath: 'nuget.config'
+
+          - task: Npm@1
+            displayName: 'npm ci - Branch.Web'
+            inputs:
+              command: 'ci'
+              workingDir: 'branch/source/IBMG.SCS.Branch.Web'
+
+          - task: Npm@1
+            displayName: 'npm run build - Branch.Web'
+            inputs:
+              command: 'custom'
+              workingDir: 'branch/source/IBMG.SCS.Branch.Web'
+              customCommand: 'run build'
+
+          - task: Npm@1
+            displayName: 'npm ci - Portal.Web'
+            inputs:
+              command: 'ci'
+              workingDir: 'portal/source/IBMG.SCS.Portal.Web'
+
+          - task: Npm@1
+            displayName: 'npm run build - Portal.Web'
+            inputs:
+              command: 'custom'
+              workingDir: 'portal/source/IBMG.SCS.Portal.Web'
+              customCommand: 'run build'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build Solution'
+            inputs:
+              command: 'build'
+              projects: '**/*.sln'
+              arguments: '--configuration $(buildConfiguration) --no-restore /p:Version=$(version)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Tests with Coverage'
+            inputs:
+              command: 'test'
+              projects: |
+                branch/tests/IBMG.SCS.Branch.Web.Tests/IBMG.SCS.Branch.Web.Tests.csproj
+                portal/tests/IBMG.SCS.Portal.Web.Tests/IBMG.SCS.Portal.Web.Tests.csproj
+              arguments: '--configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory $(Agent.TempDirectory)/TestResults'
+              publishTestResults: true
+
+          - task: PublishCodeCoverageResults@2
+            displayName: 'Publish Code Coverage'
+            inputs:
+              summaryFileLocation: '$(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml'
+              failIfCoverageEmpty: false
+
+  - stage: Publish
+    displayName: 'Publish Applications'
+    dependsOn: Build
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')))
+    jobs:
+      - job: PublishBranch
+        displayName: 'Publish Branch Web'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 10 SDK'
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: false
+
+          - task: NodeTool@0
+            displayName: 'Install Node.js 24.10.0'
+            inputs:
+              versionSpec: '24.10.0'
+
+          - script: npm config set ignore-scripts true
+            displayName: 'Configure npm to ignore scripts'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Install NSwag.ConsoleCore'
+            inputs:
+              command: 'custom'
+              custom: 'tool'
+              arguments: 'install --global NSwag.ConsoleCore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore Branch.Web'
+            inputs:
+              command: 'restore'
+              projects: 'branch/source/IBMG.SCS.Branch.Web/IBMG.SCS.Branch.Web.csproj'
+              feedsToUse: 'config'
+              nugetConfigPath: 'nuget.config'
+
+          - task: Npm@1
+            displayName: 'npm install - Branch.Web'
+            inputs:
+              command: 'install'
+              workingDir: 'branch/source/IBMG.SCS.Branch.Web'
+
+          - task: Npm@1
+            displayName: 'npm run build - Branch.Web'
+            inputs:
+              command: 'custom'
+              workingDir: 'branch/source/IBMG.SCS.Branch.Web'
+              customCommand: 'run build'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish Branch.Web'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'branch/source/IBMG.SCS.Branch.Web/IBMG.SCS.Branch.Web.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/branch-web /p:Version=$(version)'
+              zipAfterPublish: true
+              modifyOutputPath: false
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Branch.Web Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/branch-web'
+              ArtifactName: 'branch-web'
+              publishLocation: 'Container'
+
+      - job: PublishPortal
+        displayName: 'Publish Portal Web'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 10 SDK'
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: false
+
+          - task: NodeTool@0
+            displayName: 'Install Node.js 24.10.0'
+            inputs:
+              versionSpec: '24.10.0'
+
+          - script: npm config set ignore-scripts true
+            displayName: 'Configure npm to ignore scripts'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Install NSwag.ConsoleCore'
+            inputs:
+              command: 'custom'
+              custom: 'tool'
+              arguments: 'install --global NSwag.ConsoleCore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore Portal.Web'
+            inputs:
+              command: 'restore'
+              projects: 'portal/source/IBMG.SCS.Portal.Web/IBMG.SCS.Portal.Web.csproj'
+              feedsToUse: 'config'
+              nugetConfigPath: 'nuget.config'
+
+          - task: Npm@1
+            displayName: 'npm install - Portal.Web'
+            inputs:
+              command: 'install'
+              workingDir: 'portal/source/IBMG.SCS.Portal.Web'
+
+          - task: Npm@1
+            displayName: 'npm run build - Portal.Web'
+            inputs:
+              command: 'custom'
+              workingDir: 'portal/source/IBMG.SCS.Portal.Web'
+              customCommand: 'run build'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish Portal.Web'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'portal/source/IBMG.SCS.Portal.Web/IBMG.SCS.Portal.Web.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/portal-web /p:Version=$(version)'
+              zipAfterPublish: true
+              modifyOutputPath: false
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Portal.Web Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/portal-web'
+              ArtifactName: 'portal-web'
+              publishLocation: 'Container'
+
+      - job: PublishKerridgeApi
+        displayName: 'Publish Kerridge API'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET 10 SDK'
+            inputs:
+              version: $(dotnetVersion)
+              includePreviewVersions: false
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore KerridgeApi.Server'
+            inputs:
+              command: 'restore'
+              projects: 'kerridge-api/source/IBMG.SCS.KerridgeApi.Server/IBMG.SCS.KerridgeApi.Server.csproj'
+              feedsToUse: 'config'
+              nugetConfigPath: 'nuget.config'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish KerridgeApi.Server'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'kerridge-api/source/IBMG.SCS.KerridgeApi.Server/IBMG.SCS.KerridgeApi.Server.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/kerridge-api /p:Version=$(version)'
+              zipAfterPublish: true
+              modifyOutputPath: false
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish KerridgeApi Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/kerridge-api'
+              ArtifactName: 'kerridge-api'
+              publishLocation: 'Container'

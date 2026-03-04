@@ -1,0 +1,80 @@
+﻿@page "/validation/{CustomerId:int}"
+@using IBMG.SCS.Portal.Web.Client.Components
+@using IBMG.SCS.Portal.Web.Client.Dtos;
+
+<RadzenRow class="w-100 my-3">
+    <RadzenColumn Size="12">
+        <RadzenText TextStyle="TextStyle.H4" class="dark-blue-color fw-600 mb-0" Text="Validations" />
+    </RadzenColumn>
+    <RadzenColumn Size="12">
+        <RadzenCard class="p-3 m-2 shadow-sm">
+            <div class="d-flex align-items-center mb-3">
+                <RadzenIcon Icon="verified_user" Style="font-size:24px" class="me-2 text-primary" />
+                <div>
+                    <h5 class="mb-0">Validation Options</h5>
+                    <small class="text-muted">
+                        Select which identifiers operatives can present at branch.
+                        At least one option must be mandatory.
+                    </small>
+                </div>
+            </div>
+            <RadzenDataGrid Data="@validationOption"
+                            TItem="ValidationDto"
+                            Responsive="true"
+                            AllowPaging="false"
+                            AllowSorting="false"
+                            class="mb-3">
+
+                <Columns>
+                    <RadzenDataGridColumn TItem="ValidationDto"
+                                          Title="Validation Method">
+                        <Template Context="opt">
+                            <div class="fw-semibold">
+                                @GetValidationLabel(opt.ValidationType)
+                            </div>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Enabled" TextAlign="TextAlign.Center">
+                        <Template Context="opt">
+                            <RadzenSwitch @bind-Value="opt.IsEnabled"
+                                          Change="@( _ => OnEnabledChanged(opt))"
+                                          Style="transform: scale(0.9);" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Title="Mandatory" TextAlign="TextAlign.Center">
+                        <Template Context="opt">
+                            <RadzenCheckBox @bind-Value="opt.IsMandatory"
+                                            Disabled="@(!opt.IsEnabled)" />
+                        </Template>
+                    </RadzenDataGridColumn>
+
+                </Columns>
+            </RadzenDataGrid>
+
+            @if (!IsValid)
+            {
+                <RadzenAlert Severity="AlertSeverity.Warning" class="mb-3">
+                    At least one validation option must be marked as <strong>Mandatory</strong>.
+                </RadzenAlert>
+            }
+
+            <div class="d-flex justify-content-end gap-2">
+                <RadzenButton Text="Cancel"
+                              ButtonStyle="ButtonStyle.Light"
+                              Icon="close" />
+                @if (isSaving)
+                {
+                    <ComponentLoading IsVisible="true" CssClass="d-flex justify-content-center my-3" />
+                }
+
+                <RadzenButton Text="Save"
+                              Icon="save"
+                              ButtonStyle="ButtonStyle.Primary"
+                              Disabled="@(!IsValid || isSaving)"
+                              Click="SaveValidationOptions" />
+            </div>
+
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>
+

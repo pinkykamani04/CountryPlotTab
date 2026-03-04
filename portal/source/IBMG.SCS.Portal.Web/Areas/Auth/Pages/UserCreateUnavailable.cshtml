@@ -1,0 +1,26 @@
+﻿@* @page "/auth/unavailable"
+@using PearDrop.Authentication.Constants
+@using PearDrop.Authentication.RazorPages.Constants
+@model UserCreateUnavailable
+@{
+    ViewData["Title"] = "User Creation Unavailable";
+    ViewData["PageFunc"] = "user-creation-unavailable";
+}
+
+<section id="auth-container" class="d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center min-vh-100 bg-white px-5">
+        <div class="d-flex flex-column">
+            <div class="auth-logo">
+                <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+            </div>
+            <small class="mt-5 mb-4">Sorry, user creation has been disabled by your administrator.</small>
+            
+            <span class="text-muted">
+                <a href="@Url.Page(AuthPageLocations.AuthSignIn, new {area = "auth"})">
+                    <i class="fas fa-angle-double-left"></i>
+                    Return to login
+                </a>
+            </span>
+        </div>
+    </div>
+</section> *@

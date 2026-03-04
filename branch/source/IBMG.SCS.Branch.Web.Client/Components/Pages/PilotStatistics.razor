@@ -1,0 +1,232 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenCard class="mt-3 pilot-statistics">
+
+    <RadzenText Text="Pilot Statistics"
+                TextStyle="TextStyle.Subtitle1"
+                class="fw-bold mb-3 " />
+
+    <RadzenStack>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center">
+
+                <RadzenIcon Icon="travel" IconColor="#808080" />
+
+                <RadzenText Text="Total Flying Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="@($"{TotalFlyingHours:0} hrs")"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold " />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center">
+
+                <RadzenIcon Icon="calendar_clock" IconColor="#87CEEB" />
+
+                <RadzenText Text="Flights This Year"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="@FlightsThisYear.ToString()"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center">
+
+                <RadzenIcon Icon="calendar_today" IconColor="#32CD32" />
+
+                <RadzenText Text="Total Flights"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="@TotalFlights.ToString()"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+        <div class="border-bottom"></div>
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="location.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Distance Covered"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="8987 miles"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+
+        </RadzenStack>
+        <div class="border-bottom"></div>
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="plane.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Planes I have flown"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="44"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="pilot.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="PIC Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="568"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="copilot.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Co-Pilot Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="678"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="nighthours.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Night Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="868"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="compass.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Instrument Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="678"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+
+        <div class="border-bottom"></div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.SpaceBetween"
+                     AlignItems="AlignItems.Center">
+
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10px">
+
+                <RadzenImage Path="globeexplore.png"
+                             class="icon-sm" />
+
+                <RadzenText Text="Cross-Country Hours"
+                            TextStyle="TextStyle.Subtitle2"
+                            class="fw-semibold" />
+            </RadzenStack>
+
+            <RadzenText Text="667"
+                        TextStyle="TextStyle.Subtitle2"
+                        class="fw-semibold" />
+        </RadzenStack>
+    </RadzenStack>
+
+</RadzenCard>

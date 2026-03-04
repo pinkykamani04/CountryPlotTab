@@ -1,0 +1,80 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenTemplateForm @ref="bookingForm" Data="@BookingModel" TItem="BookingDialogModel" Submit="Submit">
+    <div class="p-3 bg-white">
+
+        <RadzenText TextStyle="TextStyle.H5" class="fw-semibold text-dark mb-4">
+            @(IsEditMode ? "Edit Booking" : "Book Aircraft")
+        </RadzenText>
+
+        <div class="row g-2 mb-3">
+            <div class="col-12 col-sm-6">
+                <RadzenLabel Text="From" class="fw-medium text-secondary small" />
+                <RadzenDatePicker TValue="DateTime"
+                                  @bind-Value="FromDateTime"
+                                  DateFormat="dd-MM-yyyy HH:mm"
+                                  ShowTime="true"
+                                  HourFormat="24"
+                                  Name="FromDateTime"
+                                  class="w-100 border-black" />
+                <RadzenRequiredValidator Component="FromDateTime" Text="From Date and Time is required" />
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <RadzenLabel Text="To" class="fw-medium text-secondary small" />
+                <RadzenDatePicker TValue="DateTime"
+                                  @bind-Value="ToDateTime"
+                                  DateFormat="dd-MM-yyyy HH:mm"
+                                  ShowTime="true"
+                                  HourFormat="24"
+                                  Name="ToDateTime"
+                                  class="w-100 border-black" />
+                <RadzenRequiredValidator Component="ToDateTime" Text="To Date and Time is required" />
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-12 col-sm-6">
+                <RadzenLabel Text="From Location" class="fw-medium text-secondary small" />
+                <RadzenTextBox @bind-Value="FromLocation"
+                               Placeholder="Enter departure location"
+                               Name="FromLocation"
+                               class="w-100" />
+                <RadzenRequiredValidator Component="FromLocation" Text="From Location is required" />
+            </div>
+
+            <div class="col-12 col-sm-6">
+                <RadzenLabel Text="To Location" class="fw-medium text-secondary small" />
+                <RadzenTextBox @bind-Value="ToLocation"
+                               Placeholder="Enter arrival location"
+                               Name="ToLocation"
+                               class="w-100" />
+                <RadzenRequiredValidator Component="ToLocation" Text="To Location is required" />
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-4">
+            @if (IsEditMode)
+            {
+                <RadzenButton Text="DELETE"
+                              ButtonStyle="ButtonStyle.Danger"
+                              class="btn btn-danger w-100 w-sm-auto"
+                              Click="@Delete" />
+            }
+
+            <RadzenButton Text="CANCEL"
+                          ButtonStyle="ButtonStyle.Light"
+                          class="btn btn-light w-100 w-sm-auto"
+                          Click="@Cancel" />
+
+            <RadzenButton Text="@(IsEditMode ? "UPDATE" : "SEND REQUEST")"
+                          ButtonStyle="ButtonStyle.Primary"
+                          class="btn btn-primary w-100 w-sm-auto"
+                          Click="@Submit"
+                          Disabled="@(IsEditMode && FromDateTime <= DateTime.Now)" />
+        </div>
+
+    </div>
+</RadzenTemplateForm>

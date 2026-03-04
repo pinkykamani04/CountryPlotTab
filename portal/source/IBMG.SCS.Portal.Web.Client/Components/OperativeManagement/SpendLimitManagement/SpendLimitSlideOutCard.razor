@@ -1,0 +1,73 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos;
+
+<RadzenTemplateForm Data="@Model" TItem="OperativeDto" Submit="@OnSave" class="d-flex flex-column justify-content-start h-100">
+    <div class="card-slideout px-3 py-2">
+        <RadzenRow Class="mb-3 align-items-center">
+            <RadzenColumn Size="10">
+                <RadzenText Text="Edit Limits" class="dark-blue-color heading fw-700" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="mb-3">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Card Number" />
+                <RadzenTextBox @bind-Value="Model.TradeCardNumber" ReadOnly class="w-100" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Assignee Name" />
+                <RadzenTextBox @bind-Value="Model.FirstName" ReadOnly class="w-100" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="mb-3">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Single Transaction Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Model.TnxLimit" Name="TnxLimit" ShowUpDown="false" class="w-100" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Daily Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Model.DailyLimit" Name="DailyLimit" ShowUpDown="false" class="w-100" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="mb-3">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Weekly Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Model.WeeklyLimit" Name="WeeklyLimit" ShowUpDown="false" class="w-100" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenLabel Text="Monthly Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Model.MonthlyLimit" Name="MonthlyLimit" ShowUpDown="false" class="w-100" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="mb-3 align-items-center">
+            <RadzenColumn Size="12">
+                <RadzenCheckBox Value="IsOverrideChecked" ValueChanged="@OnOverrideChanged" TValue="bool" class="me-2" />
+                <RadzenLabel Text="Override spend limits" class="fw-bold dark-blue-color" />
+            </RadzenColumn>
+        </RadzenRow>
+        @if (IsOverrideChecked)
+        {
+            <RadzenRow class="mb-3">
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenLabel Text="Override Transaction Limit" />
+                    <RadzenNumeric TValue="decimal?" @bind-Value="Model.OverrideTnxLimit" Name="OverrideTnxLimit" ShowUpDown="false" class="w-100" />
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenLabel Text="Override Daily Spend Limit" />
+                    <RadzenNumeric TValue="decimal?" @bind-Value="Model.OverrideDailyLimit" Name="OverrideDailyLimit" ShowUpDown="false" class="w-100" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow class="mb-3">
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenLabel Text="Override Weekly Spend Limit" />
+                    <RadzenNumeric TValue="decimal?" @bind-Value="Model.OverrideWeeklyLimit" Name="OverrideWeeklyLimit" ShowUpDown="false" class="w-100" />
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenLabel Text="Override Monthly Spend Limit" />
+                    <RadzenNumeric TValue="decimal?" @bind-Value="Model.OverrideMonthlyLimit" Name="OverrideMonthlyLimit" ShowUpDown="false" class="w-100" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenLabel Text="Override End Date" />
+            <RadzenDatePicker @bind-Value="Model.OverrideEndDate" Name="OverrideEndDate" DateFormat="dd/MM/yyyy" class="w-100 mb-3" />
+        }
+        <RadzenButton Text="SAVE" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" class="w-100" />
+    </div>
+</RadzenTemplateForm>

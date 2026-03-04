@@ -1,0 +1,61 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos;
+@using PearDrop.Authentication.Client.Constants;
+
+<RadzenTemplateForm Data="@User" TItem="UserEditDto" Submit="@SaveUser" class="h-100">
+
+    <div class="card-slideout px-3 py-2">
+        <RadzenRow Class="mb-3 align-items-center">
+            <RadzenColumn Size="10">
+                <RadzenText Text="Edit User" class="dark-blue-color heading fw-700" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow Gap="20px">
+            <RadzenColumn Size="12">
+                <RadzenLabel Text="First Name" />
+                <RadzenTextBox @bind-Value="User.FirstName"
+                               Name="FirstName"
+                               class="w-100" />
+                <RadzenRequiredValidator Component="FirstName"
+                                         Text="First name is required" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="12">
+                <RadzenLabel Text="Last Name" />
+                <RadzenTextBox @bind-Value="User.LastName"
+                               Name="LastName"
+                               class="w-100" />
+                <RadzenRequiredValidator Component="LastName"
+                                         Text="Last name is required" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="12">
+                <RadzenLabel Text="Email" />
+                <RadzenTextBox @bind-Value="User.Email"
+                               Name="Email"
+                               class="w-100" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="12">
+                <RadzenLabel Text="Status" />
+                <RadzenDropDown TValue="UserPrincipalNameStatus"
+                                @bind-Value="User.Status"
+                                Name="Status"
+                                Data="@StatusOptions"
+                                TextProperty="Text"
+                                ValueProperty="Value"
+                                class="w-100" />
+                <RadzenRequiredValidator Component="Status" Text="Status is required" />
+            </RadzenColumn>
+
+        </RadzenRow>
+        <RadzenRow Class="mt-4">
+            <RadzenColumn Size="12">
+                <RadzenButton Text="SAVE"
+                              ButtonType="ButtonType.Submit"
+                              ButtonStyle="ButtonStyle.Primary"
+                              class="w-100" />
+            </RadzenColumn>
+        </RadzenRow>
+
+    </div>
+</RadzenTemplateForm>

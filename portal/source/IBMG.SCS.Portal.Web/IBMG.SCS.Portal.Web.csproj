@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+		<StaticWebAssetsEnableCompression>false</StaticWebAssetsEnableCompression>
+		<StaticWebAssetsEnableCompressionNegotiation>false</StaticWebAssetsEnableCompressionNegotiation>
+		<StaticWebAssetsEnableDefaultCompression>false</StaticWebAssetsEnableDefaultCompression>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<DebugType>embedded</DebugType>
+		<EmbedAllSources>true</EmbedAllSources>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+	
+
+	<ItemGroup>
+		<!-- Exclude generated folder from compilation - use F12 to view generated code -->
+		<Compile Remove="generated\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Finbuckle.MultiTenant" Version="10.0.0" />
+		<PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="10.0.0" />
+		<PackageReference Include="Finbuckle.MultiTenant.EntityFrameworkCore" Version="10.0.0" />
+		<PackageReference Include="FluentEmail.Razor" Version="3.0.2" />
+		<PackageReference Include="FluentEmail.SendGrid" Version="3.0.2" />
+		<PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
+		<PackageReference Include="PearDrop" Version="10.0.0-net-10-migration0124" />
+		<PackageReference Include="PearDrop.Authentication" Version="10.0.0-net-10-migration0124" />
+		<PackageReference Include="PearDrop.Authentication.RazorPages" Version="10.0.0-net-10-migration0124" />
+		<PackageReference Include="PearDrop.Multitenancy" Version="10.0.0-net-10-migration0124" />
+		<PackageReference Include="PearDrop.Authentication.Multitenancy" Version="10.0.0-net-10-migration0124" />
+		<PackageReference Include="Serilog" Version="4.3.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="9.0.2" />
+		<PackageReference Include="starkbank-ecdsa" Version="1.3.3" />
+		<PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
+		<ProjectReference Include="..\..\..\kerridge-api\source\IBMG.SCS.KerridgeApi.Server\IBMG.SCS.KerridgeApi.Server.csproj" />
+		<ProjectReference Include="..\..\..\shared\IBMG.SCS.Infrastructure\IBMG.SCS.Infrastructure.csproj" />
+		<ProjectReference Include="..\IBMG.SCS.Portal.ApiClient\IBMG.SCS.Portal.ApiClient.csproj" />
+		<ProjectReference Include="..\IBMG.SCS.Portal.Web.Client\IBMG.SCS.Portal.Web.Client.csproj" />
+		<PackageReference Include="BluQube" Version="1.0.4" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Radzen.Blazor" Version="8.3.5" />
+
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="EmailTemplates\default-template.html" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="EmailTemplates\default-template.html" />
+	</ItemGroup>
+	<Import Project="..\..\..\shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems" Label="Shared" />
+
+</Project>

@@ -1,0 +1,73 @@
+﻿
+
+.users {
+    .offcanvas-backdrop {
+        max-width: 100% !important;
+        max-height: 100% !important;
+    }
+
+
+    .user-grid {
+        .rz-data-grid {
+            border-radius: 10px !important;
+            box-shadow: 0px 0px 15px #00000040;
+
+            .rz-grid-table thead th {
+                background-color: var(--color-white) !important;
+                border-bottom: 2px solid #E6EFF5;
+
+                .rz-column-title {
+                    font-size: 16px !important;
+                    color: var(--dark-electric-blue) !important;
+                }
+            }
+
+            .rz-cell-data {
+                font-size: 16px !important;
+                color: var(--color-black) !important;
+            }
+
+            .rz-grid-table-striped tbody > tr:not(.rz-expanded-row-content):nth-child(even) > td {
+                background-color: rgba(225, 194, 90, 0.10) !important;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:horizontal {
+            width: 30px;
+            background-color: var(--color-sunray) !important;
+            -webkit-border-radius: 3px;
+        }
+    }
+
+    .responsive-stack {
+        flex-direction: column !important;
+        width: 100%;
+
+
+        .stack-item {
+            width: 100% !important;
+
+            .icon {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                opacity: 0.6;
+            }
+        }
+    }
+
+    @media (min-width: 768px) {
+        .responsive-stack {
+            flex-direction: row !important;
+        }
+
+        .stack-item {
+            width: auto !important;
+        }
+    }
+}

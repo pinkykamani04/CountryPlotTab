@@ -1,0 +1,114 @@
+﻿.widget-group-container {
+    position: relative;
+    border-radius: 10px;
+    transition: 0.2s ease-in-out;
+    width: 100%;
+}
+
+.widget-group-container.edit {
+    background-color: var(--color-white) !important;
+}
+
+.row-layout-toolbar {
+    display: flex;
+
+    .layout-btn {
+        border-radius: unset !important;
+    }
+
+    .active {
+        background-color: var(--color-sunray) !important;
+    }
+
+    .rz-button-md {
+        .rz-button-box {
+            margin-top: 2px !important;
+        }
+    }
+
+    .uneven {
+        background-color: var(--color-sunray) !important;
+    }
+}
+
+.widgets-wrapper {
+    width: 100%;
+    padding: 15px;
+
+    .empty-widgets-box {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background: #fafafa;
+
+        .add-widget-empty {
+            background: none !important;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            box-shadow: unset !important;
+            color: var(--dark-electric-blue) !important;
+        }
+
+        .rz-button-box {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+    }
+}
+
+.widgets-wrapper > * {
+    min-width: 0;
+}
+
+
+.edit-overlay {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.delete-group-button {
+    border-radius: 50%;
+}
+
+.add-widget-outside-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 15px;
+
+    .add-widget-outside-button {
+        background-color: transparent !important;
+        color: var(--dark-electric-blue) !important;
+        border: 2px solid var(--dark-electric-blue);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.add-icon {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--dark-electric-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+
+@media (max-width: 768px) {
+    .widgets-wrapper {
+        flex-direction: column;
+    }
+}

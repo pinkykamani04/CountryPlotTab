@@ -1,0 +1,144 @@
+﻿.operative-management {
+    .rz-tabview-top {
+        .rz-tabview-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            li {
+                flex: 1 1 0;
+                min-width: 180px;
+                text-align: center;
+                background-color: var(--color-white);
+                border-radius: 0 !important;
+                border: 1px solid var(--dark-electric-blue);
+
+                &:hover:not(.rz-tabview-selected):not(.rz-state-disabled) {
+                    border-top-color: var(--dark-electric-blue);
+                }
+
+                a {
+                    justify-content: center;
+                    padding: 10px 5px;
+                }
+
+                .rz-tabview-title {
+                    font-weight: 700;
+                    font-size: 18px;
+                    color: var(--dark-electric-blue);
+                    white-space: normal;
+                }
+            }
+
+            li.rz-state-focused {
+                background-color: var(--dark-electric-blue) !important;
+
+                .rz-tabview-title {
+                    color: white !important;
+                }
+            }
+        }
+
+        .rz-state-focused {
+            border-bottom: none !important;
+            border-radius: 0 !important;
+            border: 1px solid var(--dark-electric-blue) !important;
+        }
+    }
+
+    .trade-card-management {
+        .search-wrapper {
+            position: relative;
+            margin-bottom: unset !important;
+
+            .search-input {
+                border-radius: 3px;
+                border: 1px solid var(--dark-electric-blue);
+                color: var(--dark-electric-blue);
+                padding: 0.5rem 1.8rem;
+
+                &::placeholder {
+                    color: var(--dark-electric-blue);
+                    opacity: 0.8;
+                }
+            }
+
+            .search-icon {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+        }
+
+        .download-menu {
+            position: absolute;
+            top: 18vh;
+            right: 0;
+            width: 180px;
+            background: var(--color-white);
+            border-radius: 8px;
+            padding: 14px;
+            z-index: 10050 !important;
+            animation: fadeIn 0.2s ease;
+
+            .close-btn {
+                position: absolute !important;
+                top: 6px;
+                right: 6px;
+                width: 24px !important;
+                height: 24px !important;
+                background: #eaeaea !important;
+                border-radius: 6px;
+            }
+
+            .menu-item {
+                width: 100%;
+                text-align: center;
+                border-radius: 3px;
+                padding: 0px !important;
+                font-weight: 600;
+
+                &:hover {
+                    background: #546e7a !important;
+                }
+            }
+        }
+
+        .scrollable-grid {
+            max-height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .trade-card-grid {
+                border: none !important;
+
+                .rz-grid-table thead th {
+                    background-color: white;
+                    border-bottom: 1px solid #E6EFF5;
+
+                    .rz-column-title {
+                        color: var(--dark-electric-blue);
+                        font-weight: 700;
+                        font-size: 1rem;
+                    }
+                }
+
+                .rz-cell-data {
+                    font-size: 16px;
+                    color: var(--color-black) !important;
+
+                    .rz-button-sm {
+                        background: unset !important;
+                        box-shadow: none;
+                    }
+                }
+
+                .rz-grid-table-striped tbody > tr:not(.rz-expanded-row-content):nth-child(even) > td {
+                    background-color: rgba(225, 194, 90, 0.10) !important;
+                }
+            }
+        }
+    }
+}

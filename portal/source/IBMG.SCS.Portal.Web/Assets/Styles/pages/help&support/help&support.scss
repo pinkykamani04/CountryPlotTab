@@ -1,0 +1,118 @@
+﻿.helpandsupport {
+    .rz-row {
+        .rz-text-h4 {
+            color: var(--dark-electric-blue);
+            font-weight: 700;
+        }
+
+        .rz-form-field {
+
+            .rz-form-field-content {
+                padding: 0.5rem 1rem;
+                border: 2px solid var(--dark-electric-blue);
+
+                input {
+                    padding: 0;
+                    color: var(--dark-electric-blue);
+                    border: 0 !important;
+                }
+
+                label {
+                    margin-left: 10px;
+                    color: var(--dark-electric-blue) !important;
+                    font-size: 1rem;
+                }
+
+                .rz-form-field-end {
+                    padding: 0;
+                }
+            }
+        }
+
+        .rz-button {
+            background-color: var(--dark-electric-blue);
+
+            .rz-button-box {
+                .rz-button-text {
+                    font-weight: 400;
+                }
+            }
+        }
+
+        .rz-col-sm-3 {
+            .help-and-support-card {
+                width: 100%;
+                border-radius: 10px;
+                background-color: var(--color-light-orange);
+                box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+
+                .rz-stack {
+                    margin-block: 10px;
+
+                    .card-icon {
+                        font-size: 30px;
+                        color: var(--dark-electric-blue);
+                    }
+
+                    .rz-text-subtitle1, .rz-text-body1 {
+                        color: var(--dark-electric-blue);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.rz-dialog-side {
+    bottom: 0;
+    width: 25rem;
+
+    .rz-dialog-side-titlebar {
+        a {
+            background-color: var(--dark-electric-blue);
+            padding: 5px;
+            border-radius: 5px;
+
+            span {
+                font-size: 2rem;
+                color: white !important;
+            }
+        }
+    }
+
+    .rz-dialog-side-content {
+        padding: 3rem;
+        padding-top: 7rem;
+
+        .sideDialogStack {
+            gap: 2rem;
+
+            .rz-text-h4, .rz-text-subtitle1 {
+                color: var(--dark-electric-blue);
+                font-weight: 700;
+            }
+
+            .rz-dropdown, .rz-textarea {
+                border: 2px solid var(--dark-electric-blue);
+            }
+
+            .rz-dropdown {
+                .rz-dropdown-trigger {
+                    span {
+                        font-size: 2rem;
+                        padding-bottom: 30px;
+                        color: var(--dark-electric-blue);
+                    }
+
+                    .rzi-chevron-down:before {
+                        margin-bottom: 6px;
+                    }
+                }
+            }
+
+            .rz-button {
+                background-color: var(--dark-electric-blue);
+            }
+        }
+    }
+}

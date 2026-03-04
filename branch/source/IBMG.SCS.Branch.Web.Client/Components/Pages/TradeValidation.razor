@@ -1,0 +1,84 @@
+﻿@page "/"
+@using IBMG.SCS.Branch.Web.Client.Components.UserControls
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Constants
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models;
+
+<PageTitle>Trade Validation | IBMG Branch</PageTitle>
+
+<RadzenTemplateForm TItem="TradeValidationModel" Data="@model" Submit="Validate" class="w-100">
+    <div class="container-fluid px-0">
+        <RadzenRow Class="px-3 w-100">
+            <RadzenColumn Size="12">
+                <RadzenText Text="Trade Validation"
+                            TextStyle="TextStyle.H4"
+                            Class="my-3 dark-blue-color" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenCard class="trade-validation">
+            <RadzenRow Class="px-0 gap-3 w-100">
+                <RadzenColumn Size="12" SizeMd="7" class="px-4">
+                    <RadzenLabel class="mb-2" Text="Customer*" />
+                    @if (isLoadingCustomers)
+                    {
+                        <ComponentLoading IsVisible="@isLoadingCustomers" />
+                    }
+                    else
+                    {
+                        <RadzenDropDown TValue="CustomerItem"
+                                        Data="@customerOptions"
+                                        TextProperty="Text"
+                                        @bind-Value="selectedCustomer"
+                                        Name="Customer"
+                                        Placeholder="Select customer"
+                                        Class="w-100"
+                                        Change="@OnCustomerChanged" />
+
+                        <RadzenRequiredValidator Component="Customer"
+                                                 Text="Customer is required" />
+                    }
+                    <RadzenRequiredValidator Component="Customer" Text="Customer is required" />
+                    @if (!string.IsNullOrEmpty(model.Customer))
+                    {
+                        <RadzenStack Orientation="Orientation.Vertical" Gap="16px" Class="mt-3">
+                            <RadzenRow>
+                                <RadzenColumn Size="12">
+                                    <RadzenLabel Text="Job Number*" />
+                                    <RadzenTextBox @bind-Value="model.JobNumber" Name="JobNumber" Class="w-100" Change="@(args => ResetValidation())" />
+                                    <RadzenRequiredValidator Component="JobNumber" Text="Job Number is required" />
+                                </RadzenColumn>
+                            </RadzenRow>
+                            <RadzenRow>
+                                <RadzenColumn Size="12" SizeMd="6">
+                                    <RadzenLabel Text="Operative ID" />
+                                    <RadzenTextBox @bind-Value="model.OperativeId" Name="OperativeId" Class="w-100" Change="@(args => ResetValidation())" />
+                                    <RadzenRequiredValidator Component="OperativeId" Text="Operative Number is required" />
+                                </RadzenColumn>
+                                <RadzenColumn Size="12" SizeMd="6">
+                                    <RadzenLabel Text="Trade Card Number" />
+                                    <RadzenTextBox @bind-Value="model.TradeCardNumber" Name="TradeCardNumber" Class="w-100" Change="@(args => ResetValidation())" />
+                                    <RadzenRequiredValidator Component="TradeCardNumber" Text="TradeCard Number is required" />
+                                </RadzenColumn>
+                            </RadzenRow>
+                            <RadzenRow Class="mt-2">
+                                <RadzenColumn Size="12" SizeMd="6">
+                                    <RadzenButton Text="VALIDATE" IsBusy="@isBusy" ButtonStyle="ButtonStyle.Primary"  Class="w-100"ButtonType="ButtonType.Submit" />
+                                </RadzenColumn>
+                                <RadzenColumn Size="12" SizeMd="6">
+                                    <RadzenButton Text="ADD ORDER" Click="AddOrder"
+                                                  ButtonStyle="@(cardState == ValidationState.Success ? ButtonStyle.Success : ButtonStyle.Secondary)"
+                                                  Class="w-100"Disabled="cardState != ValidationState.Success" />
+                                </RadzenColumn>
+                            </RadzenRow>
+                        </RadzenStack>
+                    }
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMd="5">
+                    @if (!string.IsNullOrEmpty(model.Customer))
+                    {
+                        <TradeValidationCard Card="@cardDto" CardState="@cardState" ValidationErrorMessage="@validationErrorMessage" />
+                    }
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </div>
+</RadzenTemplateForm>

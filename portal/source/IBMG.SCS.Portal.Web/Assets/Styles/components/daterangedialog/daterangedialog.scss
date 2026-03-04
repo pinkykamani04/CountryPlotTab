@@ -1,0 +1,214 @@
+﻿.date-range-sheet {
+    width: 880px;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #1f2d3d;
+
+    .range-inputs {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 18px;
+
+        .input-wrap {
+            flex: 1;
+
+            .range-label {
+                display: block;
+                font-size: 13px;
+                color: #6b7280;
+                margin-bottom: 6px;
+            }
+        }
+    }
+
+    .calendar-row {
+        display: flex;
+        gap: 18px;
+
+        .month-cal {
+            flex: 1;
+            background: #fff;
+            border-radius: 6px;
+            padding: 10px;
+
+            .month-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+
+                .month-title {
+                    font-weight: 700;
+                    font-size: 16px;
+                }
+            }
+
+            .weekdays {
+                display: grid;
+                grid-template-columns: repeat(7,1fr);
+                color: #6b7280;
+                font-weight: 700;
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .days-grid {
+                display: grid;
+                grid-template-columns: repeat(7,1fr);
+                gap: 6px;
+            }
+        }
+    }
+
+
+    .day-cell {
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        cursor: pointer;
+        user-select: none;
+        font-size: 13px;
+        color: #0f1724;
+    }
+
+    .day-inrange {
+        background: var(--color-alice-blue);
+        color: #0f1724;
+    }
+
+    .day-startend {
+        background: var(--color-true-blue);
+        color: white;
+        width: 34px;
+        height: 34px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50% !important;
+    }
+
+    .day-dot {
+        width: 6px;
+        height: 6px;
+        background: #0b5ed7;
+        border-radius: 50%;
+        margin-top: 4px;
+    }
+
+    .shortcuts {
+        width: 280px;
+        padding-left: 18px;
+        border-left: 1px solid #eef2f6;
+        box-sizing: border-box;
+        position: relative;
+
+        .tab-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
+
+            &:active {
+                color: #0b5ed7;
+                border-bottom: 3px solid #0b5ed7;
+                padding-bottom: 4px;
+            }
+        }
+
+        .tab-btn {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .shortcut {
+            padding: 8px 6px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+    }
+
+    .actions-row {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 18px;
+    }
+
+    .day-preview {
+        background: rgba(11, 94, 215, 0.18);
+        transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    .day-inrange {
+        background: var(--color-alice-blue);
+        transition: background 0.25s ease;
+    }
+
+    .day-startend {
+        background: var(--color-true-blue) !important;
+        color: white !important;
+        width: 34px;
+        height: 34px;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        animation: pop-in 0.18s ease-out;
+    }
+
+    @keyframes pop-in {
+        0% {
+            transform: scale(0.6);
+            opacity: 0.2;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .day-cell {
+        transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .day-cell:hover {
+        background: rgba(11,94,215,0.12);
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 900px) {
+    .date-range-sheet {
+        width: 100%;
+        padding: 12px;
+
+
+        .calendar-row {
+            flex-direction: column !important;
+        }
+
+        .shortcuts {
+            width: 100%;
+            border-left: none;
+            padding-left: 0;
+            margin-top: 12px;
+        }
+    }
+}
+

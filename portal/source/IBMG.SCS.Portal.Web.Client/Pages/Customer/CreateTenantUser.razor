@@ -1,0 +1,166 @@
+﻿@page "/customers/{TenantId:guid}/users/create"
+@using BluQube.Commands
+@using System.ComponentModel.DataAnnotations
+@using BluQube.Constants
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Commands
+@using PearDrop.Authentication.Multitenancy.Client.Domain.User.Commands
+@using Microsoft.AspNetCore.Components.Forms
+@inject ICommander Commander
+@inject NavigationManager Navigation
+
+<style>
+    .tenant-user-create-page h2 {
+        font-weight: 600;
+    }
+
+    .tenant-user-create-page .info-card {
+        background: rgba(56, 189, 248, 0.08);
+        border-left: 4px solid #38bdf8;
+    }
+
+    .tenant-user-create-page .rz-card {
+        border-radius: 12px;
+    }
+</style>
+
+<RadzenStack Gap="16" Class="tenant-user-create-page w-100">
+
+    <RadzenStack Orientation="Orientation.Horizontal"
+                 AlignItems="AlignItems.Center"
+                 JustifyContent="JustifyContent.SpaceBetween">
+        <h2>Add User to Tenant</h2>
+
+        <RadzenButton Icon="arrow_back"
+                      ButtonStyle="ButtonStyle.Light"
+                      Text="Back"
+                      Click="@(() => Navigation.NavigateTo($"/customers/{TenantId}"))" />
+    </RadzenStack>
+
+    <RadzenRow Gap="16">
+
+        <RadzenColumn Size="7">
+            <RadzenCard Class="rz-p-4 info-card">
+                <RadzenStack Gap="12">
+                    <RadzenIcon Icon="info" Style="font-size:32px" />
+                    <h5>Cross-Tenant Admin Operation</h5>
+                    <RadzenAlert Severity="AlertSeverity.Info">
+                        Only <strong>SystemRoot</strong> users can perform this operation.
+                    </RadzenAlert>
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn Size="5">
+            <RadzenCard Class="rz-p-4">
+
+                <RadzenTemplateForm TItem="CreateUserModel"
+                                    Data="@model"
+                                    Submit="HandleSubmit">
+
+                    <RadzenStack Gap="16">
+
+                        <RadzenFormField Text="Email Address">
+                            <RadzenTextBox Name="Email"
+                                           @bind-Value="model.Email"
+                                           Style="width:100%" />
+                            <RadzenRequiredValidator Component="Email" Text="Email is required" />
+                        </RadzenFormField>
+
+                        <RadzenFormField Text="First Name">
+                            <RadzenTextBox Name="FirstName"
+                                           @bind-Value="model.FirstName"
+                                           Style="width:100%" />
+                            <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+                        </RadzenFormField>
+
+                        <RadzenFormField Text="Last Name">
+                            <RadzenTextBox Name="LastName"
+                                           @bind-Value="model.LastName"
+                                           Style="width:100%" />
+                            <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+                        </RadzenFormField>
+
+                        <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+                            <RadzenButton Text="Cancel"
+                                          ButtonStyle="ButtonStyle.Light"
+                                          Click="@(() => Navigation.NavigateTo($"/customers/{TenantId}"))" />
+
+                            <RadzenButton Icon="person_add"
+                                          ButtonStyle="ButtonStyle.Primary"
+                                          Text="Create User"
+                                          Disabled="@isSubmitting"
+                                          IsBusy="@isSubmitting"
+                                          ButtonType="ButtonType.Submit" />
+                        </RadzenStack>
+                    </RadzenStack>
+                </RadzenTemplateForm>
+            </RadzenCard>
+        </RadzenColumn>
+
+    </RadzenRow>
+</RadzenStack>
+
+@code {
+    [Parameter] public Guid TenantId { get; set; }
+    [Inject]
+    private NotificationService notificationService { get; set; }
+
+    private CreateUserModel model = new();
+    private EditContext editContext = default!;
+    private bool isSubmitting;
+    private string? errorMessage;
+    private string? successMessage;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(model);
+    }
+
+    private async Task HandleSubmit(CreateUserModel model)
+    {
+        isSubmitting = true;
+
+        try
+        {
+            var command = new CreatePearUserInTenantCommand(
+                  TenantId,
+                Guid.NewGuid(),
+                model.Email!,
+                model.FirstName!,
+                model.LastName!,
+                model.Email!,
+                null
+            );
+
+            var result = await Commander.Send(command);
+
+            if (result.Status == CommandResultStatus.Succeeded)
+            {
+                this.notificationService.Notify(NotificationSeverity.Success, $"User '{model.Email}' created successfully!");
+                this.Navigation.NavigateTo($"/customers/{TenantId}", forceLoad: false);
+            }
+            else
+            {
+                this.notificationService.Notify(NotificationSeverity.Error, "Failed to create user. The email address may already be in use.");
+            }
+
+            model.Email = model.FirstName = model.LastName = null;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private class CreateUserModel
+    {
+        [Required, EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        public string? FirstName { get; set; }
+
+        [Required]
+        public string? LastName { get; set; }
+    }
+}

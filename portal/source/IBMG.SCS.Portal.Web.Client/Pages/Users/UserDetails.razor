@@ -1,0 +1,52 @@
+﻿@page "/users/{UserId:guid}"
+@using BluQube.Constants
+@using BluQube.Queries
+@using IBMG.SCS.Portal.Web.Client.Data
+@using IBMG.SCS.Portal.Web.Client.Data.Querier
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Queries
+@inject IQuerier Querier
+@inject NavigationManager Nav
+
+<h3>User Details</h3>
+
+@if (loading)
+{
+    <p><em>Loading...</em></p>
+}
+else if (user is null)
+{
+    <p>User not found.</p>
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@user.UserPrincipalName</h5>
+            <dl class="row">
+                <dt class="col-sm-3">Locked</dt>
+                <dd class="col-sm-9">@(user.IsLocked ? "Yes" : "No")</dd>
+                <dt class="col-sm-3">Disabled</dt>
+                <dd class="col-sm-9">@(user.IsDisabled ? "Yes" : "No")</dd>
+                <dt class="col-sm-3">Created</dt>
+                <dd class="col-sm-9">@user.CreatedDate.ToString("u")</dd>
+            </dl>
+            <button class="btn btn-secondary me-2" @onclick="GoBack">Back</button>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid UserId { get; set; }
+    private QueryableUser? user;
+    private bool loading;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        loading = true;
+        var result = await Querier.Send(new GetUserByIdQuery(UserId));
+        user = result.Status == QueryResultStatus.Succeeded ? result.Data : null;
+        loading = false;
+    }
+
+    private void GoBack() => Nav.NavigateTo("/users");
+}

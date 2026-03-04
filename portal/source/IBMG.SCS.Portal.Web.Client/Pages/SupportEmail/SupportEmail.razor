@@ -1,0 +1,38 @@
+﻿@page "/administration/support-email"
+@using IBMG.SCS.Portal.Web.Client.Dtos
+
+<PageTitle>Support Email | IBMG</PageTitle>
+
+<div class="container-fluid px-0">
+    <RadzenRow class="w-100">
+        <RadzenColumn Size="12">
+            <RadzenText Text="Support Email" TextStyle="TextStyle.H4" Class="my-3 dark-blue-color fw-700" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow class="w-100">
+        <RadzenCard class="w-100">
+            <RadzenTemplateForm Data="@model" TItem="EmailDto" Submit="@OnSave">
+                <RadzenFieldset Text="Administration Settings">
+                    <RadzenLabel Text="Enter Help & Support Email" Component="SupportEmail" class="dark-blue-color fs-26 mb-2" />
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="8px" class="mb-2" Style="max-width: 420px;">
+                        <RadzenTextBox Name="SupportEmail" @bind-Value="model.SupportEmail" Style="flex:1" class="fs-20"
+                                       Disabled="@(!isEditMode && !string.IsNullOrWhiteSpace(model.SupportEmail))" />
+                        <RadzenRequiredValidator Component="SupportEmail" Text="Support Email is required" />
+                        <RadzenEmailValidator Component="SupportEmail" Text="Enter a valid email address" />
+                        @if (!string.IsNullOrWhiteSpace(model.SupportEmail) && !isEditMode)
+                        {
+                            <RadzenButton Icon="edit"
+                                          ButtonStyle="ButtonStyle.Dark"
+                                          Size="ButtonSize.Small"
+                                          Click="@EnableEdit"
+                                          title="Edit Support Email" />
+                        }
+                    </RadzenStack>
+
+                    <RadzenButton Text="Save" Icon="save" ButtonType="ButtonType.Submit" class="mt-3"
+                                  Disabled="@(!isEditMode && !string.IsNullOrWhiteSpace(model.SupportEmail))" />
+                </RadzenFieldset>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    </RadzenRow>
+</div>

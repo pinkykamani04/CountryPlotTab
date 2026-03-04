@@ -1,0 +1,118 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos
+
+<RadzenTemplateForm Data="@Operatives" TItem="OperativeDto" Submit="@OnSave" class="h-100">
+    <div class="card-slideout px-3 py-2">
+        <RadzenRow Class="mb-3 align-items-center">
+            <RadzenColumn Size="10">
+                <RadzenText Text="@(IsEdit ? "Edit Operative" : "Add Operative")" class="dark-blue-color heading fw-700" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow Gap="20px">
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="First Name" />
+                <RadzenTextBox @bind-Value="Operatives.FirstName" Name="FirstName" class="w-100" />
+                <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Last Name" />
+                <RadzenTextBox @bind-Value="Operatives.LastName" Name="LastName" class="w-100" />
+                <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Job Role" />
+                <RadzenDropDown @bind-Value="Operatives.JobRole"
+                                Data="@Roles"
+                                TextProperty="Name"
+                                ValueProperty="Id"
+                                Placeholder="Select Job Role"
+                                class="w-100" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Operative ID" />
+                <RadzenTextBox @bind-Value="Operatives.OperativeNumber" Name="OperativeNumber" class="w-100" />
+                <RadzenRequiredValidator Component="OperativeNumber" Text="Operative ID is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Trade Card Number" />
+                <RadzenDropDown @bind-Value="Operatives.TradeCardId"
+                                Name="TradeCardId"
+                                Data="@FilteredTradeCards"
+                                TextProperty="CardNumber"
+                                ValueProperty="Id"
+                                AllowFiltering="true"
+                                FilterPlaceholder="Search or type to create..."
+                                Placeholder="Select or create..."
+                                LoadData="@OnTradeCardLoadData"
+                                class="w-100" />
+                @if (showCreateTradeCard)
+                {
+                    <div class="mt-2">
+                        <RadzenTextBox @bind-Value="lastTradeCardSearch"
+                                       Placeholder="New card number"
+                                       class="w-100" />
+                        <RadzenButton Text="Create & Assign"
+                                      Click="@CreateNewTradeCard"
+                                      ButtonStyle="ButtonStyle.Primary"
+                                      class="w-100 mt-2" />
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(selectedAssignedCardInfo))
+                {
+                    <div class="small text-muted mt-1">
+                        @selectedAssignedCardInfo
+                    </div>
+                }
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Single Transaction Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Operatives.TnxLimit" ShowUpDown="false" Name="TnxLimit"
+                               Min="0" Format="N2" class="w-100" />
+                <RadzenNumericRangeValidator Min="0.01" Component="TnxLimit" Text="Transaction limit is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Daily Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Operatives.DailyLimit" ShowUpDown="false"  Name="DailyLimit"
+                               Min="0" Format="N2"class="w-100" />
+                <RadzenNumericRangeValidator Min="0.01" Component="DailyLimit" Text="Daily limit is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Weekly Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Operatives.WeeklyLimit"ShowUpDown="false" Name="WeeklyLimit"
+                               Min="0"Format="N2" class="w-100" />
+                <RadzenNumericRangeValidator Min="0.01" Component="WeeklyLimit" Text="Weekly limit is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Monthly Spend Limit" />
+                <RadzenNumeric TValue="decimal" @bind-Value="Operatives.MonthlyLimit" ShowUpDown="false" Name="MonthlyLimit"
+                               Min="0" Format="N2"class="w-100" />
+                <RadzenNumericRangeValidator Min="0.01" Component="MonthlyLimit" Text="Monthly limit is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Start Date" />
+                <RadzenDatePicker @bind-Value="Operatives.StartDate" Name="StartDate" class="w-100" />
+                <RadzenRequiredValidator Component="StartDate" Text="Start date is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="End Date" />
+                <RadzenDatePicker @bind-Value="Operatives.EndDate" Min="@Operatives.StartDate" Name="EndDate" class="w-100" />
+                <RadzenRequiredValidator Component="EndDate" Text="End date is required" />
+            </RadzenColumn>
+            <RadzenColumn Size="6">
+                <RadzenLabel Text="Status" />
+                <RadzenDropDown @bind-Value="Operatives.Status"
+                                Name="Status"
+                                Data="@StatusOptions"
+                                TextProperty="Text"
+                                ValueProperty="Value"
+                                class="w-100" />
+                <RadzenRequiredValidator Component="Status" Text="Status is required" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow Class="mt-4">
+            <RadzenColumn Size="12">
+                <RadzenButton Text="SAVE" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" class="w-100" />
+            </RadzenColumn>
+        </RadzenRow>
+    </div>
+</RadzenTemplateForm>

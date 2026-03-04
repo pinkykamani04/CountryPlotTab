@@ -1,0 +1,46 @@
+﻿@page "/auth/multi-factor-device"
+@model ValidateDeviceMfa
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Validate Your Login";
+    ViewData["PageFunc"] = "device-factor";
+    var token = Antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}
+
+<section id="auth-container" class="d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center min-vh-100 bg-white px-5">
+        <div class="w-100">
+            <form class="form-horizontal form-material" method="post" id="start-verification"
+                  data-make-assertion-uri="@Url.RouteUrl("CurrentUser|MakeAssertion")"
+                  data-af-token="@token"
+                  data-assertion-options-uri="@Url.RouteUrl("CurrentUser|GetAssertionOptions")">
+                <div class="auth-logo">
+                    <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+                </div>
+                <h4 class="rounded-title mt-4 mb-0">Use Fido Device</h4>
+                <small>Insert your security key. When you are ready to authenticate, press the button below.</small>
+
+                @if (Model.DeviceRemembranceExpirationInDays > -1)
+                {
+                    <div class="form-check mt-4 mb-3">
+                        <input class="form-check-input" type="checkbox" id="remember-device">
+                        <label class="form-check-label" for="remember-device">
+                            Do not ask for a code on this device again for the next @Model.DeviceRemembranceExpirationInDays day(s)
+                        </label>
+                    </div>
+                }
+
+                <div class="d-grid mt-4 mb-4">
+                    <button class="btn btn-info btn-md btn-block text-uppercase waves-effect waves-light">Use security key</button>
+                </div>
+            </form>
+            <hr />
+            <p>Or select a different method</p>
+
+            <form class="feeds m-0 p-0 mt-3 pt-2" method="post">
+                @await Html.PartialAsync("_MfaOptions", Model.MfaProviders)
+            </form>
+        </div>
+    </div>
+</section>

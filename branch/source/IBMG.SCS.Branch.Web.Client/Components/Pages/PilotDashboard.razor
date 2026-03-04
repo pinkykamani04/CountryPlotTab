@@ -1,0 +1,55 @@
+﻿@page "/pilot"
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<PageTitle>Pilot Dashboard</PageTitle>
+
+<RadzenRow class="p-1">
+
+    <RadzenColumn Size="12" SizeMd="4">
+        <PilotInformation Pilot="OriginalPilot"
+                          EditablePilot="EditablePilot"
+                          IsEditMode="isEditMode"
+                          ShowFullDetails="showFullDetails"
+                          ProfileImageUrl="@ProfileImageUrl"
+                          ImagePreviewUrl="@ImagePreviewUrl"
+                          OnLoadMore="LoadMoreDetails"
+                          OnCloseFullDetails="CloseFullDetails"
+                          OnPreparePilotForEdit="PreparePilotForEdit"
+                          OnSave="SavePilotInfo"
+                          OnCancel="CancelEdit"
+                          OnImageSelected="OnProfileImageSelected" />
+
+        <PilotStatistics TotalFlyingHours="@TotalFlyingHours"
+                         FlightsThisYear="@FlightsThisYear"
+                         TotalFlights="@TotalFlights"
+                         DistanceCovered="8987"
+                         PlanesFlown="44"
+                         PICHours="568"
+                         CoPilotHours="678"
+                         NightHours="868"
+                         InstrumentHours="678"
+                         CrossCountryHours="667" />
+    </RadzenColumn>
+
+    <RadzenColumn Size="12" SizeMd="8">
+        <FlightList Title="Past Flights"
+                    Flights="PastFlights"
+                    CardClass="mb-4 past-flights"
+                    ActionButtonText="Add Flight Log"
+                    NoFlightsText="No past flights"
+                    DepartureColSize="4"
+                    MiddleColSize="4"
+                    ArrivalColSize="4" />
+
+        <FlightList Title="Upcoming Flights"
+                    Flights="UpcomingFlights"
+                    CardClass="upcoming-flights"
+                    ActionButtonText="Details"
+                    NoFlightsText="No upcoming flights"
+                    DepartureColSize="4"
+                    MiddleColSize="4"
+                    ArrivalColSize="4" />
+    </RadzenColumn>
+
+</RadzenRow>
+

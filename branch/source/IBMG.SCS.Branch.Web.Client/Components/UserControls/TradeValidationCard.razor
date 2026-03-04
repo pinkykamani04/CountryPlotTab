@@ -1,0 +1,77 @@
+﻿@using IBMG.SCS.Branch.Web.Client.Infrastructure.Constants
+<div class="@GetCardCss()">
+    <RadzenStack class="p-4 pb-0" Gap="8px">
+        <RadzenRow>
+            <RadzenColumn Size="12" SizeMd="6">
+                <RadzenImage Path="/master-logo-ibmg.png" style="height:38px;" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeMd="6" Class="text-md-start">
+                <RadzenLabel class="tv-label" Text="Operative Name" />
+                <RadzenText class="color-white fw-600" Text="@GetValue(Card.OperativeName)" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow>
+            <RadzenColumn Size="8">
+                <RadzenLabel class="tv-label" Text="Operative ID" />
+                <RadzenText class="color-white fw-600" Text="@GetValue(Card.OperativeId)" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="4">
+                <RadzenLabel class="tv-label" Text="Job Number" />
+                <RadzenText class="color-white fw-600" Text="@GetValue(Card.JobNumber)" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow>
+            <RadzenColumn Size="12">
+                <RadzenLabel class="tv-label" Text="Job Address" />
+                <RadzenText class="color-white fw-600" Text="@GetValue(Card.JobAddress)" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow>
+            <RadzenColumn Size="4">
+                <RadzenLabel class="tv-label" Text="Txn Limit" />
+                <RadzenText class="color-white fw-600" Text="@GetValue("£" + Card.TxnLimit)" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="4">
+                <RadzenLabel class="tv-label" Text="Daily Limit" />
+                <RadzenText class="color-white fw-600" Text="@GetValue("£" + Card.DailyLimit)" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="4">
+                <RadzenLabel class="tv-label" Text="Daily Spend Remaining" />
+                <RadzenText class="color-white fw-600" Text="@GetValue("£" + Card.SpendRemaining)" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenStack>
+
+    <RadzenStack class="tv-bottom-band">
+        <RadzenRow class="text-center">
+            <RadzenColumn Size="12">
+                <RadzenLabel class="tv-label" Text="Trade Card Number" />
+                <RadzenText class="color-white fw-600" Text="@GetValue(Card.CardNumber)" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenStack>
+</div>
+
+@if (CardState == ValidationState.Success)
+{
+    <div class="text-center fw-bold fs-4 mt-3 text-success">Operative verified</div>
+}
+
+@if (CardState == ValidationState.Error)
+{
+    <div class="text-center fw-bold fs-4 mt-3 text-danger">
+        @ValidationErrorMessage
+    </div>
+}
+
+@if (CardState == ValidationState.Deactive)
+{
+    <div class="text-center fw-bold fs-4 mt-3 text-sunray">Deactivated Operative Account</div>
+}

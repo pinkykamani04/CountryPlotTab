@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- Set to false by default; enable with -p:RunNSwag=true when you want client generation to run during build -->
+		<RunNSwag>false</RunNSwag>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="NSwag.MSBuild" Version="13.20.0" />
+	</ItemGroup>
+
+	<Target Name="GenerateCSharpClient" BeforeTargets="Compile" Condition="Exists('$(ProjectDir)dotnet-tools.json') and '$(RunNSwag)' == 'true'">
+		<Message Text="🚀 Running NSwag..." Importance="High" />
+		<!-- Ensure local dotnet tools are restored so `dotnet tool run` is available -->
+		<Exec Command="dotnet tool restore" WorkingDirectory="$(ProjectDir)" ContinueOnError="true" />			
+		<!-- Use `dotnet tool run nswag` so MSBuild runs NSwag via dotnet tool runner (more reliable across environments). -->
+		<!-- Do not fail the overall build if NSwag run fails locally; make generation opt-in via -p:RunNSwag=true -->
+		<Exec Command='dotnet tool run nswag run "$(ProjectDir)nswag.json"' WorkingDirectory="$(ProjectDir)" ContinueOnError="true" />
+	</Target>
+
+	<Import Project="..\..\..\shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems" Label="Shared" />
+
+</Project>	

@@ -1,0 +1,41 @@
+﻿@typeparam TItem
+
+@using Radzen
+@using Radzen.Blazor
+
+<div>
+    <div class="d-flex flex-column h-100">
+        @if (Items != null && Items.Any())
+        {
+            <RadzenDataList TItem="TItem" Data="@Items" Style="max-height:230px;">
+                <Template Context="item">
+                    <div class="rz-d-flex rz-justify-content-between rz-align-items-center rz-py-1">
+                        <span>@RankField(item). @NameField(item)</span>
+                        <strong>£@AmountField(item).ToString("N2")</strong>
+                    </div>
+                </Template>
+            </RadzenDataList>
+        }
+        else
+        {
+            <div class="d-flex flex-grow-1 align-items-center justify-content-center text-center">
+                <p class="fw-bold mb-0 fs-4">
+                    No Data available For Selected Period
+                </p>
+            </div>
+        }
+
+    </div>
+</div>
+
+<style>
+    .rz-datalist-data > li {
+        padding: unset !important;
+    }
+
+        .rz-datalist-data > li:last-child {
+            border: none !important;
+            border-radius: unset !important;
+            border-bottom: 1px solid black !important;
+        }
+</style>

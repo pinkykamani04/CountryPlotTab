@@ -1,0 +1,157 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "._", "._", "{309043E5-60B9-4334-9AD6-7D1552887CBB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		docker-compose.yml = docker-compose.yml
+		global.json = global.json
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".resources", ".resources", "{9E66E00C-D158-45CF-B89A-6EB604BDB5A2}"
+	ProjectSection(SolutionItems) = preProject
+		.resources\cert-gen.ps1 = .resources\cert-gen.ps1
+		.resources\run-kerridge-server.ps1 = .resources\run-kerridge-server.ps1
+		.resources\run-mock-servers.ps1 = .resources\run-mock-servers.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{956157AA-51A7-4BBB-BCF1-50F3F085E831}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{E9CE29C3-E048-45DE-B83E-934744255F2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{94493E8E-0BDE-4FEE-B765-1B7020E2CF58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{CFE84822-EB7D-4DCE-9B45-7CE0103F9AB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{68367B7D-172D-4010-BFCF-0804BEEB8F73}"
+	ProjectSection(SolutionItems) = preProject
+		.docs\AZURE_AD_SETUP.md = .docs\AZURE_AD_SETUP.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kerridge-api", "kerridge-api", "{A31C1853-0C42-4479-8437-0A245A8B7DCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kerridge.Instance1", "kerridge-api\samples\Kerridge.Instance1\Kerridge.Instance1.csproj", "{328A468A-1C72-4558-9C95-CDC051F73653}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kerridge.Instance2", "kerridge-api\samples\Kerridge.Instance2\Kerridge.Instance2.csproj", "{06312E8F-4944-4C39-8308-628648BB5404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kerridge.Instance3", "kerridge-api\samples\Kerridge.Instance3\Kerridge.Instance3.csproj", "{D3DAA2E0-D396-471E-8739-794CFE8264B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.KerridgeApi.Server", "kerridge-api\source\IBMG.SCS.KerridgeApi.Server\IBMG.SCS.KerridgeApi.Server.csproj", "{59FA951D-F214-4E77-8F07-B2E5C22A6133}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.KerridgeApi.Server.Tests", "kerridge-api\tests\IBMG.SCS.KerridgeApi.Server.Tests\IBMG.SCS.KerridgeApi.Server.Tests.csproj", "{94B78885-9127-4833-BC1A-2CD2849155B5}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IBMG.SCS.Shared.Rules", "shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.shproj", "{468B1FE7-4FE1-4F06-B1B8-999C1DAA858B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "branch", "branch", "{D462D617-C29E-499E-8A72-D525C4E978C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{DE31A935-D976-48DC-9122-290B25ED7FDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Branch.Web", "branch\source\IBMG.SCS.Branch.Web\IBMG.SCS.Branch.Web.csproj", "{837DA47B-5359-42DF-8F7B-12D8BA41A4DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Branch.Web.Client", "branch\source\IBMG.SCS.Branch.Web.Client\IBMG.SCS.Branch.Web.Client.csproj", "{97C1A10B-6719-442A-9566-187785C5DD6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "portal", "portal", "{E2161825-4A23-4053-801E-843800B7A698}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{63432253-9488-4C30-BDDA-9BD4CB5BF5C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Portal.Web", "portal\source\IBMG.SCS.Portal.Web\IBMG.SCS.Portal.Web.csproj", "{CE33E52C-273B-4B67-A7D8-1771E9593127}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Portal.Web.Client", "portal\source\IBMG.SCS.Portal.Web.Client\IBMG.SCS.Portal.Web.Client.csproj", "{C48A10A1-F123-4554-97F1-395319EEDBD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Portal.ApiClient", "portal\source\IBMG.SCS.Portal.ApiClient\IBMG.SCS.Portal.ApiClient.csproj", "{ECC12347-3730-4D62-AB09-9D75AF54FB5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBMG.SCS.Infrastructure", "shared\IBMG.SCS.Infrastructure\IBMG.SCS.Infrastructure.csproj", "{BA32C8AD-2EE8-4643-B3CE-847579965D92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{328A468A-1C72-4558-9C95-CDC051F73653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{328A468A-1C72-4558-9C95-CDC051F73653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{328A468A-1C72-4558-9C95-CDC051F73653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{328A468A-1C72-4558-9C95-CDC051F73653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06312E8F-4944-4C39-8308-628648BB5404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06312E8F-4944-4C39-8308-628648BB5404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06312E8F-4944-4C39-8308-628648BB5404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06312E8F-4944-4C39-8308-628648BB5404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3DAA2E0-D396-471E-8739-794CFE8264B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DAA2E0-D396-471E-8739-794CFE8264B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DAA2E0-D396-471E-8739-794CFE8264B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DAA2E0-D396-471E-8739-794CFE8264B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FA951D-F214-4E77-8F07-B2E5C22A6133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FA951D-F214-4E77-8F07-B2E5C22A6133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FA951D-F214-4E77-8F07-B2E5C22A6133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FA951D-F214-4E77-8F07-B2E5C22A6133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B78885-9127-4833-BC1A-2CD2849155B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B78885-9127-4833-BC1A-2CD2849155B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B78885-9127-4833-BC1A-2CD2849155B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B78885-9127-4833-BC1A-2CD2849155B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837DA47B-5359-42DF-8F7B-12D8BA41A4DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837DA47B-5359-42DF-8F7B-12D8BA41A4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837DA47B-5359-42DF-8F7B-12D8BA41A4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837DA47B-5359-42DF-8F7B-12D8BA41A4DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97C1A10B-6719-442A-9566-187785C5DD6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C1A10B-6719-442A-9566-187785C5DD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C1A10B-6719-442A-9566-187785C5DD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C1A10B-6719-442A-9566-187785C5DD6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE33E52C-273B-4B67-A7D8-1771E9593127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE33E52C-273B-4B67-A7D8-1771E9593127}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE33E52C-273B-4B67-A7D8-1771E9593127}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE33E52C-273B-4B67-A7D8-1771E9593127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C48A10A1-F123-4554-97F1-395319EEDBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48A10A1-F123-4554-97F1-395319EEDBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48A10A1-F123-4554-97F1-395319EEDBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48A10A1-F123-4554-97F1-395319EEDBD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECC12347-3730-4D62-AB09-9D75AF54FB5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECC12347-3730-4D62-AB09-9D75AF54FB5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECC12347-3730-4D62-AB09-9D75AF54FB5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECC12347-3730-4D62-AB09-9D75AF54FB5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA32C8AD-2EE8-4643-B3CE-847579965D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA32C8AD-2EE8-4643-B3CE-847579965D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA32C8AD-2EE8-4643-B3CE-847579965D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA32C8AD-2EE8-4643-B3CE-847579965D92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{956157AA-51A7-4BBB-BCF1-50F3F085E831} = {A31C1853-0C42-4479-8437-0A245A8B7DCE}
+		{E9CE29C3-E048-45DE-B83E-934744255F2E} = {A31C1853-0C42-4479-8437-0A245A8B7DCE}
+		{94493E8E-0BDE-4FEE-B765-1B7020E2CF58} = {A31C1853-0C42-4479-8437-0A245A8B7DCE}
+		{328A468A-1C72-4558-9C95-CDC051F73653} = {E9CE29C3-E048-45DE-B83E-934744255F2E}
+		{06312E8F-4944-4C39-8308-628648BB5404} = {E9CE29C3-E048-45DE-B83E-934744255F2E}
+		{D3DAA2E0-D396-471E-8739-794CFE8264B4} = {E9CE29C3-E048-45DE-B83E-934744255F2E}
+		{59FA951D-F214-4E77-8F07-B2E5C22A6133} = {956157AA-51A7-4BBB-BCF1-50F3F085E831}
+		{94B78885-9127-4833-BC1A-2CD2849155B5} = {94493E8E-0BDE-4FEE-B765-1B7020E2CF58}
+		{468B1FE7-4FE1-4F06-B1B8-999C1DAA858B} = {CFE84822-EB7D-4DCE-9B45-7CE0103F9AB8}
+		{DE31A935-D976-48DC-9122-290B25ED7FDE} = {D462D617-C29E-499E-8A72-D525C4E978C7}
+		{837DA47B-5359-42DF-8F7B-12D8BA41A4DA} = {DE31A935-D976-48DC-9122-290B25ED7FDE}
+		{97C1A10B-6719-442A-9566-187785C5DD6C} = {DE31A935-D976-48DC-9122-290B25ED7FDE}
+		{63432253-9488-4C30-BDDA-9BD4CB5BF5C8} = {E2161825-4A23-4053-801E-843800B7A698}
+		{CE33E52C-273B-4B67-A7D8-1771E9593127} = {63432253-9488-4C30-BDDA-9BD4CB5BF5C8}
+		{C48A10A1-F123-4554-97F1-395319EEDBD8} = {63432253-9488-4C30-BDDA-9BD4CB5BF5C8}
+		{ECC12347-3730-4D62-AB09-9D75AF54FB5F} = {63432253-9488-4C30-BDDA-9BD4CB5BF5C8}
+		{BA32C8AD-2EE8-4643-B3CE-847579965D92} = {CFE84822-EB7D-4DCE-9B45-7CE0103F9AB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5EC2C88-4478-490E-B6C2-3433D235785E}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{468b1fe7-4fe1-4f06-b1b8-999c1daa858b}*SharedItemsImports = 13
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{59fa951d-f214-4e77-8f07-b2e5c22a6133}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{837da47b-5359-42df-8f7b-12d8ba41a4da}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{94b78885-9127-4833-bc1a-2cd2849155b5}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{97c1a10b-6719-442a-9566-187785c5dd6c}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{ba32c8ad-2ee8-4643-b3ce-847579965d92}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{c48a10a1-f123-4554-97f1-395319eedbd8}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{ce33e52c-273b-4b67-a7d8-1771e9593127}*SharedItemsImports = 5
+		shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems*{ecc12347-3730-4d62-ab09-9d75af54fb5f}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal

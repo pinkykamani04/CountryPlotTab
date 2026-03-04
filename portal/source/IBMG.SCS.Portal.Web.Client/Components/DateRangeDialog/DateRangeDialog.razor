@@ -1,0 +1,108 @@
+﻿@using System.Globalization
+@inject DialogService DialogService
+
+<div class="date-range-sheet">
+    <div class="range-inputs">
+        <div class="input-wrap">
+            <label class="range-label">From:</label>
+            <RadzenDatePicker @bind-Value="from"
+                              AllowInput="false"
+                              Change="@OnFromChanged"
+                              DateFormat="dd/MM/yyyy"
+                              Style="width:100%" />
+        </div>
+        <div class="input-wrap">
+            <label class="range-label">To:</label>
+            <RadzenDatePicker @bind-Value="to" AllowInput="false"
+                              Change="@OnToChanged"
+                              DateFormat="dd/MM/yyyy"
+                              Style="width:100%" />
+        </div>
+    </div>
+    <div class="calendar-row">
+        <div class="month-cal">
+            <div class="month-header">
+                <RadzenButton Icon="keyboard_arrow_left" ButtonStyle="ButtonStyle.Light" Style="min-width:36px" Click="@PrevMonth" />
+                <div class="month-title">@leftMonth.ToString("MMMM yyyy")</div>
+                <RadzenButton Icon="keyboard_arrow_right" ButtonStyle="ButtonStyle.Light" Style="min-width:36px" Click="@NextMonth" />
+            </div>
+
+            <div class="weekdays">
+                @foreach (var n in weekDays)
+                {
+                    <div>@n</div>
+                }
+            </div>
+            <div class="days-grid">
+                @RenderMonth(leftMonth)
+            </div>
+        </div>
+        <div class="month-cal">
+            <div class="month-header">
+                <div class="month-title">@rightMonth.ToString("MMMM yyyy")</div>
+            </div>
+
+            <div class="weekdays">
+                @foreach (var n in weekDays)
+                {
+                    <div>@n</div>
+                }
+            </div>
+            <div class="days-grid">
+                @RenderMonth(rightMonth)
+            </div>
+        </div>
+
+        <div class="shortcuts">
+            <div class="tab-row">
+                <button class="tab-btn @(activeTab == "Last" ? "active" : "")"
+                        @onclick='() => SwitchTab("Last")'>
+                    Last
+                </button>
+
+                <button class="tab-btn @(activeTab == "Current" ? "active" : "")"
+                        @onclick='() => SwitchTab("Current")'>
+                    Current
+                </button>
+
+                <button class="tab-btn @(activeTab == "Next" ? "active" : "")"
+                        @onclick='() => SwitchTab("Next")'>
+                    Next
+                </button>
+
+            </div>
+
+            <div style="padding-top:6px;">
+                <div class="title">Periods</div>
+
+                @if (activeTab == "Last")
+                {
+                    <div class="shortcut" @onclick="() => ApplyQuick(-7, -1)">Last 7 days</div>
+                    <div class="shortcut" @onclick="ApplyLastMonth">Last Month</div>
+                    <div class="shortcut" @onclick="ApplyLastQuarter">Last Quarter</div>
+                }
+                else if (activeTab == "Current")
+                {
+                    <div class="shortcut" @onclick="ApplyCurrentWeek">Week</div>
+                    <div class="shortcut" @onclick="ApplyCurrentMonth">Month</div>
+                    <div class="shortcut" @onclick="() => ApplyPeriod(7)">Period</div>
+                    <div class="shortcut" @onclick="ApplyCurrentQuarter">Quarter</div>
+                }
+                else
+                {
+                    <div class="shortcut" @onclick="() => ApplyQuick(1, 7)">Next 7 days</div>
+                    <div class="shortcut" @onclick="ApplyNextMonth">Next Month</div>
+                    <div class="shortcut" @onclick="ApplyNextQuarter">Next Quarter</div>
+                }
+
+            </div>
+
+            <div style="position:absolute; bottom:18px; right:18px; left:auto;">
+                <div class="actions-row">
+                    <RadzenButton Text="Apply" ButtonStyle="ButtonStyle.Primary" Click="@OnApply" />
+                    <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Light" Click="@OnCancel" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

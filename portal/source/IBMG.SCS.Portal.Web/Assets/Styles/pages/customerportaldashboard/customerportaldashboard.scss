@@ -1,0 +1,109 @@
+﻿.dashboard {
+    .edit-toggle-button {
+        border: none !important;
+        padding: 8px 20px !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        color: black !important;
+        min-width: 48px;
+        height: 48px;
+    }
+
+    .edit-toggle-button.edit-mode-off {
+        background-color: var(--dark-electric-blue);
+        color: var(--color-white) !important;
+    }
+
+    .edit-toggle-button.edit-mode-on {
+        background-color: var(--color-sunray) !important;
+    }
+
+    .custom {
+        width: 150px;
+        height: 48px;
+
+        .rz-dropdown-label {
+            padding-top: 8px !important;
+        }
+    }
+
+    .rz-card {
+        padding: 10px !important;
+    }
+
+    .widget-title-outside {
+        font-size: 22px;
+        color: var(--dark-electric-blue) !important;
+        font-weight: 600;
+    }
+
+    .widget-card-wrapper {
+        border-radius: var(--rz-card-border-radius);
+        background-color: var(--rz-card-background-color);
+        box-shadow: var(--rz-card-shadow);
+    }
+
+    .widget-card-wrapper {
+        flex: 1!important;
+    }
+
+    .dashboard-widget-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dashboard-widget {
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+
+        &:hover {
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background-color: rgba(225, 194, 90, 0.10);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        &:active::after {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+    }
+
+    .delete-button {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        border-radius: 50%;
+        z-index: 10;
+    }
+
+    .accno {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        color: var(--dark-electric-blue);
+
+        span {
+            font-weight: 400;
+            font-size: 28px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            color: var(--dark-electric-blue);
+        }
+    }
+}

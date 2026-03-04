@@ -1,0 +1,19 @@
+version: "3.9"
+name: downwind
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mIOub5n3nG8LEpaa
+    volumes:
+      - './.dockertemp/sql/data:/var/opt/mssql/data'
+      - './.dockertemp/sql/log:/var/opt/mssql/log'
+      - './.dockertemp/sql/secrets:/var/opt/mssql/secrets'
+    ports:
+      - "1441:1433"
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui

@@ -1,0 +1,105 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Components.Widgets
+@using IBMG.SCS.Portal.Web.Client.Dtos
+@using IBMG.SCS.Portal.Web.Client.Shared
+
+<div class="@ContainerClass">
+
+    @if (IsEditMode)
+    {
+        <div class="row-layout-toolbar">
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.OneColumn ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.OneColumn)">
+                @((MarkupString)SvgStorage.OneCol)
+            </RadzenButton>
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.TwoEqual ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.TwoEqual)">
+                @((MarkupString)SvgStorage.TwoEqual)
+            </RadzenButton>
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.TwoUneven ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.TwoUneven)">
+
+                @((MarkupString)SvgStorage.TwoUneven)
+            </RadzenButton>
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.ThreeUneven ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.ThreeUneven)">
+                @((MarkupString)SvgStorage.ThreeUneven)
+            </RadzenButton>
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.ThreeEqual ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.ThreeEqual)">
+                @((MarkupString)SvgStorage.ThreeEqual)
+            </RadzenButton>
+
+            <RadzenButton class="@($"layout-btn {(ActiveLayouts.GetValueOrDefault(RowOrder) == DashboardRowLayout.FourEqual ? "active" : "")}")"
+                          Click="() => ChangeLayout(DashboardRowLayout.FourEqual)">
+                @((MarkupString)SvgStorage.FourEqual)
+            </RadzenButton>
+
+        </div>
+
+    }
+
+    @if (IsEditMode)
+    {
+        <div class="edit-overlay">
+            <RadzenButton Icon="delete"
+                          class="delete-group-button"
+                          Size="ButtonSize.Small"
+                          ButtonStyle="ButtonStyle.Danger"
+                          Click="() => OnDelete.InvokeAsync(RowOrder)" />
+        </div>
+    }
+
+    <div class="widgets-wrapper">
+        <div class="row">
+
+            @if (IsEditMode)
+            {
+                @ChildContent
+
+                @if (CanAddWidget && RemainingWidth > 0)
+                {
+                    <div class="dashboard-widget-col col-md-@RemainingWidth col-12 mb-3">
+                        <div class="empty-widgets-box h-100">
+                            <RadzenButton class="add-widget-empty w-100 h-100"
+                                          Click="OpenAddWidgetDialog">
+                                <div class="add-icon">+</div>
+                                <div>Add Widget</div>
+                            </RadzenButton>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                @ChildContent
+            }
+
+
+        </div>
+    </div>
+
+</div>
+
+@if (IsEditMode)
+{
+    <div class="add-widget-outside-wrapper">
+        <RadzenButton Icon="add"
+                      class="add-widget-outside-button"
+                      Size="ButtonSize.Medium"
+                      Click="AddNewRow"
+                      Style="border-radius:50%;" />
+    </div>
+}
+<style>
+    .rz-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>

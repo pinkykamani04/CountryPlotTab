@@ -1,0 +1,90 @@
+﻿@page "/help-&-support"
+@using IBMG.SCS.Portal.Web.Client.Components.SideDialog
+
+<PageTitle>Help & Support | IBMG</PageTitle>
+
+<RadzenStack class="mt-5 mx-4 w-100 helpandsupport">
+    <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
+        <RadzenText TextStyle="TextStyle.H4" Text="Help & Support" />
+        <RadzenButton Text="Report an Issue" Size="ButtonSize.Small" Click="@OpenSideDialog" />
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn SizeSM="4">
+            <RadzenFormField Variant="Variant.Outlined" Text="SEARCH" class="w-100">
+                <ChildContent>
+                    <RadzenTextBox />
+                </ChildContent>
+                <End>
+                    <RadzenIcon Icon="search" IconColor="#4F6A7B" />
+                </End>
+            </RadzenFormField>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn SizeSM="3">
+            <RadzenCard class="help-and-support-card">
+                <RadzenStack>
+                    <RadzenIcon Icon="description" class="card-icon" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" TextStyle="TextStyle.Subtitle1" />
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+                    <RadzenButton Icon="visibility" />
+                    <RadzenButton Icon="download" />
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn SizeSM="3">
+            <RadzenCard class="help-and-support-card">
+                <RadzenStack>
+                    <RadzenIcon Icon="description" class="card-icon" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" TextStyle="TextStyle.Subtitle1" />
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+                    <RadzenButton Icon="visibility" />
+                    <RadzenButton Icon="download" />
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn SizeSM="3">
+            <RadzenCard class="help-and-support-card">
+                <RadzenStack>
+                    <RadzenIcon Icon="description" class="card-icon" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" TextStyle="TextStyle.Subtitle1" />
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+                    <RadzenButton Icon="visibility" />
+                    <RadzenButton Icon="download" />
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn SizeSM="3">
+            <RadzenCard class="help-and-support-card">
+                <RadzenStack>
+                    <RadzenIcon Icon="description" class="card-icon" />
+                </RadzenStack>
+                <RadzenStack>
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" TextStyle="TextStyle.Subtitle1" />
+                    <RadzenText Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="10px">
+                    <RadzenButton Icon="visibility" />
+                    <RadzenButton Icon="download" />
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenStack>

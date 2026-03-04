@@ -1,0 +1,40 @@
+﻿.widget-card {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all .2s ease;
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.25);
+        backdrop-filter: blur(2px);
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity .25s ease;
+        z-index: 10;
+    }
+
+    .add-btn {
+        padding: 10px 20px;
+        background: #4a5c6a;
+        border-radius: 10px;
+        color: white;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all .25s ease;
+    }
+
+    &:hover {
+        .overlay {
+            opacity: 1;
+        }
+
+        .add-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

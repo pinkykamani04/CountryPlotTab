@@ -1,0 +1,62 @@
+[
+  {
+    "id": "21E7A75D-6F75-4E5D-8A31-0C4B0FE8E1A2",
+    "name": "SpendByCategory",
+    "isMandatory": false,
+    "icon": "donut_large"
+  },
+  {
+    "id": "4F2C6F63-1D3A-44C8-A2F9-1F7F3B1B5EA0",
+    "name": "TotalSpend",
+    "isMandatory": false,
+    "icon": "show_chart"
+  },
+  {
+    "id": "0C3EAC7D-E22F-47C0-906F-3E2A8DE0FD67",
+    "name": "TopBranchesBySpend",
+    "isMandatory": false,
+    "icon": "format_list_numbered"
+  },
+  {
+    "id": "B5F2EF42-7796-4A8F-9E79-4D84455CBF88",
+    "name": "SpendByBranch",
+    "isMandatory": false,
+    "icon": "donut_large"
+  },
+  {
+    "id": "3C8A43E1-9F93-4DD1-A5E8-6C4A2A42F61B",
+    "name": "TopProductsBySpend",
+    "isMandatory": false,
+    "icon": "format_list_numbered"
+  },
+  {
+    "id": "EBD9BC51-67BB-4E7D-84F4-9155E1B42FAB",
+    "name": "SpendByOperative",
+    "isMandatory": false,
+    "icon": "donut_large"
+  },
+  {
+    "id": "C29EBF43-8BB1-4ED6-B3BB-92FFB5878151",
+    "name": "FaultyGoodsKpi",
+    "isMandatory": false,
+    "icon": "speed"
+  },
+  {
+    "id": "A510DFE7-1541-4E6E-92C3-9C8A9788AC07",
+    "name": "InvoiceAccuracyKpi",
+    "isMandatory": false,
+    "icon": "speed"
+  },
+  {
+    "id": "D73C0697-8A45-4F4C-9FF9-A6C9635E1F9C",
+    "name": "OtifKpi",
+    "isMandatory": false,
+    "icon": "speed"
+  },
+  {
+    "id": "97C8AA47-FC31-4E26-9C1F-DF7946D156AA",
+    "name": "TopOperativesBySpend",
+    "isMandatory": false,
+    "icon": "format_list_numbered"
+  }
+]

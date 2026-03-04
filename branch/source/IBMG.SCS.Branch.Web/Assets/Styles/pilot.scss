@@ -1,0 +1,74 @@
+﻿.pilot-card,
+.pilot-statistics,
+.past-flights,
+.upcoming-flights {
+    border-radius: 18px !important;
+}
+
+.pilot-card {
+    height: max-content !important;
+}
+
+
+.icon-only-btn {
+    .rz-button-icon {
+        font-size: 20px;
+        color: #0b2c5d;
+        transition: 0.2s ease;
+    }
+
+    &:hover {
+        .rz-button-icon {
+            color: #083a8f;
+        }
+    }
+}
+
+.pilot-avatar,
+.pilot-avatar-small {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #ccc !important;
+}
+
+.pilot-avatar {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.pilot-avatar-small {
+    width: 80px !important;
+    height: 80px !important;
+    border-color: #ddd !important;
+}
+
+.icon-sm {
+    width: 22px;
+    height: 22px;
+}
+.flight-row {
+    font-size: 17px !important;
+}
+.flight-code,
+.flight-time,
+.flight-location {
+    color: #0084ff !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+.flight-time {
+    font-weight: 600 !important;
+}
+
+.flight-date {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #444 !important;
+}
+
+.flight-divider {
+    color: black !important;
+    font-weight: 700 !important;
+    font-size: 17px !important;
+}

@@ -1,0 +1,62 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenColumn Size="12" SizeMd="12" SizeLg="8" class="bg-light rounded shadow-sm p-3 h-50 position-relative">
+   
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <RadzenButton Icon="chevron_left" Size="ButtonSize.Small" class="light-grey-btn" Click="@HandlePreviousWeek" />
+        <RadzenText Text="@WeekDisplayText" TextStyle="TextStyle.DisplayH6" class="fw-semibold mb-0 text-center" />
+        <RadzenButton Icon="chevron_right" Size="ButtonSize.Small" class="light-grey-btn" Click="@HandleNextWeek" />
+    </div>
+   <div class="position-relative">
+   @if (IsLoading)
+   {
+        <ComponentLoading IsVisible="true" CssClass="calendar-grid-loader" />
+   }
+   <div class="week-grid border bg-white rounded overflow-auto">
+
+        @foreach (var day in WeekDays)
+        {
+            <div class="bg-light border-bottom border-end py-2 text-center d-flex flex-column justify-content-center align-items-center">
+                <div class="fw-semibold small">
+                    @day.DayOfWeek.ToString().Substring(0, 3)
+                </div>
+            </div>
+        }
+
+        @foreach (var day in WeekDays)
+        {
+            var bookingsForDay = GetBookingsForDay(day);
+            var canBook = CanBook(day);
+            var isPastDay = day < DateTime.Today;
+
+            <div class="grid-cell border-bottom border-end p-2 d-flex flex-column gap-1 @(isPastDay ? "bg-light opacity-50" : "bg-white")">
+
+                <div class="fw-semibold small text-center mb-1">@day.Day</div>
+
+                @if (bookingsForDay.Any())
+                {
+                    @foreach (var booking in bookingsForDay)
+                    {
+                        var currentDay = day;
+                        var currentBooking = booking;
+                        <div class="text-white rounded p-1 small" style="cursor:pointer;background-color:#FF4500" @onclick="@(() => HandleBookingClick(currentDay, currentBooking))">
+                            <div class="fw-semibold">@booking.FromDate.ToString("HH:mm") - @booking.ToDate.ToString("HH:mm")</div>
+                            <div class="small">@booking.FromLocation → @booking.ToLocation</div>
+                        </div>
+                    }
+                }
+
+                @if (canBook)
+                {
+                    var currentDay = day;
+                    <RadzenButton Size="ButtonSize.Small" Text="Book" class="w-100 mt-auto light-grey-btn" Click="@(() => HandleBookingClick(currentDay, null))" />
+                }
+
+            </div>
+        }
+
+    </div>
+   </div>
+</RadzenColumn>

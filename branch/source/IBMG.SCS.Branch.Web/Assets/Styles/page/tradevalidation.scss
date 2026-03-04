@@ -1,0 +1,45 @@
+﻿.trade-validation {
+    .rz-label {
+        color: var(--dark-electric-blue);
+        font-weight: 700;
+    }
+
+    .tv-card-grey {
+        background: linear-gradient(180deg, #d7d7d7, #b5b5b5);
+        border-radius: 22px;
+    }
+
+    .tv-card-green {
+        background: linear-gradient(107deg, #198511 2.61%, #1D9C30 101.2%);
+        border-radius: 22px;
+    }
+
+    .tv-card-red {
+        background: linear-gradient(107deg, #c00000 2.61%, #ff3333 101.2%);
+        border-radius: 22px;
+    }
+
+    .tv-card-yellow {
+        background: linear-gradient(107.38deg, #E1C25A 2.61%, #EBD67C 101.2%);
+        border-radius: 20px;
+
+        .tv-label {
+            color: var(--dark-electric-blue) !important;
+        }
+
+        .color-white {
+            color: ar(--dark-electric-blue) !important;
+        }
+    }
+
+    .tv-bottom-band {
+        background: rgba(0,0,0,0.15);
+        border-radius: 0 0 20px 20px;
+        padding: 10px 24px;
+    }
+
+    .tv-label {
+        font-size: 12px;
+        color: var(--color-white);
+    }
+}

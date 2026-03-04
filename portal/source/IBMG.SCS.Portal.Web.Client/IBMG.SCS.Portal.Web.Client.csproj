@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+		<StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup>
+		<RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<!-- Exclude generated folder from compilation - use F12 to view generated code -->
+		<Compile Remove="generated\**" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Content Remove="Data\widgets.json" />
+	</ItemGroup>
+	
+
+	<ItemGroup>
+		<PackageReference Include="PearDrop.Authentication" Version="8.1.2" />
+		<PackageReference Include="PearDrop.Multitenancy.Client" Version="10.0.0-net-10-migration0122" />
+		<PackageReference Include="PearDrop.Authentication.Multitenancy.Client" Version="10.0.0-net-10-migration0122" />
+		<PackageReference Include="BluQube" Version="1.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Radzen.Blazor" Version="8.3.5" />
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Components\Layout\MainLayout.razor" />
+    <AdditionalFiles Include="Components\Layout\NavMenu.razor" />
+    <AdditionalFiles Include="Components\Layout\ReconnectModal.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\widgets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IBMG.SCS.Portal.ApiClient\IBMG.SCS.Portal.ApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Import Project="..\..\..\shared\IBMG.SCS.Shared.Rules\IBMG.SCS.Shared.Rules.projitems" Label="Shared" />
+
+</Project>

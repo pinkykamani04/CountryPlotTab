@@ -1,0 +1,30 @@
+﻿
+@using IBMG.SCS.Portal.Web.Client.Dtos
+@using Radzen
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="1rem" Class="w-100">
+    <RadzenRow>
+        <RadzenColumn Size="12">
+            <TonnageColumnCard Title="Tonnage"
+                               YAxisTitle="Tonnage"
+                               Data="MonthlyChartData"
+                               TargetValue="3000" />
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow Gap="1rem">
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <TonnageBarCard Title="Number of Transactions"
+                            Data="TransactionCountChartData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <TonnageLineCard Title="Total Value of Transactions"
+                             Data="TotalValueChartData" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeSM="12" SizeMD="12" SizeLG="4">
+            <TonnageGaugeCard Title="Performance by Stream vs Target Value"
+                              AchievedPercentage="AchievedPercentage"
+                              TotalValue="TotalStreamValue" />
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenStack>

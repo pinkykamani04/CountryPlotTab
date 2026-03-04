@@ -1,0 +1,26 @@
+﻿@using BluQube.Commands
+@using IBMG.SCS.Portal.Web.Client.Dtos
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Commands.AddJobRoleCommand
+@inject DialogService DialogService
+@inject ICommander Commander
+
+<RadzenTemplateForm Data="@JobRole" TItem="JobRoleDto" Submit="@OnSave" class="h-100">
+    <div class="card-slideout px-2">
+
+        <RadzenText class="py-2 dark-blue-color heading fw-700"
+                    Text="@(IsEdit ? "Edit Role" : "Add Role")" />
+
+        <RadzenStack Gap="0" class="mb-3">
+            <RadzenLabel Text="Role Name" />
+            <RadzenTextBox @bind-Value="JobRole.Name" Name="Name" Style="width:100%" />
+            <RadzenRequiredValidator Component="Name" Text="Role name is required" />
+        </RadzenStack>
+
+        <RadzenStack Gap="0" class="mb-3">
+            <RadzenButton Text="Save"
+                          class="w-100 mt-3"
+                          ButtonType="ButtonType.Submit"
+                          ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </div>
+</RadzenTemplateForm>

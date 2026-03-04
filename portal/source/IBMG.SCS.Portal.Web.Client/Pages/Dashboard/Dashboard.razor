@@ -1,0 +1,108 @@
+﻿@page "/"
+@using IBMG.SCS.Portal.Web.Client.Components
+@using IBMG.SCS.Portal.Web.Client.Components.DashboardWidgets
+@using IBMG.SCS.Portal.Web.Client.Components.DonutWidget
+@using IBMG.SCS.Portal.Web.Client.Components.LineWidget
+@using IBMG.SCS.Portal.Web.Client.Components.RankedListWidget
+@using IBMG.SCS.Portal.Web.Client.Components.KpiGaugeWidget
+@using IBMG.SCS.Portal.Web.Client.Components.WidgetsContainer
+@using IBMG.SCS.Portal.Web.Client.Components.Dashboard
+
+<PageTitle>Dashboard | IBMG</PageTitle>
+
+<div class="container-fluid px-0">
+    <div class="dashboard">
+        @if (_isLoading)
+        {
+            <ComponentLoading IsVisible="true" />
+        }
+        else
+        {
+            <RadzenRow class="w-100 align-items-center mt-3 px-3">
+                <RadzenColumn Size="12">
+
+                    <div class="d-flex flex-wrap align-items-center justify-content-between w-100">
+                        <div class="accno">
+                            Account Number:
+                            <span>0000234</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+
+                            <RadzenDropDown @bind-Value="SelectedFilter"
+                                            Data="filters"
+                                            TValue="string"
+                                            Change="OnFilterChanged"
+                                            class="custom" />
+
+                            <RadzenButton class="@($"edit-toggle-button {(IsEditMode ? "edit-mode-on" : "edit-mode-off")}")"
+                                          Click="@ToggleEditMode">
+                                <RadzenIcon Icon="dashboard" />
+                            </RadzenButton>
+
+                        </div>
+
+                    </div>
+
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow class="mt-3 w-100">
+                <DashboardWidgets SizeMD="3" Icon="credit_card" CardText="Credit Limit" CardNumber="£12,000" IconBackground="#FFE0EB" IconColor="#FF82AC" />
+                <DashboardWidgets SizeMD="3" Icon="account_balance_wallet" CardText="Available Credit" CardNumber="£7,920" IconBackground="#DCFAF8" IconColor="#16DBCC" />
+                <DashboardWidgets SizeMD="3" Icon="trending_up" CardText="Total Sales" CardNumber="£12,750" IconBackground="#FFF6D1" IconColor="#E1C25A" />
+                <DashboardWidgets SizeMD="3" Icon="shopping_cart" CardText="Open Orders" CardNumber="£5,734" IconBackground="#E7EDFF" IconColor="#8694BF" />
+            </RadzenRow>
+
+            <RadzenRow class="dashboard-row w-100 mt-4 p-0 m-0">
+                <RadzenRow class="dashboard-row w-100 mt-4 p-0 m-0">
+
+                    @foreach (var rowNumber in GetRows())
+                    {
+                        var widgetsInRow = Widgets
+                        .Where(w => w.RowOrder == rowNumber)
+                        .OrderBy(w => w.Position)
+                        .ToList();
+
+                    <WidgetsContainer IsEditMode="IsEditMode"
+                                      RowOrder="@rowNumber"
+                                      IsEmpty="@(widgetsInRow.Count == 0)"
+                                      Widgets="widgetsInRow"
+                                      OnDelete="DeleteGroup"
+                                      OnWidgetAdded="AddWidget"
+                                      ActiveLayouts="ActiveLayouts"
+                                       OnAddRow="AddNewRow"
+                     OnRowLayoutChanged="args => ApplyRowLayout(args.rowOrder, args.layout)">
+
+                        @if (widgetsInRow.Any())
+                        {
+                            @foreach (var widget in widgetsInRow)
+                            {
+                               <div class="dashboard-widget-col col-md-@widget.RowLayoutType col-12 mb-3 dashboard-widget clickable"
+     @onclick="() => NavigateToOrders(widget)">
+
+    <div class="widget-title-outside">
+        @widget.Title
+    </div>
+
+    <div class="widget-card-wrapper">
+        @widget.Content
+    </div>
+
+</div>
+                            }
+
+                            }
+
+                        </WidgetsContainer>
+                    }
+
+                </RadzenRow>
+
+
+            </RadzenRow>
+        }
+
+
+    </div>
+</div>
+

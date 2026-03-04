@@ -1,0 +1,56 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos
+
+<RadzenCard Style="background:#F5FFE6; border-radius:16px; height:100%; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:1.25rem;">
+    <RadzenText TextStyle="TextStyle.H6" Style="color:#0B6E3F; font-weight:600; margin-bottom:1rem;">
+        @Title
+    </RadzenText>
+
+    @if (Data == null || !Data.Any())
+    {
+        <div class="h-100 d-flex flex-column align-items-center justify-content-center text-muted gap-2 text-center" style="min-height:200px;">
+            <RadzenIcon Icon="bar_chart" Style="font-size:32px; opacity:0.4;" />
+            <RadzenText TextStyle="TextStyle.Body1">No chart data to display</RadzenText>
+        </div>
+    }
+    else
+    {
+        <div class="d-none d-lg-block w-100" style="height:260px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                <RadzenColumnSeries TItem="MonthlyMetricDto"
+                                    Data="@FormattedData"
+                                    CategoryProperty="Month"
+                                    ValueProperty="Value"
+                                    Fill="#0A733C" />
+               
+                <RadzenLegend Visible="false" />
+                <RadzenColumnOptions Radius="5" />
+            </RadzenChart>
+        </div>
+
+        <div class="d-none d-sm-block d-lg-none w-100" style="height:280px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                <RadzenColumnSeries TItem="GroupedMetricDto"
+                                    Data="@GetAggregatedGroups(4)"
+                                    CategoryProperty="Label"
+                                    ValueProperty="Total"
+                                    Fill="#0A733C" />
+
+                <RadzenLegend Visible="false" />
+                <RadzenColumnOptions Radius="5" />
+            </RadzenChart>
+        </div>
+
+        <div class="d-sm-none w-100" style="height:260px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                <RadzenColumnSeries TItem="GroupedMetricDto"
+                                    Data="@GetAggregatedGroups(3)"
+                                    CategoryProperty="Label"
+                                    ValueProperty="Total"
+                                    Fill="#0A733C" />
+                <RadzenLegend Visible="false" />
+                <RadzenColumnOptions Radius="5" />
+            </RadzenChart>
+        </div>
+    }
+</RadzenCard>
+

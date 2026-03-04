@@ -1,0 +1,113 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos;
+
+<div class="trade-card-management px-3 py-2">
+    <RadzenRow AlignItems="AlignItems.Center" Gap="10px">
+        <RadzenColumn Size="12" SizeMd="6" SizeLg="4">
+            <div class="search-wrapper form-group">
+                <input type="text"
+                       class="form-control search-input"
+                       placeholder="SEARCH OPERATIVE"
+                       @bind:event="oninput"
+                       @bind="searchText" />
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.2939 12.5786H13.3905L13.0703 12.2699C14.191 10.9663 14.8656 9.27387 14.8656 7.43282C14.8656 3.32762 11.538 0 7.43282 0C3.32762 0 0 3.32762 0 7.43282C0 11.538 3.32762 14.8656 7.43282 14.8656C9.27387 14.8656 10.9663 14.191 12.2699 13.0703L12.5786 13.3905V14.2939L18.2962 20L20 18.2962L14.2939 12.5786ZM7.43282 12.5786C4.58548 12.5786 2.28702 10.2802 2.28702 7.43282C2.28702 4.58548 4.58548 2.28702 7.43282 2.28702C10.2802 2.28702 12.5786 4.58548 12.5786 7.43282C12.5786 10.2802 10.2802 12.5786 7.43282 12.5786Z"
+                          fill="#4F6A7B" />
+                </svg>
+            </div>
+        </RadzenColumn>
+
+        <RadzenColumn Size="12" SizeMd="6" SizeLg="8"
+                      class="icon-btn-group d-flex justify-content-md-end gap-2 mt-2 mt-md-0">
+
+            <RadzenButton Icon="person_add" Click="OpenAdd"
+                          ButtonStyle="ButtonStyle.Primary" />
+
+            <RadzenButton Icon="filter_alt"
+                          ButtonStyle="ButtonStyle.Primary" />
+
+            <RadzenButton Icon="filter_alt_off"
+                          ButtonStyle="ButtonStyle.Danger" />
+
+        </RadzenColumn>
+        <RadzenRow>
+            <div class="scrollable-grid" id="operative-export">
+                <RadzenDataGrid TItem="OperativeDto"
+                                Data="@FilteredCards"
+                                Class="mt-3 trade-card-grid"
+                                AllowSorting="true"
+                                AllowFiltering="false"
+                                GridLines="DataGridGridLines.None"
+                                AllowAlternatingRows="true"
+                                AllowPaging="false"
+                                ColumnWidth="120px">
+
+                    <Columns>
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="FirstName"
+                                              Title="First Name"
+                                              Sortable="true" />
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="LastName"
+                                              Title="Last Name"
+                                              Sortable="true" />
+                        <RadzenDataGridColumn TItem="OperativeDto" Title="Job Role">
+                            <Template Context="row">
+                                @(Roles.FirstOrDefault(x => x.Id == row.JobRole)?.Name)
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="OperativeNumber"
+                                              Title="Operative ID"
+                                              Sortable="true" />
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="StartDate"
+                                              Title="Start Date"
+                                              Sortable="true">
+                            <Template Context="row">
+                                @row.StartDate.ToString("dd/MM/yyyy")
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="EndDate"
+                                              Title="End Date"
+                                              Sortable="true">
+                            <Template Context="row">
+                                @row.EndDate.ToString("dd/MM/yyyy")
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Property="Status"
+                                              Title="Status"
+                                              Sortable="true">
+                            <Template Context="row">
+                                @if (row.Status == Status.Active)
+                                {
+                                    <RadzenIcon Icon="check_circle" class="material-icons text-success"/>
+                                }
+                                else
+                                {
+                                    <RadzenIcon Icon="cancel" class="material-icons text-danger"/>
+                                }
+                            </Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="OperativeDto"
+                                              Filterable="false"
+                                              Sortable="false"
+                                              TextAlign="TextAlign.Right">
+                            <Template Context="row">
+                                <RadzenButton Icon="edit_square"
+                                              Size="ButtonSize.Small"
+                                              IconColor="#4F6A7B"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="() => OpenEdit(row)" />
+                            </Template>
+                        </RadzenDataGridColumn>
+
+                    </Columns>
+
+                </RadzenDataGrid>
+            </div>
+        </RadzenRow>
+    </RadzenRow>
+</div>

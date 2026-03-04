@@ -1,0 +1,227 @@
+﻿@page "/orders-grid/{Period?}/{GroupBy?}"
+@using IBMG.SCS.Portal.Web.Client.Components
+@using IBMG.SCS.Portal.Web.Client.Components.DashboardWidgets
+@using IBMG.SCS.Portal.Web.Client.Components.DateRangeDialog
+@using Radzen
+@using Radzen.Blazor
+@using System.Globalization
+@using IBMG.SCS.Portal.Web.Client.Models;
+@inject DialogService DialogService
+@inject IJSRuntime JS
+
+<PageTitle>Orders | IBMG</PageTitle>
+
+<div class="timesheet-container">
+    <RadzenRow>
+        <DashboardWidgets SizeMD="3" Icon="box" CardText="Total Non-Catalogue Order" CardNumber="234" IconBackground="#FFE0EB" IconColor="#FF82AC" />
+        <DashboardWidgets SizeMD="3" Icon="groups" CardText="Non-Catalogue Orders Per Operative" CardNumber="8.2" IconBackground="#DCFAF8" IconColor="#16DBCC" />
+        <DashboardWidgets SizeMD="3" Icon="star" CardText="Total Specials Orders" CardNumber="92" IconBackground="#FFF6D1" IconColor="#E1C25A" />
+        <DashboardWidgets SizeMD="3" Icon="inventory" CardText="Specials Orders Per Operative" CardNumber="6.2" IconBackground="#E7EDFF" IconColor="#8694BF" />
+    </RadzenRow>
+    <div class=" mt-3">
+        <div class="filters-bar mt-3">
+
+            <RadzenButton class="filter-control date-control"
+                          ButtonStyle="ButtonStyle.Light"
+                          Click="@OpenDateDialog">
+                <RadzenIcon Icon="calendar_today" class="mr-2" />
+                @startDate.ToString("dd/MMM/yy") – @endDate.ToString("dd/MMM/yy")
+            </RadzenButton>
+
+            <div class="search-box">
+                <RadzenTextBox @bind-Value="searchText"
+                               Placeholder="Search Operative..." Change="@(_ => ApplyFilter())" />
+                <RadzenIcon Icon="search" class="search-icon" />
+            </div>
+
+            <div class="filter-by-group">
+
+                <div class="filter-control dropdown-wrapper filter-by">
+                    <label>FILTER BY</label>
+
+                    <RadzenDropDown @bind-Value="selectedFilterType"
+                                    Data="@FilterTypeOptions"
+                                    Change="@OnFilterTypeChanged"
+                                    Style="width:220px" />
+                </div>
+
+            </div>
+
+            <div class="filter-control dropdown-wrapper">
+                <RadzenDropDown @bind-Value="groupBy"
+                                Data="@GroupOptions"
+                                Change="@(_ => ApplyFilter())" />
+            </div>
+            <div class="filter-control dropdown-wrapper">
+                <label>ORDER BY</label>
+                <RadzenDropDown @bind-Value="orderBy"
+                                Data="@OrderByOptions"
+                                Change="@OnOrderByChanged" />
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(selectedFilterType))
+            {
+                <div class="search-box">
+                    <input class="rz-textbox rz-inputtext" type="text" placeholder="Type to filter..." @oninput="OnFilterInput" />
+                </div>
+            }
+
+            <div class="actions">
+                <RadzenButton Icon="filter_list_off" class="reset-btn" Click="@ResetFilter" />
+
+                <div class="download-container">
+                    <RadzenButton class="download-btn"
+                                  Icon="download"
+                                  ButtonStyle="ButtonStyle.Light"
+                                  Click="@ToggleDownloadMenu" />
+
+                    @if (showDownloadMenu)
+                    {
+                        <div class="download-menu">
+
+                            <RadzenButton Size="ButtonSize.Small"
+                                          Icon="close"
+                                          Class="close-btn"
+                                          Click="@ToggleDownloadMenu" />
+
+                            <RadzenStack Orientation="Orientation.Vertical"
+                                         Gap="10px"
+                                         Style="margin-top: 35px;">
+                                <RadzenButton Text="Download PDF" class="menu-item" Click="@DownloadPdf" />
+                                <RadzenButton Text="Download CSV" class="menu-item" Click="@DownloadCsv" />
+                            </RadzenStack>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div id="timesheet-export-table">
+            <RadzenDataGrid @ref="TimesheetGrid"
+                            Data="@displayRows"
+                            TItem="DisplayRow"
+                            ShowPagingSummary="true"
+                            SelectionMode="DataGridSelectionMode.Single"
+                            PagingSummaryFormat="Page {0} - {1} of {2}"
+                            FilterPopupRenderMode="PopupRenderMode.OnDemand"
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterMode="@(FilterMode.Advanced)"
+                            AllowSorting="false"
+                            AllowFiltering="false"
+                            AllowPaging="true"
+                            PageSize="10"
+                            PageSizeOptions="@(new int[] { 5, 10, 20, 50 })"
+                            PagerHorizontalAlign="HorizontalAlign.Center"
+                            ColumnWidth="100px">
+
+                <Columns>
+                    @if (ShowOperative)
+                    {
+                        <RadzenDataGridColumn TItem="DisplayRow"
+                                              Property="Operative"
+                                              Title="Operative"
+                                              Width="180px"
+                                              TextAlign="TextAlign.Left"
+                                              Frozen="true" />
+                    }
+                    @if (ShowBranch)
+                    {
+                        <RadzenDataGridColumn TItem="DisplayRow"
+                                              Property="Branch"
+                                              Title="Branch"
+                                              Width="160px"
+                                              Frozen="true" />
+                    }
+                    @if (ShowCategory)
+                    {
+                        <RadzenDataGridColumn TItem="DisplayRow"
+                                              Property="Category"
+                                              Title="Category"
+                                              Width="160px"
+                                              Frozen="true" />
+                    }
+                    @if (ShowTransactionType)
+                    {
+                        <RadzenDataGridColumn TItem="DisplayRow"
+                                              Property="TransactionType"
+                                              Title="Transaction Type"
+                                              Width="180px"
+                                              Frozen="true" />
+                    }
+
+                    <RadzenDataGridColumn TItem="DisplayRow"
+                                          Property="TotalSpent"
+                                          FormatString="{0:C}"
+                                          Frozen="true">
+                        <HeaderTemplate>
+                            @((MarkupString)"Total<br/>Spent")
+                        </HeaderTemplate>
+                    </RadzenDataGridColumn>
+
+                    @foreach (var date in columnDates)
+                    {
+                        var columnDate = date;
+
+                        <RadzenDataGridColumn TItem="DisplayRow"
+                                              CalculatedCssClass="@( (col, item) => GetCalculatedCssClass(item, columnDate) )">
+
+                            <HeaderTemplate>
+                                @((MarkupString)FormatHeader(columnDate))
+                            </HeaderTemplate>
+
+                            <Template Context="row">
+                                <div @onclick="() => OnCellClick(row, columnDate)"
+                                     style="cursor:pointer;">
+                                    @row.Columns.GetValueOrDefault(columnDate).ToString("C")
+                                </div>
+                            </Template>
+
+                            <FooterTemplate>
+                                @{
+                                    var total = displayRows.Sum(r => r.Columns.GetValueOrDefault(columnDate));
+                                }
+                                <strong>@total.ToString("C")</strong>
+                            </FooterTemplate>
+                        </RadzenDataGridColumn>
+                    }
+                </Columns>
+
+            </RadzenDataGrid>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.downloadFileFromBytes = (filename, bytes) => {
+      var blob = new Blob([new Uint8Array(bytes)], { type: "application/octet-stream" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    window.getOuterHtml = (selector) => {
+      const el = document.querySelector(selector);
+      if (!el) return "";
+      return `<html><head><title>Timesheet</title>
+        <style>
+          table { border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; }
+          th, td { border: 1px solid #ddd; padding: 8px; text-align:center; }
+          th { background: #f6f6f6; font-weight:700; }
+        </style>
+      </head><body>` + el.outerHTML + `</body></html>`;
+    };
+
+    window.openPrintWindow = (html) => {
+      var w = window.open('', '_blank');
+      w.document.write(html);
+      w.document.close();
+      w.focus();
+      setTimeout(() => { w.print(); }, 300);
+    };
+</script>

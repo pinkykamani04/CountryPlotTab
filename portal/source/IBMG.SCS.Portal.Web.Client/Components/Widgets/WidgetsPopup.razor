@@ -1,0 +1,155 @@
+﻿@using BluQube.Constants
+@using BluQube.Queries
+@using IBMG.SCS.Portal.ApiClient
+@using IBMG.SCS.Portal.Web.Client.Components.DonutWidget
+@using IBMG.SCS.Portal.Web.Client.Components.KpiGaugeWidget
+@using IBMG.SCS.Portal.Web.Client.Components.LineWidget
+@using IBMG.SCS.Portal.Web.Client.Components.RankedListWidget
+@using IBMG.SCS.Portal.Web.Client.Components.WidgetWrapper
+@using IBMG.SCS.Portal.Web.Client.Components.Widgets
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Queries
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.QueryResults
+@using Radzen
+@using IBMG.SCS.Portal.Web.Client.Services;
+@inject IQuerier Querier
+@inject IClient Api
+
+
+<div class="widgets-popup p-3">
+
+    @if (AvailableWidgets is null)
+    {
+        <ComponentLoading IsVisible="true" />
+    }
+    else if (!AvailableWidgets.Any())
+    {
+        <div>No widgets available.</div>
+    }
+    else
+    {
+        <RadzenRow>
+            @if (isLoading)
+            {
+                <div class="d-flex justify-content-center align-items-center vw-100 vh-100">
+                    <ComponentLoading IsVisible="true" />
+                </div>
+            }
+            else
+            {
+                @foreach (var widget in AvailableWidgets)
+                {
+
+                    <RadzenColumn Size="12" SizeMD="6" SizeLG="4" class="mb-3">
+                        <div class="widget-card d-flex flex-column h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <RadzenIcon Icon="@widget.Icon" Style="font-size:22px; margin-right:8px;" />
+                                    <strong>@widget.Name</strong>
+                                </div>
+                            </div>
+
+                            <div class="widget-preview mb-3 flex-grow-1 d-flex">
+                                <WidgetWrapper OnAdd="@(async () => await SelectWidget(widget.Id, widget.Name))">
+                                    @RenderPreview(widget.Name)
+                                </WidgetWrapper>
+                            </div>
+                        </div>
+                    </RadzenColumn>
+
+                }
+            }
+        </RadzenRow>
+    }
+</div>
+
+@code {
+
+    RenderFragment RenderPreview(string name) => name switch
+    {
+        "TotalSpend" => @<LineWidget TItem="SpendPoint"
+            Data="@TotalSpendPoints"
+            Category="DayLabel"
+            Value="Amount"
+            Format="{0:C0}" />,
+
+    "SpendByCategory" =>@<div>
+    <DonutWidget TItem="CategorySpend"
+                 Data="@spendPoints"
+                 Category="Cat"
+                 Value="Amount"
+                 ShowLegend="true" />
+
+</div>,
+
+    "TopProductsBySpend" => @<RankedListWidget TItem="RankedItem"
+                  Items="@TopProducts"
+                  RankField="@(i => i.Rank)"
+                  NameField="@(i => i.Name)"
+                  AmountField="@(i => i.Amount)" />,
+ "SpendByOperative" => @<div>
+    <DonutWidget TItem="NameAmount"
+                 Data="@SpendByOperative"
+                 Category="Text"
+                 Value="Amount"
+                 ShowLegend="true" />
+
+</div>,
+
+
+"TopOperativesBySpend" => @<RankedListWidget TItem="RankedItem"
+                  Items="@TopOperatives"
+                  RankField="@(i => i.Rank)"
+                  NameField="@(i => i.Name)"
+                  AmountField="@(i => i.Amount)" />,
+
+
+"SpendByBranch" => @<DonutWidget TItem="NameAmount"
+             Data="@SpendByBranch"
+             Category="Text"
+             Value="Amount"
+             ShowLegend="true" />,
+
+
+"TopBranchesBySpend" => @<RankedListWidget TItem="RankedItem"
+                  Items="@TopBranches"
+                  RankField="@(i => i.Rank)"
+                  NameField="@(i => i.Name)"
+                  AmountField="@(i => i.Amount)" />,
+
+"FaultyGoodsKpi" => @<div>
+    <KpiGaugeWidget Description="Faulty Goods"
+                    Value="@(FaultyGoodsKpi ?? 0)" />
+</div>,
+
+"OtifKpi" => @<div>
+    <KpiGaugeWidget Description="OTIF"
+                    Value="@(OtifKpi ?? 0)" />
+</div>,
+
+"InvoiceAccuracyKpi" => @<div>
+    <KpiGaugeWidget Description="Accuracy"
+                    Value="@(InvoiceAccuracyKpi ?? 0)" />
+</div>,
+
+
+_ => @<div>Unknown widget</div>
+};
+}
+<style>
+
+    .widget-card {
+        height: 320px !important;
+        border: 1px solid var(--dark-blue, #4F6A7B);
+        border-radius: 1px;
+        padding: 12px;
+        background: #fff;
+    }
+
+    .widget-preview {
+        flex: 1; /* fills remaining space */
+        display: flex;
+        align-items: center; /* vertical centering */
+        justify-content: center;
+    }
+
+</style>

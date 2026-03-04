@@ -1,0 +1,120 @@
+﻿@page "/tenants/create"
+@using BluQube.Commands
+@using BluQube.Constants
+@using PearDrop.Multitenancy.Client.Domain.Tenant.Commands
+@using System.ComponentModel.DataAnnotations
+@inject ICommander Commander
+@inject NavigationManager Navigation
+
+
+
+<div class="container-fluid px-0 tenants mt-3">
+
+    <!-- Header -->
+    <RadzenRow class="w-100 my-3">
+        <RadzenText TextStyle="TextStyle.H4"
+                    class="dark-blue-color fw-600 mb-0"
+                    Text="Create New Tenant" />
+    </RadzenRow>
+
+    <!-- Card / Content -->
+    <RadzenRow class="w-100 tenant-card" AlignItems="AlignItems.Start">
+
+        <RadzenColumn Size="12" SizeMd="6" SizeLg="5">
+            <EditForm Model="model" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <RadzenStack Gap="6" class="p-4">
+                    <RadzenLabel Text="Tenant Name" />
+                    <RadzenTextBox @bind-Value="model.Name"
+                                   Style="width:100%" />
+                    <ValidationMessage class="text-danger" For="@(() => model.Name)" />
+                </RadzenStack>
+                <RadzenStack Gap="6" class="p-4">
+                    <RadzenLabel Text="Identifier (used in URLs/code)" />
+                    <RadzenTextBox @bind-Value="model.Identifier"
+                                   Style="width:100%" />
+                    <ValidationMessage class="text-danger" For="@(() => model.Identifier)" />
+                    <RadzenText TextStyle="TextStyle.Caption"
+                                class="text-muted"
+                                Text="Lowercase alphanumeric and hyphens only" />
+                </RadzenStack>
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <RadzenAlert AlertStyle="AlertStyle.Danger"
+                                 Text="@errorMessage"
+                                 class="mb-3" />
+                }
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             Gap="12"
+                             class="px-4 pb-4">
+
+                    <RadzenButton Text="Create Tenant"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Disabled="@isSubmitting"
+                                  ButtonType="ButtonType.Submit"
+                                  Icon="check" />
+
+                    <RadzenButton Text="Cancel"
+                                  ButtonStyle="ButtonStyle.Secondary"
+                                  Icon="close"
+                                  Click="@(() => Navigation.NavigateTo("/tenants"))" />
+
+                </RadzenStack>
+            </EditForm>
+        </RadzenColumn>
+    </RadzenRow>
+</div>
+
+@code {
+    private CreateTenantModel model = new();
+    private bool isSubmitting;
+    private string? errorMessage;
+
+    private async Task HandleSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+        StateHasChanged();
+
+        try
+        {
+            var command = new CreateTenantCommand(
+                Guid.NewGuid(),
+                model.Name!,
+                model.Identifier!
+            );
+
+            var result = await Commander.Send(command);
+
+            if (result.Status == CommandResultStatus.Succeeded)
+            {
+                Navigation.NavigateTo("/tenants");
+            }
+            else
+            {
+                errorMessage = "Failed to create tenant. Please check the form and try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+            StateHasChanged();
+        }
+    }
+
+    private class CreateTenantModel
+    {
+        [Required(ErrorMessage = "Tenant name is required")]
+        [StringLength(200, ErrorMessage = "Name must be less than 200 characters")]
+        public string? Name { get; set; }
+
+        [Required(ErrorMessage = "Identifier is required")]
+        [StringLength(100, ErrorMessage = "Identifier must be less than 100 characters")]
+        [RegularExpression(@"^[a-z0-9-]+$", ErrorMessage = "Identifier must be lowercase alphanumeric and hyphens only")]
+        public string? Identifier { get; set; }
+    }
+}

@@ -1,0 +1,13 @@
+﻿:root {
+    --color-white: #ffffff;
+    --bright-gray: #E8ECEF;
+    --color-sunray: #E1C25A;
+    --dark-electric-blue: #4F6A7B;
+    --favicon: url('../assets/favicon.ico');
+    --favicon-16: url('../assets/favicon-16x16.png');
+    --favicon-32: url('../assets/favicon-32x32.png');
+}
+
+.text-sunray {
+    color: var( --color-sunray);
+}

@@ -1,0 +1,31 @@
+{
+  "runtime": "Net60",
+  "documentGenerator": {
+    "fromDocument": {         
+      "url": "OpenAPI/kerridge.json"
+    }
+  },
+  "codeGenerators": {
+    "openApiToCSharpClient": {
+      "className": "{controller}Client",
+      "namespace": "IBMG.SCS.Portal.ApiClient",
+      "output": "KerridgeClient.g.cs",
+
+      "generateClientClasses": true,
+      "generateClientInterfaces": true,
+
+      "injectHttpClient": true,
+      "useBaseUrl": true,
+      "generateSyncMethods": false,
+
+      "useReadResponseAsString": true,
+      "exceptionClass": "ApiException",
+
+      "useHttpRequestMessageCreationMethod": false,
+      "useHttpClientCreationMethod": false,
+      "generateUpdateJsonSerializerSettingsMethod": true,
+      "additionalNamespaceUsages": [ "Newtonsoft.Json", "Newtonsoft.Json.Serialization" ]
+
+    }
+  }
+}

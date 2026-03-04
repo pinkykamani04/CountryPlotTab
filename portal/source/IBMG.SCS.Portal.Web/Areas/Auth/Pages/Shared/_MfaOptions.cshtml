@@ -1,0 +1,48 @@
+@using PearDrop.Authentication.Client.Constants
+@using PearDrop.Client.Extensions
+@using PearDrop.Extensions
+@model IReadOnlyList<PearDrop.Authentication.Client.Contracts.MfaProviderDetails>
+
+@foreach (var item in Model)
+{
+    switch (item.MfaProvider)
+    {
+        case MfaProvider.Device:
+            <button asp-page-handler="DeviceMfa" type="submit" class="feed-item py-2 w-100 border-0 bg-white" data-processable data-processable-class="d-flex align-items-center">
+                <span class="btn btn-info btn-circle font-18 text-white d-flex align-items-center justify-content-center"><i class="fab fa-usb"></i></span>
+                <div class="ms-3">
+                    <span class="">Fido Device</span>
+                </div>
+            </button>
+            break;
+        case MfaProvider.App:
+            <button asp-page-handler="AppMfa" type="submit" class="feed-item py-2 w-100 border-0 bg-white" data-processable data-processable-class="d-flex align-items-center">
+                <span class="btn btn-info btn-circle font-18 text-white d-flex align-items-center justify-content-center"><i class="fab fa-usb"></i></span>
+                <div class="ms-3">
+                    <span class="">Authenticator App</span>
+                </div>
+            </button>
+            break;
+        case MfaProvider.Email:
+            <button asp-page-handler="EmailMfa" type="submit" name="ProviderId" value="@item.ProviderId" class="feed-item py-2 w-100 border-0 bg-white" data-processable data-processable-class="d-flex align-items-center">
+                <span class="btn btn-info btn-circle font-18 text-white d-flex align-items-center justify-content-center">
+                    <i class="far fa-envelope"></i>
+                </span>
+                <div class="ms-3">
+                    <span class="">Email @item.FriendlyValue.MaskChars('*', 60, MaskingExtensions.MaskOption.InTheMiddleOfString)</span>
+                </div>
+            </button>
+            break;
+        case MfaProvider.Sms:
+            <button asp-page-handler="SmsMfa" type="submit" name="ProviderId" value="@item.ProviderId" class="feed-item py-2 w-100 border-0 bg-white" data-processable data-processable-class="d-flex align-items-center">
+                <span class="btn btn-info btn-circle font-18 text-white d-flex align-items-center justify-content-center">
+                    <i class="fas fa-sms"></i>
+                </span>
+                <div class="ms-3">
+                    <span class="">SMS @item.FriendlyValue.MaskChars('*', 60, MaskingExtensions.MaskOption.InTheMiddleOfString)</span>
+                </div>
+            </button>
+            break;
+    }
+
+}

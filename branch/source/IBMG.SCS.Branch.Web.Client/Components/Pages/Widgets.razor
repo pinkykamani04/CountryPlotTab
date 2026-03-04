@@ -1,0 +1,21 @@
+﻿@using Radzen
+@using Radzen.Blazor
+
+<RadzenColumn Class="@CssClass" Size="@Size" SizeSM="@SizeSM" SizeMD="@SizeMD" SizeLG="@SizeLG" SizeXL="@SizeXL" SizeXS="@SizeXS" SizeXX="@SizeXX">
+    <RadzenCard Class="h-100 shadow-sm p-3" Style="border-radius: 12px;">
+        <RadzenRow AlignItems="AlignItems.Stretch" class="row h-100">
+            <RadzenColumn Size="8">
+                <RadzenStack Gap="6" class="d-flex flex-column justify-content-between h-100">
+                    <RadzenText Text="@Number" TextStyle="TextStyle.H4" class="fw-600 mt-auto fw-semibold" style="font-size:2rem;" />
+                    <RadzenText Text="@Text" TextStyle="TextStyle.H6" class="dark-blue-color flex-grow-1 d-block fw-normal dashboard-widget-title" />
+                </RadzenStack>
+            </RadzenColumn>
+
+            <RadzenColumn Size="4" class="d-flex justify-content-end align-items-end">
+                <RadzenStack class="d-flex justify-content-end align-items-end w-100 h-100 pe-1 pb-1 border-radius-50">
+                    <RadzenIcon Icon="@Icon" IconColor="@IconColor" class="summary-icon" />
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenCard>
+</RadzenColumn>

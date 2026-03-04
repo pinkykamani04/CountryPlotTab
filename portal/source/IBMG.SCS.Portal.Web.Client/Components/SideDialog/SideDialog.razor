@@ -1,0 +1,30 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos;
+
+<RadzenTemplateForm Data="@model" TItem="ReportIssueDto" Submit="@OnSubmit">
+    <div class="card-slideout px-3 py-2">
+        <RadzenStack class="sideDialogStack" Gap="16px">
+            <RadzenText Text="Report an Issue" TextStyle="TextStyle.H4" />
+            <RadzenStack>
+                <RadzenLabel Text="Issue Type" class="fs-26 dark-blue-color" />
+                <RadzenDropDown TValue="string"
+                                Name="IssueType"
+                                @bind-Value="model.IssueType"
+                                Data="@issueTypes"
+                                Placeholder="Select Issue Type"
+                                Style="width:100%" />
+                <RadzenRequiredValidator Component="IssueType" Text="Issue Type is required" />
+            </RadzenStack>
+
+            <RadzenStack>
+                <RadzenLabel Text="Issue Details" class="fs-26 dark-blue-color" />
+                <RadzenTextArea Name="IssueDetails"
+                                @bind-Value="model.IssueDetails"
+                                Rows="5"
+                                Placeholder="Describe your issue..."
+                                Style="width:100%" />
+                <RadzenRequiredValidator Component="IssueDetails" Text="Issue details are required" />
+            </RadzenStack>
+            <RadzenButton Text="Submit" Icon="send" IsBusy="@IsBusy" ButtonType="ButtonType.Submit" class="w-100" />
+        </RadzenStack>
+    </div>
+</RadzenTemplateForm>

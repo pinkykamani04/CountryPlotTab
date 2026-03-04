@@ -1,0 +1,37 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Models
+<RadzenTemplateForm Data="@Model" TItem="CardModel" Submit="@OnSave">
+    <div class="card-slideout px-2">
+        <RadzenText class="py-2 dark-blue-color heading fw-700"
+                    Text="@(IsEdit ? "Edit Card" : "Add Card")" />
+        <RadzenStack Gap="0">
+            <RadzenLabel Text="Card Number" />
+            <RadzenNumeric @bind-Value="Model.CardNumber"
+                           ShowUpDown="false"
+                           Name="CardNumber"
+                           class="w-100" />
+            <RadzenRequiredValidator Component="CardNumber" Text="Card Number is required" />
+        </RadzenStack>
+        <RadzenStack Gap="0">
+            <RadzenLabel Text="Assignee Name" class="mt-3" />
+            <RadzenDropDown Data="@FilteredAssignees"
+                            TextProperty="Name"
+                            ValueProperty="Id"
+                            @bind-Value="Model.AssigneeId"
+                            AllowFiltering="true"
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            FilterPlaceholder="Search assignee..."
+                            class="w-100"
+                            LoadData="@OnAssigneeLoadData" />
+        </RadzenStack>
+        <RadzenStack Gap="0">
+            <RadzenLabel Text="Status" class="mt-3" />
+            <RadzenDropDown Data="@Statuses"
+                            class="w-100"
+                            @bind-Value="Model.Status" />
+        </RadzenStack>
+        <RadzenButton Text="Save"
+                      class="w-100 mt-3"
+                      ButtonType="ButtonType.Submit"
+                      ButtonStyle="ButtonStyle.Primary" />
+    </div>
+</RadzenTemplateForm>

@@ -1,0 +1,65 @@
+﻿@page "/auth/multi-factor-sms"
+@model ValidateSmsMfaCode
+@using Microsoft.AspNetCore.Antiforgery
+@using PearDrop.Client.Extensions
+@using PearDrop.Extensions
+@inject IAntiforgery _antiforgery
+@{
+    ViewData["Title"] = "Validate Your Login";
+    ViewData["PageFunc"] = "sms-factor";
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}
+
+
+
+<section id="auth-container" class="d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center min-vh-100 bg-white px-5">
+        <div class="w-100">
+            <form class="form-horizontal form-material" asp-antiforgery="true" method="post">
+                <div class="auth-logo">
+                    <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+                </div>
+                <h4 class="rounded-title mt-4 mb-0">Use SMS</h4>
+                <small>A text message has been sent to @Model.Number.MaskChars('*', 60, MaskingExtensions.MaskOption.InTheMiddleOfString) you with an authentication code. If you are missing the sms click <a href="@Url.RouteUrl("CurrentUser|RequestMfaSms", new { area = "Auth" })" data-resend data-af-token="@token" data-uid="@Model.UserPrincipleNameId">here to resend</a>.</small>
+
+                <div class="form-group mt-4">
+                    <label asp-for="PageModel!.Code" class="form-label"></label>
+                    <input class="form-control" type="text" asp-for="PageModel!.Code" autocomplete="off"/>
+                    @if (Model.InError)
+                    {
+                        <span class="text-danger small" asp-validation-for="PageModel!.Code">That code did not work. Please check the code and try again.</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger small" asp-validation-for="PageModel!.Code"></span>
+                    }
+                </div>
+
+                @if (Model.DeviceRemembranceExpirationInDays > -1)
+                {
+                    <div class="form-check mt-4 mb-3">
+                        <input class="form-check-input" type="checkbox" asp-for="PageModel!.RememberDevice">
+                        <label class="form-check-label" asp-for="PageModel!.RememberDevice">
+                            Do not ask for a code on this device again for the next @Model.DeviceRemembranceExpirationInDays day(s)
+                        </label>
+                    </div>
+                }
+                <div class="d-grid mt-4 mb-4">
+                    <button class="btn btn-primary btn-lg" type="submit" data-processable>Authenticate</button>
+                </div>
+                
+                <input asp-for="Attempt" type="hidden" value="@Model.Attempt"/>
+            </form>
+
+            @if (Model.MfaProviders.Any())
+            {
+                <hr/>
+                <p>Or select a different method</p>
+            }
+
+            <form class="feeds m-0 p-0 mt-3 pt-2" method="post">
+                @await Html.PartialAsync("_MfaOptions", Model.MfaProviders)
+            </form>
+        </div>
+    </div>
+</section>

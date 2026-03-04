@@ -1,0 +1,95 @@
+﻿@page "/customers/{TenantId:guid}"
+@using BluQube.Constants
+@using BluQube.Queries
+@using IBMG.SCS.Portal.Web.Client.Data.Querier.Tenants
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Queries
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.QueryResults
+@using IBMG.SCS.Portal.Web.Client.Data.Querier;
+@using IBMG.SCS.Portal.Web.Client.Data
+@using PearDrop.Authentication.Client.Constants
+@inject IQuerier Querier
+@inject NavigationManager Nav
+
+<div class="container-fluid px-0 tenants mt-3">
+    <RadzenRow class="w-100 my-3">
+        <RadzenColumn Size="12" SizeMD="8">
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="10">
+                <RadzenButton Icon="arrow_back"
+                              IconColor="#F2F4F7"
+                              class="tenant-button"
+                              ButtonStyle="ButtonStyle.Dark"
+                              Size="ButtonSize.Small"
+                              Click="GoBack" />
+
+                <RadzenLink Path="/customers"
+                            Text="@tenant?.Name"
+                            class="dark-blue-color fw-600 fs-26" />
+            </RadzenStack>
+        </RadzenColumn>
+
+        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-right align-content-center">
+            <RadzenButton Icon="person_add" class="p-2"
+                          Size="ButtonSize.Small"
+                          ButtonStyle="ButtonStyle.Primary"
+                          Click="CreateUser" />
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow class="w-100 tenant-card" AlignItems="AlignItems.Center" Gap="10px">
+        <RadzenRow class="w-100 m-3">
+            <RadzenColumn Size="12" SizeMd="6" SizeLg="4">
+                <div class="search-wrapper form-group">
+                    <input type="text"
+                           class="form-control search-input"
+                           placeholder="SEARCH USER"
+                           @bind="searchText"
+                           @bind:event="oninput" />
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.2939 12.5786H13.3905L13.0703 12.2699C14.191 10.9663 14.8656 9.27387 14.8656 7.43282C14.8656 3.32762 11.538 0 7.43282 0C3.32762 0 0 3.32762 0 7.43282C0 11.538 3.32762 14.8656 7.43282 14.8656C9.27387 14.8656 10.9663 14.191 12.2699 13.0703L12.5786 13.3905V14.2939L18.2962 20L20 18.2962L14.2939 12.5786ZM7.43282 12.5786C4.58548 12.5786 2.28702 10.2802 2.28702 7.43282C2.28702 4.58548 4.58548 2.28702 7.43282 2.28702C10.2802 2.28702 12.5786 4.58548 12.5786 7.43282C12.5786 10.2802 10.2802 12.5786 7.43282 12.5786Z"
+                              fill="#4F6A7B" />
+                    </svg>
+                </div>
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMd="6" SizeLg="8"
+                          class="icon-btn-group d-flex justify-content-md-end gap-2 mt-2 mt-md-0">
+                <RadzenButton Icon="filter_alt" ButtonStyle="ButtonStyle.Primary" />
+                <RadzenButton Icon="filter_alt_off" ButtonStyle="ButtonStyle.Danger" />
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="m-3">
+            <RadzenDataGrid Data="@FilteredUsers"
+                            TItem="QueryableUser"
+                            AllowPaging="true"
+                            GridLines="DataGridGridLines.None"
+                            PageSize="8"
+                            Class="customer-card-grid">
+                <Columns>
+                    <RadzenDataGridColumn Property="Firstname" Title="First Name" />
+                    <RadzenDataGridColumn Property="Lastname" Title="Last Name" />
+                    <RadzenDataGridColumn Property="UserPrincipalName" Title="Email" />
+                    <RadzenDataGridColumn Title="Status">
+                        <Template Context="u">
+                            @{
+                                var isDisabled = u.Status == UserPrincipalNameStatus.Disabled;
+
+                                var text = isDisabled ? "Disabled" : "Verified";
+                                var style = isDisabled ? BadgeStyle.Danger : BadgeStyle.Success;
+                            }
+                            <RadzenBadge BadgeStyle="@style" Text="@text" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Width="60px">
+                        <Template Context="u">
+                            <RadzenButton Icon="edit_square" IconColor="#4F6A7B"
+                                          Size="ButtonSize.Small"
+                                          ButtonStyle="ButtonStyle.Dark"
+                                          Click="@(() => OpenEditUser(u))" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenRow>
+    </RadzenRow>
+</div>

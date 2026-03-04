@@ -1,0 +1,104 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos
+
+<RadzenCard Style="background:#F5FFE6;
+                   border-radius:16px;
+                   height:100%;
+                   box-shadow:0 2px 8px rgba(0,0,0,0.08);
+                   padding:1.5rem;">
+
+    <RadzenText TextStyle="TextStyle.H6"
+                Style="color:#0B6E3F; font-weight:600; margin-bottom:0;">
+        @Title
+    </RadzenText>
+
+    @if (TotalValue <= 0)
+    {
+        <div class="h-100 d-flex flex-column align-items-center justify-content-center text-muted gap-2 text-center"
+             style="min-height:200px;">
+            <RadzenIcon Icon="bar_chart" Style="font-size:32px; opacity:0.4;" />
+            <RadzenText>No chart data to display</RadzenText>
+        </div>
+    }
+    else
+    {
+        <div style="position:relative; width:100%; height:300px; margin-top:0;">
+            <RadzenChart Style="width:100%; height:100%;">
+                <RadzenDonutSeries TItem="TonnageGaugeCard.DonutSlice"
+                                   Data="@DonutData"
+                                   CategoryProperty="Label"
+                                   ValueProperty="Value"
+                                   TotalAngle="300"
+                                   StartAngle="270"
+                                   Fills="@(new[] { "#A8E063", "#2D5F3F" })">
+                    <TitleTemplate>
+                        <div></div>
+                    </TitleTemplate>
+                </RadzenDonutSeries>
+                <RadzenLegend Visible="false" />
+            </RadzenChart>
+
+            <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"
+                 viewBox="0 0 300 300"
+                 preserveAspectRatio="xMidYMid meet">
+
+                <line x1="150" y1="14"
+                      x2="150" y2="44"
+                      stroke="#2D5F3F"
+                      stroke-width="1.5"
+                      stroke-dasharray="4,3" />
+                <text x="158" y="30"
+                      text-anchor="start"
+                      font-size="13"
+                      font-weight="600"
+                      fill="#2D5F3F">
+                    @($"{AchievedPercentage:F0}%")
+                </text>
+
+                <text x="150" y="138"
+                      text-anchor="middle"
+                      font-size="22"
+                      font-weight="800"
+                      fill="#2D5F3F">
+                    @($"{GetAchievedTonnage():N0}T")
+                </text>
+
+                <text x="150" y="158"
+                      text-anchor="middle"
+                      font-size="12"
+                      fill="#555">
+                    of @($"{TotalValue:N0}T")
+                </text>
+
+                <text x="150" y="174"
+                      text-anchor="middle"
+                      font-size="11"
+                      fill="#999">
+                    Total
+                </text>
+            </svg>
+        </div>
+
+        <RadzenStack Orientation="Orientation.Horizontal"
+                     JustifyContent="JustifyContent.Center"
+                     Gap="1.5rem"
+                     Wrap="FlexWrap.Wrap"
+                     Style="margin-top:0.5rem;">
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="0.4rem">
+                <div style="width:12px; height:12px; border-radius:50%; background:#2D5F3F; flex-shrink:0;"></div>
+                <RadzenText Style="color:#555; font-size:13px; white-space:nowrap;">
+                    Achieved (@($"{AchievedPercentage:F1}%"))
+                </RadzenText>
+            </RadzenStack>
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         AlignItems="AlignItems.Center"
+                         Gap="0.4rem">
+                <div style="width:12px; height:12px; border-radius:50%; background:#A8E063; flex-shrink:0;"></div>
+                <RadzenText Style="color:#555; font-size:13px; white-space:nowrap;">
+                    Remaining (@($"{(100 - AchievedPercentage):F1}%"))
+                </RadzenText>
+            </RadzenStack>
+        </RadzenStack>
+    }
+</RadzenCard>

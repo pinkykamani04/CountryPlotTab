@@ -1,0 +1,150 @@
+﻿@page "/auth/sign-in"
+@using PearDrop.Authentication.Constants
+@using PearDrop.Authentication.RazorPages.Constants
+@model UserAuthentication
+
+@{
+    ViewData["Title"] = "Sign In";
+    ViewData["PageFunc"] = "user-authentication";
+}
+
+<div id="auth-container">
+    <!-- Left Side - Image Section -->
+    <div class="auth-image-section">
+        <!-- Background image will be applied via CSS -->
+    </div>
+
+    <!-- Right Side - Form Section -->
+    <div class="auth-form-section">
+        <div class="auth-form-container">
+            @if (Model.UseInternal)
+            {
+                <form asp-antiforgery="true" method="post">
+                    <input asp-for="PageModel!.ReturnUrl" type="hidden" />
+                    
+                    <!-- Logo -->
+                    <div class="auth-logo">
+                        <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+                    </div>
+
+                    <!-- Title -->
+                    <h1 class="auth-title">Login</h1>
+
+                    <!-- Error Message -->
+                    @if (Model.InError)
+                    {
+                        <div class="alert-danger">
+                            @Model.ErrorFeedback
+                        </div>
+                    }
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label asp-for="PageModel!.Username" class="form-label">E-mail</label>
+                        <div class="input-group">
+                            <i class="input-icon fas fa-envelope"></i>
+                            <input class="form-control" type="text" asp-for="PageModel!.Username" placeholder="Loremipsum@gmail.com" />
+                        </div>
+                        <span class="text-danger" asp-validation-for="PageModel!.Username"></span>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label asp-for="PageModel!.Password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <i class="input-icon fas fa-lock"></i>
+                            <input class="form-control" type="password" asp-for="PageModel!.Password" placeholder="**************" id="passwordField" />
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="far fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        <span class="text-danger" asp-validation-for="PageModel!.Password"></span>
+                    </div>
+                    
+                    <input asp-for="Attempt" type="hidden" value="@Model.Attempt"/>
+
+                    <!-- Links -->
+                    <div class="auth-links">
+                        @if (Model.UseRegistration)
+                        {
+                            <a href="@Url.Page(RegistrationPageLocations.SignUp, new { area = "registration" })" class="auth-link">
+                                <i class="fas fa-user-plus"></i> Need an account?
+                            </a>
+                        }
+                        else
+                        {
+                            <span></span>
+                        }
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <button class="btn-primary" type="submit" data-processable>Send</button>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="@Url.Page(AuthPageLocations.AuthRequestPassword, new { area = "auth" })" class="auth-link">
+                            <i class="fas fa-key"></i> Forgot your password?
+                        </a>
+                    </div>
+
+                    <!-- Alternative Sign-in Options -->
+                    @if (Model.SignInButtons.Any())
+                    {
+                        <div class="alternative-providers">
+                            <h4 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-muted);">Or sign in with:</h4>
+                            @foreach (var signInButton in Model.SignInButtons)
+                            {
+                                <a class="sign-in-button" href="@signInButton.AuthUrl">
+                                    <img src="@signInButton.IconUrl" alt="@($"{signInButton.Text}_icon")" />
+                                    @signInButton.Text
+                                </a>
+                            }
+                        </div>
+                    }
+                </form>
+            }
+            else
+            {
+                <div>
+                    <!-- Logo -->
+                    <div class="auth-logo">
+                        <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+                    </div>
+
+                    <h1 class="auth-title">Login</h1>
+
+                    @if (Model.SignInButtons != null && Model.SignInButtons.Any())
+                    {
+                        <div class="alternative-providers">
+                            @foreach (var signInButton in Model.SignInButtons)
+                            {
+                                <a class="sign-in-button" href="@signInButton.AuthUrl">
+                                    <img src="@signInButton.IconUrl" alt="@($"{signInButton.Text}_icon")" />
+                                    @signInButton.Text
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById('passwordField');
+    const toggleIcon = document.getElementById('toggleIcon');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+    }
+}
+</script>

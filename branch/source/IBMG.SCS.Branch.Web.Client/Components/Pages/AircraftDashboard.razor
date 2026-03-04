@@ -1,0 +1,38 @@
+﻿@page "/widgets"
+@using Radzen
+@using Radzen.Blazor
+@using IBMG.SCS.Branch.Web.Client.Infrastructure.Models
+
+<RadzenStack class="d-block w-100">
+    <RadzenRow Class="rz-display-flex rz-row rz-align-items-normal rz-justify-content-normal mb-4" Style="gap:15px;">
+        <Widgets Size="12" SizeSm="6" SizeMd="3" Icon="travel" Text="Flying Hours" Number="@TotalFlyingHours" IconColor="#D3D3D3" />
+        <Widgets Size="12" SizeSm="6" SizeMd="3" Icon="calendar_clock" Text="Number of Bookings This Year" Number="@BookingsThisYear.ToString()" IconColor="#87CEEB" />
+        <Widgets Size="12" SizeSm="6" SizeMd="3" Icon="calendar_today" Text="Number of Bookings in Total" Number="@TotalBookingsLifetime.ToString()" IconColor="#32CD32" />
+        <Widgets Size="12" SizeSm="6" SizeMd="3" Icon="groups_3" Text="Members in the Ownership Pool" Number="2" IconColor="#000080" />
+    </RadzenRow>
+
+    <RadzenRow class="test-form-container" Style="gap:20px; margin-top:20px;">
+
+        <AircraftInfo IsLoading="@IsPageLoading"
+                      AircraftList="@AircraftList"
+                      Aircraft="@Aircraft"
+                      SelectedAircraftId="@SelectedAircraftId"
+                      IsEditMode="@IsEditMode"
+                      IsAddMode="@IsAddMode"
+                      OnAircraftChanged="@OnAircraftIdChange"
+                      OnSave="@SaveAircraft"
+                      OnCancel="@CancelAircraftEdit"
+                      ToggleEditMode="@(() => ToggleEdit(Aircraft))"
+                      AddNew="@AddNewAircraft" />
+
+        <BookingCalendar IsLoading="@IsPageLoading"
+                         WeekDays="@WeekDays"
+                         WeekDisplayText="@WeekDisplayText"
+                         CurrentWeekBookings="@CurrentWeekBookings"
+                         OnPreviousWeek="@PreviousWeek"
+                         OnNextWeek="@NextWeek"
+                         OnBookingClick="@HandleBookingClick" />
+
+    </RadzenRow>
+
+</RadzenStack>

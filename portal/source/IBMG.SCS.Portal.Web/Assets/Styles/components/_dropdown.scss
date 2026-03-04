@@ -1,0 +1,16 @@
+﻿// Custom Dropdown Styling
+
+.dropdown {
+    .dropdown-menu {
+        font-size: $dropdown-font-size;
+
+    }
+}
+
+// Utility class to hide arrow from dropdown
+
+.dropdown.no-arrow {
+    .dropdown-toggle::after {
+        display: none;
+    }
+}

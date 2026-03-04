@@ -1,0 +1,163 @@
+﻿@page "/auth/multi-factor-email"
+@model ValidateEmailMfaCode
+@using Microsoft.AspNetCore.Antiforgery
+@using PearDrop.Client.Extensions
+@using PearDrop.Extensions
+
+@inject IAntiforgery _antiforgery
+@{
+    ViewData["Title"] = "Validate Your Login";
+    ViewData["PageFunc"] = "email-factor";
+    var token = _antiforgery.GetAndStoreTokens(HttpContext).RequestToken;
+}
+
+<div id="auth-container">
+    <!-- Left Side - Image Section -->
+    <div class="auth-image-section">
+        <!-- Background image will be applied via CSS -->
+    </div>
+
+    <!-- Right Side - Form Section -->
+    <div class="auth-form-section">
+        <div class="auth-form-container">
+            <form asp-antiforgery="true" method="post">
+                <!-- Logo -->
+                <div class="auth-logo">
+                    <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+                </div>
+
+                <h1 class="auth-title">Security Email</h1>
+                
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9375rem;">
+                    An email has been sent to you with an authentication code. If you are missing the email <a href="@Url.RouteUrl("CurrentUser|RequestMfaEmail")" data-resend data-uid="@Model.UserPrincipleNameId" data-af-token="@token" style="color: var(--primary-color); text-decoration: none;">click here to resend</a>.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label asp-for="PageModel!.Code" class="form-label" style="font-weight: 500; margin-bottom: 0.75rem; display: block;">Please enter your 6 digit verification code</label>
+                    
+                    <!-- 6 Digit Code Input -->
+                    <div class="code-input-container" style="display: flex; gap: 0.5rem; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <input type="text" maxlength="1" class="code-digit" data-index="0" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                        <input type="text" maxlength="1" class="code-digit" data-index="1" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                        <input type="text" maxlength="1" class="code-digit" data-index="2" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                        <input type="text" maxlength="1" class="code-digit" data-index="3" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                        <input type="text" maxlength="1" class="code-digit" data-index="4" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                        <input type="text" maxlength="1" class="code-digit" data-index="5" style="width: 3rem; height: 3rem; text-align: center; font-size: 1.5rem; border: none; border-bottom: 2px solid #ccc; border-radius: 0; background: transparent; outline: none;" />
+                    </div>
+                    
+                    <!-- Hidden input to hold the actual code value -->
+                    <input type="hidden" asp-for="PageModel!.Code" id="full-code" />
+                    
+                    @if (Model.InError)
+                    {
+                        <span class="text-danger" style="font-size: 0.875rem;">That code did not work. Please check the code and try again.</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger" asp-validation-for="PageModel!.Code" style="font-size: 0.875rem;"></span>
+                    }
+                </div>
+
+                @if (Model.DeviceRemembranceExpirationInDays > -1)
+                {
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal; gap: 0.5rem;">
+                            <input type="checkbox" asp-for="PageModel!.RememberDevice" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary-color);">
+                            <span style="color: var(--text-primary); font-size: 0.9375rem;">
+                                Remember this device
+                            </span>
+                        </label>
+                    </div>
+                }
+                
+                <div class="form-group">
+                    <button class="btn-primary" type="submit" data-processable style="width: 100%; padding: 0.875rem; font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Authenticate</button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="/auth/login" style="color: var(--text-muted); text-decoration: none; font-size: 0.9375rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-chevron-left" style="font-size: 0.75rem;"></i> Return to login
+                    </a>
+                </div>
+                
+                <input asp-for="Attempt" type="hidden" value="@Model.Attempt"/>
+            </form>
+
+            @if (Model.MfaProviders.Any())
+            {
+                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border-color);" />
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Or select a different method:</p>
+                
+                <form method="post" style="margin: 0; padding: 0;">
+                    @await Html.PartialAsync("_MfaOptions", Model.MfaProviders)
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeDigits = document.querySelectorAll('.code-digit');
+            const fullCodeInput = document.getElementById('full-code');
+            
+            codeDigits.forEach((input, index) => {
+                // Handle input
+                input.addEventListener('input', function(e) {
+                    const value = e.target.value;
+                    
+                    // Only allow digits
+                    if (!/^\d*$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+                    
+                    // Update hidden input with full code
+                    updateFullCode();
+                    
+                    // Move to next input if digit entered
+                    if (value.length === 1 && index < codeDigits.length - 1) {
+                        codeDigits[index + 1].focus();
+                    }
+                });
+                
+                // Handle backspace
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        codeDigits[index - 1].focus();
+                    }
+                });
+                
+                // Handle paste
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pastedData = e.clipboardData.getData('text');
+                    const digits = pastedData.replace(/\D/g, '').split('');
+                    
+                    digits.forEach((digit, i) => {
+                        if (index + i < codeDigits.length) {
+                            codeDigits[index + i].value = digit;
+                        }
+                    });
+                    
+                    updateFullCode();
+                    
+                    // Focus last filled input or next empty
+                    const nextIndex = Math.min(index + digits.length, codeDigits.length - 1);
+                    codeDigits[nextIndex].focus();
+                });
+            });
+            
+            function updateFullCode() {
+                const code = Array.from(codeDigits).map(input => input.value).join('');
+                fullCodeInput.value = code;
+            }
+            
+            // Focus first input on load
+            if (codeDigits.length > 0) {
+                codeDigits[0].focus();
+            }
+        });
+    </script>
+}

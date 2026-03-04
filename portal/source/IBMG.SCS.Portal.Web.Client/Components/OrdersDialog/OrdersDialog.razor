@@ -1,0 +1,27 @@
+﻿@using IBMG.SCS.Portal.ApiClient
+@using IBMG.SCS.Portal.Web.Client.Models
+@using Newtonsoft.Json.Linq
+@using Radzen
+@using Radzen.Blazor
+@inject DialogService DialogService
+@inject IClient Client
+
+
+<div style="padding:12px; width:100%">
+    <RadzenDataGrid Data="@Orders" TItem="OrderDetails" PageSize="10" AllowPaging="true" RowClick="@OnOrderRowClick">
+        <Columns>
+            <RadzenDataGridColumn TItem="OrderDetails" Property="Date" Title="Date" FormatString="{0:dd/MM/yyyy}" />
+            <RadzenDataGridColumn TItem="OrderDetails" Property="Time" Title="Time" />
+            <RadzenDataGridColumn TItem="OrderDetails" Property="Operative" Title="Operative" />
+            <RadzenDataGridColumn TItem="OrderDetails" Property="OrderNo" Title="Order #" />
+            <RadzenDataGridColumn TItem="OrderDetails" Property="Branch" Title="Branch" />
+            <RadzenDataGridColumn TItem="OrderDetails" Property="Total" Title="Total" FormatString="{0:C}" />
+        </Columns>
+    </RadzenDataGrid>
+
+    <div style="text-align:right; margin-top:12px;">
+        <RadzenButton Text="Close" ButtonStyle="ButtonStyle.Primary" Click="@Close" />
+    </div>
+</div>
+
+

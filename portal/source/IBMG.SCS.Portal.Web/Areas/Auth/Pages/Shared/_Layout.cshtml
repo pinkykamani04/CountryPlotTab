@@ -1,0 +1,55 @@
+﻿@using Microsoft.Extensions.Options
+@using PearDrop.Authentication.Contracts
+@using PearDrop.Authentication.Contracts.Settings
+@using PearDrop.Settings
+@inject IOptions<CoreSettings> CoreSettings;
+@inject IEnumerable<IContentInjector> ContentInjectors;
+@inject IOptions<AuthenticationSettings> AuthenticationSettings;
+@addTagHelper *, PearDrop.Server
+@{
+    var title = ViewData["Title"] != null ? $"{ViewData["Title"]} | {CoreSettings.Value.SystemName}" : CoreSettings.Value.SystemName;
+    var pageFunc = ViewData["PageFunc"] ?? string.Empty;
+    var aiKey = ViewData["AiKey"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16x16.png">
+        <title>@title</title>
+        
+        <link rel="stylesheet" href="~/_content/PearDrop.Authentication.RazorPages/peardrop.authentication.server.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/app.css" asp-append-version="true" />
+        @foreach (var additionalStyleSheet in AuthenticationSettings.Value.AdditionalStyleSheets)
+        {
+            <link rel="stylesheet" href="@additionalStyleSheet" asp-append-version="true" />
+        }
+    </head>
+
+    <body class="pd-auth" data-function="@pageFunc" data-ai-key="@aiKey">
+        <div id="toast-container" class="position-fixed top-0 end-0 p-3">
+        </div>
+
+        @RenderBody()
+
+        @if (ViewData.Any(x=>x.Key == "post-content") && ViewData["post-content"] is string postContent)
+        {
+            var injectors = this.ContentInjectors.Where(x => x.Handle == postContent);
+            foreach (var injector in injectors)
+            {
+                await injector.ProcessView().ExecuteResultAsync(this.ViewContext);
+            }
+        }
+
+        <script src="~/_content/PearDrop.Authentication.RazorPages/peardrop.authentication.server.js" asp-append-version="true"></script>
+        @foreach (var additionalScript in AuthenticationSettings.Value.AdditionalScripts)
+        {
+            <script src="@additionalScript" asp-append-version="true" ></script>
+        }
+        
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>

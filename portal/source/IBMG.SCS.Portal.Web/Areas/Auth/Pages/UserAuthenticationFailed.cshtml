@@ -1,0 +1,26 @@
+﻿@page "/auth/failure"
+@using PearDrop.Authentication.Constants
+@using PearDrop.Authentication.RazorPages.Constants
+@model UserAuthenticationFailed
+@{
+    ViewData["Title"] = "Sign In Failed";
+    ViewData["PageFunc"] = "authentication-failed";
+}
+
+<section id="auth-container" class="d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center min-vh-100 bg-white px-5">
+        <div class="d-flex flex-column">
+            <div class="auth-logo">
+                <img src="~/assets/assets/auth-logo.png" alt="IBMG Supply Chain Services" />
+            </div>
+            <small class="my-4">Sorry, there has been an issue attempting to sign you in. Please contact your system administrator.</small>
+            
+            <span class="text-muted">
+                <a href="@Url.Page(AuthPageLocations.AuthSignIn, new {area = "auth"})">
+                    <i class="fas fa-angle-double-left"></i>
+                    Return to login
+                </a>
+            </span>
+        </div>
+    </div>
+</section>

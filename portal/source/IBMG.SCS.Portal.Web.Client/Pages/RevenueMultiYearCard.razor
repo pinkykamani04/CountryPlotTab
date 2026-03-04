@@ -1,0 +1,144 @@
+﻿@using IBMG.SCS.Portal.Web.Client.Dtos
+
+<RadzenCard Style="background:#F5FFE6; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:1.25rem;">
+    <RadzenText TextStyle="TextStyle.H5" Style="color:#0B6E3F; font-weight:600; margin-bottom:1rem;">
+        Waste Processing Cost – Yearly Comparison
+    </RadzenText>
+
+    @if (WasteProcessingMultiYearData == null || !WasteProcessingMultiYearData.Any(kvp => kvp.Value != null && kvp.Value.Any()))
+    {
+        <div class="h-100 d-flex flex-column align-items-center justify-content-center text-muted gap-2 text-center" style="min-height:250px;">
+            <RadzenIcon Icon="bar_chart" Style="font-size:32px; opacity:0.4;" />
+            <RadzenText TextStyle="TextStyle.Body1">No chart data to display</RadzenText>
+        </div>
+    }
+    else
+    {
+        var greenShades = new[] { "#d8e35d", "#93C948", "#0A733C" };
+        var orderedYears = WasteProcessingMultiYearData.Keys.OrderBy(y => y).ToList();
+
+        <div class="d-none d-lg-block w-100" style="height:380px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                @{
+                    int ci = 0;
+                }
+                @foreach (var year in orderedYears)
+                {
+                    var yearData = WasteProcessingMultiYearData[year]?.OrderBy(d => d.MonthNumber).ToList();
+                    if (yearData != null && yearData.Any())
+                    {
+                        <RadzenColumnSeries TItem="MonthlyMetricDto"
+                                            Data="@yearData"
+                                            CategoryProperty="Month"
+                                            ValueProperty="Value"
+                                            Title="@year.ToString()"
+                                            Fill="@greenShades[ci % greenShades.Length]" />
+                        ci++;
+                    }
+                }
+                <RadzenColumnOptions Radius="5" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Transaction Value" />
+                </RadzenValueAxis>
+                <RadzenCategoryAxis>
+                    <RadzenAxisTitle Text="Month" />
+                    <RadzenGridLines Visible="false" />
+                </RadzenCategoryAxis>
+                <RadzenLegend Position="LegendPosition.Top" />
+            </RadzenChart>
+        </div>
+        <div class="d-none d-sm-block d-lg-none w-100" style="height:350px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                @{
+                    int ci2 = 0;
+                }
+                @foreach (var year in orderedYears)
+                {
+                    var grouped = GetAggregatedGroupsForYear(year, 4);
+                    if (grouped.Any())
+                    {
+                        <RadzenColumnSeries TItem="GroupedMetricDto"
+                                            Data="@grouped"
+                                            CategoryProperty="Label"
+                                            ValueProperty="Total"
+                                            Title="@year.ToString()"
+                                            Fill="@greenShades[ci2 % greenShades.Length]" />
+                        ci2++;
+                    }
+                }
+                <RadzenColumnOptions Radius="5" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Transaction Value" />
+                </RadzenValueAxis>
+                <RadzenCategoryAxis>
+                    <RadzenAxisTitle Text="Period" />
+                    <RadzenGridLines Visible="false" />
+                </RadzenCategoryAxis>
+                <RadzenLegend Position="LegendPosition.Top" />
+            </RadzenChart>
+        </div>
+
+        <div class="d-sm-none w-100" style="height:320px;">
+            <RadzenChart Style="width:100%; height:100%;">
+                @{
+                    int ci3 = 0;
+                }
+                @foreach (var year in orderedYears)
+                {
+                    var grouped = GetAggregatedGroupsForYear(year, 3);
+                    if (grouped.Any())
+                    {
+                        <RadzenColumnSeries TItem="GroupedMetricDto"
+                                            Data="@grouped"
+                                            CategoryProperty="Label"
+                                            ValueProperty="Total"
+                                            Title="@year.ToString()"
+                                            Fill="@greenShades[ci3 % greenShades.Length]" />
+                        ci3++;
+                    }
+                }
+                <RadzenColumnOptions Radius="5" />
+                <RadzenValueAxis>
+                    <RadzenGridLines Visible="true" />
+                    <RadzenAxisTitle Text="Transaction Value" />
+                </RadzenValueAxis>
+                <RadzenCategoryAxis>
+                    <RadzenAxisTitle Text="Period" />
+                    <RadzenGridLines Visible="false" />
+                </RadzenCategoryAxis>
+                <RadzenLegend Position="LegendPosition.Top" />
+            </RadzenChart>
+        </div>
+    }
+</RadzenCard>
+
+@code {
+    [Parameter] public Dictionary<int, List<MonthlyMetricDto>> WasteProcessingMultiYearData { get; set; } = new();
+
+    private List<GroupedMetricDto> GetAggregatedGroupsForYear(int year, int size)
+    {
+        if (!WasteProcessingMultiYearData.TryGetValue(year, out var yearData) || yearData == null)
+            return new List<GroupedMetricDto>();
+
+        var ordered = yearData.OrderBy(d => d.MonthNumber).ToList();
+        var result = new List<GroupedMetricDto>();
+        for (int i = 0; i < ordered.Count; i += size)
+        {
+            var slice = ordered.Skip(i).Take(size).ToList();
+            result.Add(new GroupedMetricDto
+            {
+                Label = $"{slice.First().Month}–{slice.Last().Month}",
+                Total = (double)slice.Sum(x => x.Value)
+            });
+        }
+        return result;
+    }
+
+    private class GroupedMetricDto
+    {
+        public string Label { get; set; } = "";
+        public double Total { get; set; }
+    }
+}

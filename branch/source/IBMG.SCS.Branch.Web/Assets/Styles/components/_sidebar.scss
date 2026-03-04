@@ -1,0 +1,105 @@
+﻿:focus-visible {
+    outline: unset;
+}
+
+.sidebar-layout {
+    .ibmg-header {
+        height: 80px;
+        background: var(--color-white);
+        border-bottom: 1px solid var(--bright-gray);
+
+        .ibmg-logo {
+            height: 38px;
+        }
+
+        .ibmg-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+        }
+    }
+
+    .rz-sidebar.rz-sidebar-collapsed {
+        width: 0 !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        border: none !important;
+    }
+
+    .ibmg-sidebar {
+        width: auto !important;
+        background: var(--color-white) !important;
+        border-right: 1px solid var(--bright-gray) !important;
+        overflow: hidden;
+        padding-top: 10px;
+
+        .rz-panel-menu .rz-navigation-item-wrapper {
+            background-color: unset !important;
+            color: unset !important;
+        }
+
+        .rz-panel-menu .rz-navigation-item-wrapper:hover {
+            background-color: unset !important;
+            color: unset !important;
+
+            .rz-navigation-item-icon {
+                color: unset !important;
+            }
+        }
+    }
+
+    .ibmg-panelmenu {
+        font-size: 15px;
+        font-weight: 500;
+        background-color: var(--color-white) !important;
+        color: var(--dark-electric-blue) !important;
+        position: relative;
+
+        .rz-navigation-item {
+            margin-bottom: 6px !important;
+            display: flex !important;
+            align-items: center !important;
+            color: var(--dark-electric-blue) !important;
+            border-bottom: unset !important;
+            position: relative;
+
+            .rz-navigation-item-wrapper {
+                width: 100% !important;
+                background-color: unset !important;
+                color: unset !important;
+
+                .rz-navigation-item-link {
+                    padding-right: 3.5rem !important;
+                }
+            }
+
+            &:has(> .rz-navigation-item-wrapper.rz-navigation-item-wrapper-active)::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: var(--color-sunray);
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+
+            .rz-navigation-item-icon .rz-navigation-item-text {
+                color: var(--dark-electric-blue);
+            }
+
+            .rz-navigation-item-wrapper-active {
+                background-color: unset !important;
+                color: unset !important;
+                font-weight: 700;
+
+                .rz-navigation-item-icon {
+                    color: unset;
+                }
+            }
+        }
+    }
+}

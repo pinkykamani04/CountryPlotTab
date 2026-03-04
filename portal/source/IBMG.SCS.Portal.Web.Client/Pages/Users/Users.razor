@@ -1,0 +1,174 @@
+@page "/users"
+@using BluQube.Constants
+@using IBMG.SCS.Portal.Web.Client.Components
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Queries
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.QueryResults
+@using IBMG.SCS.Portal.Web.Client.Infrastructure.Commands.Auth
+@using IBMG.SCS.Portal.Web.Client.Data
+@using Microsoft.AspNetCore.Components.Authorization
+@using PearDrop.Authentication.Client.Domain.User.Commands
+
+@inject BluQube.Queries.IQuerier Querier
+@inject BluQube.Commands.ICommander Commander
+@inject NavigationManager Nav
+@inject NotificationService Notifier
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Users | IBMG</PageTitle>
+
+<style>
+    .pd-loader[b-aficbxi1mg] {
+        background-color: none !important;
+    }
+</style>
+<PearLoadingAnimation IsVisible="isLoading" />
+
+
+    <RadzenStack Orientation="Orientation.Vertical" Gap="20px" class="p-3 users">
+        <RadzenRow AlignItems="AlignItems.Center" ColumnGap="10px">
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenText Text="Users" TextStyle="TextStyle.H3" />
+            </RadzenColumn>
+
+            <RadzenColumn Size="12" SizeMD="6">
+                <RadzenStack class="responsive-stack"
+                             Orientation="Orientation.Horizontal"
+                             AlignItems="AlignItems.Stretch"
+                             JustifyContent="JustifyContent.End"
+                             Gap="10px">
+                    <div class="stack-item">
+                        <div style="position:relative; width:100%;">
+                            <RadzenTextBox @bind-Value="search"
+                                           Placeholder="Search user"
+                                           Change="OnSearchInput"
+                                           Style="width:100%; padding-left:30px;" />
+                            <RadzenIcon Icon="search" class="icon" />
+                        </div>
+                    </div>
+                    <RadzenButton class="stack-item"
+                                  Text="Add User"
+                                  Icon="add"
+                                  Click="OnAddUser"
+                                  ButtonStyle="ButtonStyle.Primary" />
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow class="user-grid">
+        <RadzenDataGrid TItem="QueryableUser"
+                        Data="@users"
+                        @ref="grid"
+                        AllowSorting="true"
+                        AllowPaging="true"
+                        PageSize="10"
+                        class="w-100">
+
+            <Columns>
+
+                <RadzenDataGridColumn Property="UserPrincipalName"
+                                      Title="User"
+                                      Sortable="true" />
+
+                <RadzenDataGridColumn Property="CreatedDate"
+                                      Title="Created"
+                                      FormatString="{0:dd MMM yyyy}"
+                                      Sortable="true" />
+
+                <RadzenDataGridColumn Title="Status">
+                    <Template Context="u">
+                        @if (u.IsDisabled)
+                        {
+                            <RadzenBadge Text="Disabled"
+                                         Severity="NotificationSeverity.Danger" />
+                        }
+                        else if (u.IsLocked)
+                        {
+                            <RadzenBadge Text="Locked"
+                                         Severity="NotificationSeverity.Warning" />
+                        }
+                        else
+                        {
+                            <RadzenBadge Text="Active"
+                                         Severity="NotificationSeverity.Success" />
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+
+            </Columns>
+
+            <EmptyTemplate>
+                <div class="text-center py-4 text-muted">
+                    No users found.
+                </div>
+            </EmptyTemplate>
+
+        </RadzenDataGrid>
+        </RadzenRow>
+
+        @if (showAdd)
+        {
+            <div class="offcanvas offcanvas-end show" style="width:350px;" tabindex="-1">
+                <RadzenStack Orientation="Orientation.Horizontal"
+                             AlignItems="AlignItems.Center"
+                             JustifyContent="JustifyContent.SpaceBetween"
+                             Class="offcanvas-header">
+
+                    <RadzenText Text="Add User"
+                                TextStyle="TextStyle.H5"
+                                Class="offcanvas-title" />
+
+                    <RadzenButton Icon="close"
+                                  ButtonStyle="ButtonStyle.Light"
+                                  Size="ButtonSize.Small"
+                                  Click="@CloseAdd"
+                                  Class="close-btn" />
+                </RadzenStack>
+
+                <div class="offcanvas-body">
+
+                    <RadzenTemplateForm TItem="CreateUserModel"
+                                        Data="@newUser"
+                                        Submit="SaveNewUser">
+
+                        <RadzenStack Orientation="Orientation.Vertical" Gap="15px">
+
+                            <RadzenLabel Text="First Name" Component="FirstName" />
+                            <RadzenTextBox @bind-Value="newUser.FirstName"
+                                           Name="FirstName"
+                                           Placeholder="First Name" />
+                            <RadzenRequiredValidator Component="FirstName" Text="Required" />
+
+                            <RadzenLabel Text="Last Name" Component="LastName" />
+                            <RadzenTextBox @bind-Value="newUser.LastName"
+                                           Name="LastName"
+                                           Placeholder="Last Name" />
+                            <RadzenRequiredValidator Component="LastName" Text="Required" />
+
+                            <RadzenLabel Text="Email" Component="Email" />
+                            <RadzenTextBox @bind-Value="newUser.Email"
+                                           Name="Email"
+                                           Placeholder="Email"
+                                           Type="email" />
+                            <RadzenRequiredValidator Component="Email" Text="Required" />
+                            <RadzenEmailValidator Component="Email" Text="Invalid Email" />
+
+                            <RadzenButton Text="@((saving ? "Saving..." : "Save"))"
+                                          Icon="save"
+                                          ButtonStyle="ButtonStyle.Primary"
+                                          Disabled="saving"
+                                          Style="width:100%;"
+                                          ButtonType="ButtonType.Submit" />
+
+                            @if (saving)
+                            {
+                                <ComponentLoading IsVisible="true" />
+                            }
+
+                        </RadzenStack>
+                    </RadzenTemplateForm>
+                </div>
+            </div>
+            <div class="offcanvas-backdrop fade show" @onclick="CloseAdd"></div>
+        }
+    </RadzenStack>
+
+
